@@ -3,12 +3,12 @@
 
     <!-- Analytics -->
     <plural name="analytics_transactions">
-        <item quantity="zero">%d транзакций</item>
-        <item quantity="one">%d транзакция</item>
-        <item quantity="two">%d транзакции</item>
-        <item quantity="few">%d транзакции</item>
-        <item quantity="many">%d транзакций</item>
-        <item quantity="other">%d транзакций</item>
+        <item quantity="zero">%d операций</item>
+        <item quantity="one">%d операция</item>
+        <item quantity="two">%d операции</item>
+        <item quantity="few">%d операции</item>
+        <item quantity="many">%d операций</item>
+        <item quantity="other">%d операций</item>
     </plural>
 
 </resources>

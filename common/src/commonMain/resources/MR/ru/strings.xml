@@ -1,14 +1,14 @@
 <resources>
     <!-- General -->
     <string name="okey">OK</string>
-    <string name="general_no_transactions">Еще нет транзакций</string>
+    <string name="general_no_transactions">Еще нет операций</string>
     <string name="btn_cancel">Отмена</string>
     <string name="btn_delete">Удалить</string>
     <string name="dialog_body_delete">Вы уверены, что хотите удалить?</string>
     <string name="dialog_title_delete">Удаление</string>
-    <string name="transaction">Транзакция</string>
+    <string name="transaction">Операция</string>
     <string name="category">Категория</string>
-    <string name="transactions">Транзакции</string>
+    <string name="transactions">Операции</string>
     <string name="account">Счет</string>
     <string name="tab_income">Доход</string>
     <string name="tab_expense">Расход</string>
@@ -130,14 +130,14 @@
 
     <!-- Home -->
     <string name="home_topbar_text">Общий баланс</string>
-    <string name="home_my_accounts">Мои Счета</string>
-    <string name="home_last_transactions">Последние Транзакции</string>
-    <string name="home_add_account">Добавить Счет</string>
+    <string name="home_my_accounts">Мои счета</string>
+    <string name="home_last_transactions">Последние операции</string>
+    <string name="home_add_account">Добавить счет</string>
 
     <!--Accounts -->
     <string name="accounts_screen_header">Счета</string>
-    <string name="accounts_screen_top_bar">Настройки Счета</string>
-    <string name="accounts_screen_add_account">Добавить Счет</string>
+    <string name="accounts_screen_top_bar">Настройки счета</string>
+    <string name="accounts_screen_add_account">Добавить счет</string>
     <string name="accounts_screen_empty">Нет счетов</string>
 
     <!-- Settings -->
@@ -154,27 +154,27 @@
     <!-- Transactions -->
     <string name="transactions_today">Сегодня</string>
     <string name="transactions_yesterday">Вчера</string>
-    <string name="transactions_title_normal">Транзакции</string>
+    <string name="transactions_title_normal">Операции</string>
     <string name="transactions_title_selected">Выбрано:</string>
     <string name="got_it">Понятно</string>
 
     <!-- Categories -->
-    <string name="category_settings">Настройки Категорий</string>
-    <string name="new_expense_category">Новая Категория Расходов</string>
-    <string name="new_income_category">Новая Категория Доходов</string>
-    <string name="expense_category">Категория Расходов</string>
-    <string name="income_category">Категория Доходов</string>
+    <string name="category_settings">Настройки категорий</string>
+    <string name="new_expense_category">Новая категория расходов</string>
+    <string name="new_income_category">Новая категория доходов</string>
+    <string name="expense_category">Категория расходов</string>
+    <string name="income_category">Категория доходов</string>
     <string name="categories_empty">Нет категорий</string>
 
     <!-- New account -->
-    <string name="new_account_title">Новый Счет</string>
+    <string name="new_account_title">Новый счет</string>
     <string name="new_account_btn_add">Добавить</string>
     <string name="new_account_field_name_label">Название</string>
-    <string name="new_account_field_name_placeholder">Введите Название</string>
+    <string name="new_account_field_name_placeholder">Введите название</string>
     <string name="new_account_field_type_label">Тип</string>
-    <string name="new_account_field_type_placeholder">Выберите Тип</string>
+    <string name="new_account_field_type_placeholder">Выберите тип</string>
     <string name="new_account_field_color_label">Цвет</string>
-    <string name="new_account_field_color_placeholder">Выберите Цвет</string>
+    <string name="new_account_field_color_placeholder">Выберите цвет</string>
     <string name="new_account_field_amount_label">Баланс</string>
     <string name="new_account_field_amount_placeholder">0</string>
     <string name="new_account_error_enter_account_name">Введите название счета</string>
@@ -187,14 +187,14 @@
     <string name="expense_analytics_trend">Тренд расходов</string>
     <string name="income_analytics_trend">Тренд доходов</string>
     <string name="analytics_by_category">%s по категории</string>
-    <string name="analytics_make_first_transactions">Нет транзакций за\u00A0выбранный период</string>
+    <string name="analytics_make_first_transactions">Нет операций за\u00A0выбранный период</string>
 
     <!-- Detail account -->
     <string name="detail_account_btn_edit">Редактировать</string>
 
     <!-- Empty stubs -->
-    <string name="add_transaction">Добавить Транзакцию</string>
-    <string name="add_account">Добавить Счет</string>
-    <string name="add_category">Добавить Категорию</string>
+    <string name="add_transaction">Добавить операцию</string>
+    <string name="add_account">Добавить счет</string>
+    <string name="add_category">Добавить категорию</string>
 
 </resources>
