@@ -60,7 +60,7 @@ internal fun CategorySettingsScreen() {
                 TransactionTypeTab.Expense -> {
                     if (expenseCategories.isEmpty()) {
                         EmptyStub(
-                            image = rememberVectorPainter("categories_empty"),
+                            image = rememberVectorPainter("categories_empty", isSupportDarkMode = true),
                             text = stringResource(MR.strings.add_category),
                             onClick = viewModel::onAddCategoryClick
                         )
@@ -76,7 +76,7 @@ internal fun CategorySettingsScreen() {
                 TransactionTypeTab.Income -> {
                     if (incomeCategories.isEmpty()) {
                         EmptyStub(
-                            image = rememberVectorPainter("categories_empty"),
+                            image = rememberVectorPainter("categories_empty", isSupportDarkMode = true),
                             text = stringResource(MR.strings.add_category),
                             onClick = viewModel::onAddCategoryClick
                         )

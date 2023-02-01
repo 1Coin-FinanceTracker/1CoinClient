@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.presentation.settings.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,48 +25,53 @@ import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import dev.icerock.moko.resources.compose.stringResource
 
+@Suppress("ReusedModifierInstance")
 @Composable
 internal fun SendingUsageDataDialog(
     onOkClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier.padding(8.dp),
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(
-                    start = 16.dp,
-                    top = 16.dp,
-                    end = 16.dp
-                ),
-            text = buildAnnotatedString {
-                withStyle(SpanStyle(fontWeight = FontWeight.Medium)) {
-                    append(stringResource(MR.strings.sending_usage_data_description_1))
-                }
-                append("\n\n")
-                append(stringResource(MR.strings.sending_usage_data_description_2))
-            },
-            style = CoinTheme.typography.body1
-        )
-
-        Row(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                    bottom = 8.dp,
-                    end = 16.dp
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
+    CoinTheme {
+        Column(
+            modifier = modifier
+                .background(CoinTheme.color.background)
+                .padding(8.dp),
         ) {
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            ActionButton(
-                text = stringResource(MR.strings.okey),
-                onClick = { onOkClick.invoke() }
+            Text(
+                modifier = Modifier
+                    .padding(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp
+                    ),
+                text = buildAnnotatedString {
+                    withStyle(SpanStyle(fontWeight = FontWeight.Medium)) {
+                        append(stringResource(MR.strings.sending_usage_data_description_1))
+                    }
+                    append("\n\n")
+                    append(stringResource(MR.strings.sending_usage_data_description_2))
+                },
+                style = CoinTheme.typography.body1
             )
+
+            Row(
+                modifier = Modifier
+                    .padding(
+                        top = 16.dp,
+                        bottom = 8.dp,
+                        end = 16.dp
+                    )
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                ActionButton(
+                    text = stringResource(MR.strings.okey),
+                    onClick = { onOkClick.invoke() }
+                )
+            }
         }
     }
 }

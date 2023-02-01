@@ -80,7 +80,7 @@ internal fun CoinTabRow(
                 },
             edgePadding = centeredEdgePadding.toInt().toDp(),
             selectedTabIndex = selectedTabIndex,
-            backgroundColor = CoinTheme.color.background,
+            backgroundColor = CoinTheme.color.backgroundSurface,
             contentColor = CoinTheme.color.primary,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(

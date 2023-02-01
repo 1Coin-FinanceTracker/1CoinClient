@@ -32,7 +32,8 @@ internal fun ActionButtonsSection(
         modifier = modifier
             .fillMaxWidth()
             .background(CoinTheme.color.background),
-        elevation = if (hasActiveStep) 8.dp else 0.dp
+        elevation = if (hasActiveStep) 8.dp else 0.dp,
+        color = CoinTheme.color.background
     ) {
         Row(
             modifier = Modifier

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,11 +21,11 @@ internal fun CoinTopAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     appBarHeight: Dp = AppBarHeight
 ) {
-    val backgroundColor = CoinTheme.color.background
+    val backgroundColor = CoinTheme.color.backgroundSurface
     Surface(
         modifier = modifier,
         color = backgroundColor,
-        contentColor = contentColorFor(CoinTheme.color.background),
+        contentColor = CoinTheme.color.content,
         elevation = AppBarDefaults.TopAppBarElevation
     ) {
         TopAppBar(

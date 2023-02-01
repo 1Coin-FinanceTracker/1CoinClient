@@ -22,8 +22,8 @@ enum class AccountColorModel(
     ),
     GoldenTainoi(
         id = 2,
-        color = Color(0xFFFFC857),
-        colorName = MR.strings.color_yellow
+        color = Color(0xFFC75146),
+        colorName = MR.strings.color_red
     ),
     CopperRose(
         id = 3,

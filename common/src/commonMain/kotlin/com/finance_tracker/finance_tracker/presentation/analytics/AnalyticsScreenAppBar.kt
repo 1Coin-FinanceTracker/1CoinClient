@@ -20,7 +20,8 @@ internal fun AnalyticsScreenAppBar(
         title = {
             Text(
                 text = stringResource(MR.strings.tab_analytics),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         },
         selectedTransactionTypeTab = selectedTransactionTypeTab,

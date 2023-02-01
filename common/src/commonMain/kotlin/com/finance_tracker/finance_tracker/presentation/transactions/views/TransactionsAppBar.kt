@@ -32,7 +32,8 @@ internal fun TransactionsAppBar(
                 } else {
                     stringResource(MR.strings.transactions_title_normal)
                 },
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         },
         navigationIcon = if (hasSelectedItems) {{

@@ -1,6 +1,5 @@
 package com.finance_tracker.finance_tracker.presentation.email_auth.enter_email
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -52,7 +51,6 @@ internal fun EnterEmailScreen() {
         }
 
         Column(
-            modifier = Modifier.background(CoinTheme.color.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             EnterEmailAppBar(

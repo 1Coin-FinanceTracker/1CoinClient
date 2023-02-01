@@ -50,13 +50,13 @@ internal fun AccountCard(
                         top = 16.dp
                     )
                     .size(29.dp),
-                tint = CoinTheme.color.primaryVariant
+                tint = CoinTheme.color.white
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = data.balance.format(mode = AmountFormatMode.NegativeSign),
                 style = CoinTheme.typography.h5,
-                color = CoinTheme.color.primaryVariant,
+                color = CoinTheme.color.white,
                 modifier = Modifier
                     .padding(start = 16.dp)
             )
@@ -68,7 +68,7 @@ internal fun AccountCard(
             Text(
                 text = accountName,
                 style = CoinTheme.typography.subtitle2,
-                color = CoinTheme.color.primaryVariant.copy(alpha = 0.5f),
+                color = CoinTheme.color.white.copy(alpha = 0.5f),
                 modifier = Modifier
                     .padding(
                         start = 16.dp,

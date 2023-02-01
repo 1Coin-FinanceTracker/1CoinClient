@@ -66,7 +66,8 @@ internal fun TabsNavigationScreen() {
                 ) {
                     Icon(
                         painter = rememberVectorPainter("ic_plus"),
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = CoinTheme.color.white
                     )
                 }
             }

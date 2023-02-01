@@ -70,7 +70,8 @@ private fun AccountColorItem(
                 modifier = Modifier
                     .padding(start = 16.dp),
                 text = stringResource(data.colorName),
-                style = CoinTheme.typography.body1
+                style = CoinTheme.typography.body1,
+                color = CoinTheme.color.content
             )
         }
     }

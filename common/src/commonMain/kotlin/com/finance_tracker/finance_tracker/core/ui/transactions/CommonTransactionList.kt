@@ -39,7 +39,7 @@ internal fun CommonTransactionsList(
     if (transactions.itemCount == 0) {
         EmptyStub(
             modifier = modifier,
-            image = rememberVectorPainter("transactions_empty"),
+            image = rememberVectorPainter("transactions_empty", isSupportDarkMode = true),
             text = stringResource(MR.strings.add_transaction),
             onClick = { onAddTransactionClick.invoke() },
             stubHeightAlignment = stubHeightAlignment,

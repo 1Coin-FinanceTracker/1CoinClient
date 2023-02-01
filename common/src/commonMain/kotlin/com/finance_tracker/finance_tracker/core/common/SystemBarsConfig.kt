@@ -9,11 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 class SystemBarsConfig(
-    initIsStatusBarLight: Boolean = true,
-    initIsNavigationBarLight: Boolean = true
+    initIsStatusBarLight: Boolean? = null,
+    initIsNavigationBarLight: Boolean? = null
 ) {
-    var isStatusBarLight: Boolean by mutableStateOf(initIsStatusBarLight)
-    var isNavigationBarLight: Boolean by mutableStateOf(initIsNavigationBarLight)
+    var isStatusBarLight: Boolean? by mutableStateOf(initIsStatusBarLight)
+    var isNavigationBarLight: Boolean? by mutableStateOf(initIsNavigationBarLight)
 
     fun copy() = SystemBarsConfig(
         initIsStatusBarLight = isStatusBarLight,

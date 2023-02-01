@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.presentation.dashboard_settings.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,7 @@ internal fun DashboardItem(
                 color = CoinTheme.color.dividers,
                 shape = RoundedCornerShape(12.dp)
             )
+            .background(CoinTheme.color.background)
             .noRippleClickable(enabled = data.type.isEditable) {
                 onClick.invoke()
             }
@@ -59,7 +61,8 @@ internal fun DashboardItem(
             text = stringResource(data.type.nameRes),
             style = CoinTheme.typography.h5,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            color = CoinTheme.color.content
         )
         Spacer(modifier = Modifier.weight(1f))
 

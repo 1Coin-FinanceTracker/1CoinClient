@@ -139,7 +139,8 @@ internal fun NextIcon(
         modifier = modifier
             .padding(horizontal = 2.dp),
         painter = rememberVectorPainter("ic_arrow_next_small"),
-        contentDescription = null
+        contentDescription = null,
+        tint = CoinTheme.color.content
     )
 }
 

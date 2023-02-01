@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.core.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,45 +28,49 @@ internal fun DeleteDialog(
     onCancelClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    Column(
-        modifier = Modifier.padding(8.dp),
-    ) {
-        Text(
+    CoinTheme {
+        Column(
             modifier = Modifier
-                .padding(start = 16.dp)
-                .padding(top = 16.dp),
-            text = titleEntity,
-            style = CoinTheme.typography.h4
-        )
-        Text(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 8.dp),
-            text = stringResource(MR.strings.dialog_body_delete),
-            style = CoinTheme.typography.body1
-        )
-        Row(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                    bottom = 8.dp,
-                    end = 16.dp
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
+                .background(CoinTheme.color.backgroundSurface)
+                .padding(8.dp),
         ) {
-            ActionButton(
-                text = stringResource(MR.strings.btn_cancel),
-                onClick = { onCancelClick.invoke() }
+            Text(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .padding(top = 16.dp),
+                text = titleEntity,
+                style = CoinTheme.typography.h4
             )
-
-            Spacer(modifier = Modifier.width(24.dp))
-
-            ActionButton(
-                text = stringResource(MR.strings.btn_delete),
-                textColor = CoinTheme.color.accentRed,
-                onClick = { onDeleteClick.invoke() }
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp),
+                text = stringResource(MR.strings.dialog_body_delete),
+                style = CoinTheme.typography.body1
             )
+            Row(
+                modifier = Modifier
+                    .padding(
+                        top = 16.dp,
+                        bottom = 8.dp,
+                        end = 16.dp
+                    )
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                ActionButton(
+                    text = stringResource(MR.strings.btn_cancel),
+                    onClick = { onCancelClick.invoke() }
+                )
+
+                Spacer(modifier = Modifier.width(24.dp))
+
+                ActionButton(
+                    text = stringResource(MR.strings.btn_delete),
+                    textColor = CoinTheme.color.accentRed,
+                    onClick = { onDeleteClick.invoke() }
+                )
+            }
         }
     }
 }

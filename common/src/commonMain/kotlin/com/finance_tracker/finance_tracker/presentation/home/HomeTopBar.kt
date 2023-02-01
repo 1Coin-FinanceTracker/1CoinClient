@@ -33,7 +33,8 @@ internal fun HomeTopBar(
             Column {
                 Text(
                     text = totalBalance.format(mode = AmountFormatMode.NegativeSign),
-                    style = CoinTheme.typography.h4
+                    style = CoinTheme.typography.h4,
+                    color = CoinTheme.color.content
                 )
                 Text(
                     text = stringResource(MR.strings.home_topbar_text),

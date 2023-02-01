@@ -27,7 +27,8 @@ internal fun AddAccountTopBar(
         title = {
             Text(
                 text = stringResource(topBarTextId),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         }
     )

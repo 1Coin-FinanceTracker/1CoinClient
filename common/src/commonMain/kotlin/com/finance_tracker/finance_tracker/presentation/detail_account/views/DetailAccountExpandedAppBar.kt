@@ -53,7 +53,7 @@ internal fun DetailAccountExpandedAppBar(
                 .padding(12.dp),
             painter = rememberVectorPainter(iconId),
             contentDescription = null,
-            tint = CoinTheme.color.primaryVariant
+            tint = CoinTheme.color.white
         )
         Text(
             modifier = Modifier.padding(
@@ -62,7 +62,7 @@ internal fun DetailAccountExpandedAppBar(
             ),
             text = amount.format(mode = AmountFormatMode.NegativeSign),
             style = CoinTheme.typography.h2,
-            color = CoinTheme.color.primaryVariant
+            color = CoinTheme.color.white
         )
     }
 }

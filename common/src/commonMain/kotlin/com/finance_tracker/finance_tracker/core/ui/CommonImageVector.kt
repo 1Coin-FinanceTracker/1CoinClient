@@ -6,9 +6,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter as graphicsRememberVectorPainter
 
 @Composable
-expect fun rememberImageVector(id: String): ImageVector
+expect fun rememberImageVector(
+    id: String,
+    isSupportDarkMode: Boolean = false
+): ImageVector
 
 @Composable
-internal fun rememberVectorPainter(id: String): Painter {
-    return graphicsRememberVectorPainter(rememberImageVector(id))
+internal fun rememberVectorPainter(
+    id: String,
+    isSupportDarkMode: Boolean = false
+): Painter {
+    return graphicsRememberVectorPainter(rememberImageVector(id, isSupportDarkMode))
 }

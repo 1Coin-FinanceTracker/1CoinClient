@@ -28,7 +28,8 @@ internal fun SettingsScreenTopBar(
         title = {
             Text(
                 text = stringResource(MR.strings.settings_topbar_text),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content,
             )
         }
 

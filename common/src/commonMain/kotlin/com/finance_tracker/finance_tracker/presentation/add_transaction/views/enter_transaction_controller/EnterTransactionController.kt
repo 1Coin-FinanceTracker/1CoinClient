@@ -57,6 +57,7 @@ internal fun EnterTransactionController(
                         onAccountAdd = onAccountAdd
                     )
                 }
+
                 EnterTransactionStep.Category -> {
                     CategorySelector(
                         categories = categories,
@@ -64,11 +65,13 @@ internal fun EnterTransactionController(
                         onCategoryAdd = onCategoryAdd
                     )
                 }
+
                 EnterTransactionStep.Amount -> {
                     AmountKeyboard(
                         onButtonClick = onKeyboardButtonClick
                     )
                 }
+
                 else -> {
                     /* no keyboard */
                 }

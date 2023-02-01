@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.core.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import androidx.compose.material.DropdownMenuItem as AndroidDropDownMenuItem
 
 @Suppress("MissingModifierDefaultValue", "ReusedModifierInstance")
@@ -24,7 +26,8 @@ actual fun CoinDropdownMenu(
 ) {
     MaterialTheme(shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(12.dp))) {
         DropdownMenu(
-            modifier = modifier,
+            modifier = modifier
+                .background(CoinTheme.color.backgroundSurface),
             expanded = expanded,
             offset = DpOffset(x = xOffset, y = yOffset),
             onDismissRequest = onDismissRequest,

@@ -3,8 +3,10 @@ package com.finance_tracker.finance_tracker.presentation.add_transaction
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,6 +23,7 @@ import com.finance_tracker.finance_tracker.core.common.date.currentLocalDateTime
 import com.finance_tracker.finance_tracker.core.common.`if`
 import com.finance_tracker.finance_tracker.core.common.toDateTime
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
+import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.DeleteDialog
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionType
@@ -169,79 +172,84 @@ internal fun AddTransactionScreen(
                     previousStepIndex = currentStep?.ordinal
                 }
 
-                Column {
-                    StepsEnterTransactionBar(
-                        data = StepsEnterTransactionBarData(
+                CompositionLocalProvider(LocalContentColor provides CoinTheme.color.content) {
+                    Column {
+                        StepsEnterTransactionBar(
+                            data = StepsEnterTransactionBarData(
+                                currentStep = currentStep,
+                                accountData = accountData,
+                                categoryData = categoryData
+                            ),
+                            onStepSelect = {
+                                viewModel.onCurrentStepSelect(it)
+                                currentStep = it
+                            }
+                        )
+
+                        val categoriesFlow = when (selectedTransactionType) {
+                            TransactionTypeTab.Expense -> viewModel.expenseCategories
+                            TransactionTypeTab.Income -> viewModel.incomeCategories
+                        }
+                        val accounts by viewModel.accounts.collectAsState()
+                        val categories by categoriesFlow.collectAsState()
+
+                        EnterTransactionController(
+                            modifier = Modifier
+                                .`if`(currentStep == null) {
+                                    height(0.dp)
+                                }
+                                .`if`(currentStep != null) {
+                                    weight(1f)
+                                },
+                            accounts = accounts,
+                            categories = categories,
                             currentStep = currentStep,
-                            accountData = accountData,
-                            categoryData = categoryData
-                        ),
-                        onStepSelect = {
-                            viewModel.onCurrentStepSelect(it)
-                            currentStep = it
-                        }
-                    )
-
-                    val categoriesFlow = when (selectedTransactionType) {
-                        TransactionTypeTab.Expense -> viewModel.expenseCategories
-                        TransactionTypeTab.Income -> viewModel.incomeCategories
-                    }
-                    val accounts by viewModel.accounts.collectAsState()
-                    val categories by categoriesFlow.collectAsState()
-
-                    EnterTransactionController(
-                        modifier = Modifier
-                            .`if`(currentStep == null) {
-                                height(0.dp)
-                            }
-                            .`if`(currentStep != null) {
-                                weight(1f)
+                            animationDirection = when {
+                                currentStep == null || previousStepIndex == null -> 0
+                                currentStep!!.ordinal >= previousStepIndex!! -> 1
+                                else -> -1
                             },
-                        accounts = accounts,
-                        categories = categories,
-                        currentStep = currentStep,
-                        animationDirection = when {
-                            currentStep == null || previousStepIndex == null -> 0
-                            currentStep!!.ordinal >= previousStepIndex!! -> 1
-                            else -> -1
-                        },
-                        onAccountSelect = {
-                            viewModel.onAccountSelect(it)
-                            currentStep = currentStep?.next()
-                        },
-                        onAccountAdd = viewModel::onAccountAdd,
-                        onCategorySelect = {
-                            viewModel.onCategorySelect(it)
-                            currentStep = currentStep?.next()
-                        },
-                        onCategoryAdd = viewModel::onCategoryAdd,
-                        onKeyboardButtonClick = { command ->
-                            viewModel.onKeyboardButtonClick(command)
-                        }
-                    )
-
-                    ActionButtonsSection(
-                        hasActiveStep = currentStep != null,
-                        enabled = isAddTransactionEnabled,
-                        onAddClick = { onAddTransaction.invoke(true) },
-                        onEditClick = { onEditTransaction.invoke(true) },
-                        isEditMode = viewModel.isEditMode,
-                        onDeleteClick = {
-                            modalNavController.present(DialogConfigurations.alert) { dialogKey ->
-                                DeleteTransactionDialog(
-                                    key = dialogKey,
-                                    transaction = params.transaction,
-                                    modalNavController = modalNavController,
-                                    onDeleteTransactionClick = { transaction ->
-                                        viewModel.onDeleteTransactionClick(transaction, dialogKey)
-                                    }
-                                )
+                            onAccountSelect = {
+                                viewModel.onAccountSelect(it)
+                                currentStep = currentStep?.next()
+                            },
+                            onAccountAdd = viewModel::onAccountAdd,
+                            onCategorySelect = {
+                                viewModel.onCategorySelect(it)
+                                currentStep = currentStep?.next()
+                            },
+                            onCategoryAdd = viewModel::onCategoryAdd,
+                            onKeyboardButtonClick = { command ->
+                                viewModel.onKeyboardButtonClick(command)
                             }
-                        },
-                        onDuplicateClick = {
-                            viewModel.onDuplicateTransactionClick(params.transaction)
-                        }
-                    )
+                        )
+
+                        ActionButtonsSection(
+                            hasActiveStep = currentStep != null,
+                            enabled = isAddTransactionEnabled,
+                            onAddClick = { onAddTransaction.invoke(true) },
+                            onEditClick = { onEditTransaction.invoke(true) },
+                            isEditMode = viewModel.isEditMode,
+                            onDeleteClick = {
+                                modalNavController.present(DialogConfigurations.alert) { dialogKey ->
+                                    DeleteTransactionDialog(
+                                        key = dialogKey,
+                                        transaction = params.transaction,
+                                        modalNavController = modalNavController,
+                                        onDeleteTransactionClick = { transaction ->
+                                            viewModel.onDeleteTransactionClick(
+                                                transaction,
+                                                dialogKey
+                                            )
+                                        }
+                                    )
+                                }
+                            },
+                            onDuplicateClick = {
+                                viewModel.onDuplicateTransactionClick(params.transaction)
+                            }
+                        )
+                    }
                 }
             }
         }

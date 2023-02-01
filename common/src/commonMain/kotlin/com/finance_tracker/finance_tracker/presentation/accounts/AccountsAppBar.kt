@@ -28,7 +28,8 @@ internal fun AccountsAppBar(
         title = {
             Text(
                 text = stringResource(MR.strings.accounts_screen_header),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         },
         actions = {

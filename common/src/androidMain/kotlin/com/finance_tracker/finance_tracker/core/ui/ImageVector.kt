@@ -9,10 +9,14 @@ import androidx.compose.ui.res.vectorResource
 
 @SuppressLint("DiscouragedApi")
 @Composable
-actual fun rememberImageVector(id: String): ImageVector {
+actual fun rememberImageVector(
+    id: String,
+    isSupportDarkMode: Boolean
+): ImageVector {
     val context = LocalContext.current
-    val imageVector = with(context) {
-        ImageVector.vectorResource(resources.getIdentifier(id, "drawable", packageName))
+    val identifier = remember(context, id) {
+        context.resources.getIdentifier(id, "drawable", context.packageName)
     }
+    val imageVector = ImageVector.vectorResource(identifier)
     return remember(id) { imageVector }
 }

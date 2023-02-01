@@ -43,6 +43,7 @@ internal fun AccountNameText(
             )
         ),
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
+        color = CoinTheme.color.white
     )
 }

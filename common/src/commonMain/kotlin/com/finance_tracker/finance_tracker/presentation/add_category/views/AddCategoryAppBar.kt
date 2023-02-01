@@ -27,7 +27,8 @@ internal fun AddCategoryAppBar(
         title = {
             Text(
                 text = stringResource(textValue),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         },
     )

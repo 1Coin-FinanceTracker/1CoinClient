@@ -45,7 +45,7 @@ internal fun AccountsScreen() {
 
             if (accounts.isEmpty()) {
                 EmptyStub(
-                    image = rememberVectorPainter("accounts_empty"),
+                    image = rememberVectorPainter("accounts_empty", isSupportDarkMode = true),
                     text = stringResource(MR.strings.add_account),
                     onClick = viewModel::onAddAccountClick
                 )

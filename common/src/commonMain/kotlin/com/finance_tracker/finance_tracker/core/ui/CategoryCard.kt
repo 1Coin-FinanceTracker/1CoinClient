@@ -67,7 +67,8 @@ internal fun CategoryCard(
                 .align(Alignment.CenterVertically)
                 .weight(1f),
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            color = CoinTheme.color.content
         )
         Icon(
             painter = rememberVectorPainter("ic_cross"),

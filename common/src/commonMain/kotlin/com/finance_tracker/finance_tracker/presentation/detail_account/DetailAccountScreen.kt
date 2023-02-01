@@ -82,7 +82,7 @@ internal fun DetailAccountScreen(
                         .align(Alignment.TopStart),
                     painter = rememberVectorPainter("ic_arrow_back"),
                     onClick = viewModel::onBackClick,
-                    tint = CoinTheme.color.primaryVariant
+                    tint = CoinTheme.color.white
                 )
 
                 AccountNameText(

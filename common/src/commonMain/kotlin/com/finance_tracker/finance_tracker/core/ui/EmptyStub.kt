@@ -42,8 +42,13 @@ internal fun EmptyStub(
             verticalArrangement = Arrangement.Center
         ) {
             Image(
+                modifier = Modifier
+                    .size(
+                        width= 275.dp,
+                        height= 155.dp,
+                    ),
                 painter = image,
-                contentDescription = null,
+                contentDescription = null
             )
             Row(
                 modifier = Modifier

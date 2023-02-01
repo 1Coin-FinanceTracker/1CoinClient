@@ -30,7 +30,8 @@ internal fun CategorySettingsAppBar(
         title = {
             Text(
                 text = stringResource(MR.strings.category_settings),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         },
         actions = {

@@ -36,7 +36,7 @@ internal fun BottomNavigationBar(
     val navigationBarsHeight = LocalFixedInsets.current.navigationBarsHeight
     BottomAppBar(
         modifier = modifier,
-        backgroundColor = CoinTheme.color.background,
+        backgroundColor = CoinTheme.color.backgroundSurface,
         elevation = 12.dp,
         contentColor = CoinTheme.color.primary,
         contentPadding = PaddingValues(

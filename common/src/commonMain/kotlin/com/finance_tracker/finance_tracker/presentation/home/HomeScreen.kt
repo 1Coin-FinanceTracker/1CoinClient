@@ -1,6 +1,5 @@
 package com.finance_tracker.finance_tracker.presentation.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +18,6 @@ import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinPaddings
-import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
 import com.finance_tracker.finance_tracker.domain.models.DashboardWidgetData
 import com.finance_tracker.finance_tracker.presentation.widgets.AnalyticsByCategoryWidget
@@ -44,7 +42,6 @@ internal fun HomeScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(CoinTheme.color.background)
         ) {
             val totalBalance by viewModel.totalBalance.collectAsState()
             HomeTopBar(

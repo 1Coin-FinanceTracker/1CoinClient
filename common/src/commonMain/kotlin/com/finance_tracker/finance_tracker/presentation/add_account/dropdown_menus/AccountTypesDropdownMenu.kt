@@ -34,7 +34,8 @@ internal fun AccountTypesDropdownMenu(
             ) {
                 Text(
                     text = stringResource(item.textId),
-                    style = CoinTheme.typography.body1
+                    style = CoinTheme.typography.body1,
+                    color = CoinTheme.color.content
                 )
             }
         }

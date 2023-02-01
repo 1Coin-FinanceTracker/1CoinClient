@@ -26,7 +26,8 @@ internal fun DashboardSettingsAppBar(
         title = {
             Text(
                 text = stringResource(MR.strings.widget_settings_title),
-                style = CoinTheme.typography.h4
+                style = CoinTheme.typography.h4,
+                color = CoinTheme.color.content
             )
         },
     )

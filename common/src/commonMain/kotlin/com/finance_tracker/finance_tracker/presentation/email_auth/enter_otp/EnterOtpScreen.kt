@@ -1,6 +1,5 @@
 package com.finance_tracker.finance_tracker.presentation.email_auth.enter_otp
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -59,7 +58,6 @@ internal fun EnterOtpScreen(email: String) {
 
         val isWrongCodeStateEnabled by viewModel.isWrongCodeStateEnabled.collectAsState()
         Column(
-            modifier = Modifier.background(CoinTheme.color.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             EnterOtpAppBar(

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
+import com.finance_tracker.finance_tracker.core.common.UpdateSystemBarsConfigEffect
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.statusBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
@@ -36,6 +37,10 @@ private const val MiddleContentWight = 1f - (TopSpaceWeight + BottomSpaceWeight)
 @Composable
 internal fun WelcomeScreen() {
     StoredViewModel<WelcomeViewModel> { viewModel ->
+
+        UpdateSystemBarsConfigEffect {
+            isStatusBarLight = true
+        }
 
         viewModel.watchViewActions { action, baseLocalsStorage ->
             handleAction(action, baseLocalsStorage)

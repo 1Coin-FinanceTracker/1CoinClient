@@ -36,7 +36,8 @@ internal fun AmountCurrenciesDropdownMenu(
             ) {
                 Text(
                     text = "${item.code} (${item.symbol})",
-                    style = CoinTheme.typography.body1
+                    style = CoinTheme.typography.body1,
+                    color = CoinTheme.color.content
                 )
             }
         }

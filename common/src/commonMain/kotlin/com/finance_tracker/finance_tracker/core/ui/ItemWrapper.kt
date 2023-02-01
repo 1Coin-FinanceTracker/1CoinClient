@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.core.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -25,6 +26,7 @@ internal fun ItemWrapper(
 ) {
     Box(
         modifier = modifier
+            .background(CoinTheme.color.background)
             .border(
                 strokeWidth = 1.dp,
                 color = CoinTheme.color.dividers,

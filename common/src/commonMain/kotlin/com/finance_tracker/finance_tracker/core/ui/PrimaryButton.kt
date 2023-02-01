@@ -1,6 +1,5 @@
 package com.finance_tracker.finance_tracker.core.ui
 
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +23,7 @@ fun PrimaryButton(
             text = text,
             style = CoinTheme.typography.body1_medium,
             textAlign = TextAlign.Center,
-            color = LocalContentColor.current
+            color = CoinTheme.color.white
         )
     }
 }

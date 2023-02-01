@@ -30,11 +30,13 @@ data class CoinColors(
     val primaryVariant: Color,
     val secondary: Color,
     val background: Color,
+    val backgroundSurface: Color,
     val secondaryBackground: Color,
     val dividers: Color,
     val content: Color,
     val accentGreen: Color,
-    val accentRed: Color
+    val accentRed: Color,
+    val white: Color
 )
 
 val LocalCoinColors = staticCompositionLocalOf {
@@ -43,11 +45,13 @@ val LocalCoinColors = staticCompositionLocalOf {
         primaryVariant = Color.Unspecified,
         secondary = Color.Unspecified,
         background = Color.Unspecified,
+        backgroundSurface = Color.Unspecified,
         secondaryBackground = Color.Unspecified,
         dividers = Color.Unspecified,
         content = Color.Unspecified,
         accentGreen = Color.Unspecified,
-        accentRed = Color.Unspecified
+        accentRed = Color.Unspecified,
+        white = Color.White
     )
 }
 val LocalCoinTypography = staticCompositionLocalOf {
@@ -82,26 +86,31 @@ private val DefaultRippleAlpha = RippleAlpha(
 )
 
 private val DarkColorPalette = CoinColors(
-    primary = Color(0xFF009BFF),
-    primaryVariant = Color(0xFFFFFFFF),
-    secondary = Color.Black.copy(alpha = 0.4f),
-    background = Color.White,
-    secondaryBackground = Color(0xFFF7F7F7),
-    dividers = Color(0xFFE6E6E6),
-    content = Color.Black,
+    primary = Color(0xFF1AA5FF),
+    primaryVariant = Color(0xFF141414),
+    secondary = Color(0xFFF2F2F2).copy(alpha = 0.4f),
+    background = Color(0xFF1F1F1F),
+    backgroundSurface = Color(0xFF262626),
+    secondaryBackground = Color(0xFF262626),
+    dividers = Color(0xFF3D3D3D),
+    content = Color(0xFFF2F2F2),
     accentGreen = Color(0xFF00BC2D),
-    accentRed = Color(0xFFF62D2D)
+    accentRed = Color(0xFFF23030),
+    white = Color(0xFFF2F2F2)
 )
+
 private val LightColorPalette = CoinColors(
     primary = Color(0xFF009BFF),
     primaryVariant = Color(0xFFFFFFFF),
-    secondary = Color.Black.copy(alpha = 0.4f),
-    background = Color.White,
+    secondary = Color(0xFF000000).copy(alpha = 0.4f),
+    background = Color(0xFFFFFFFF),
+    backgroundSurface = Color(0xFFFFFFFF),
     secondaryBackground = Color(0xFFF7F7F7),
     dividers = Color(0xFFE6E6E6),
-    content = Color.Black,
+    content = Color(0xFF000000),
     accentGreen = Color(0xFF00BC2D),
-    accentRed = Color(0xFFF62D2D)
+    accentRed = Color(0xFFF20000),
+    white = Color(0xFFFFFFFF)
 )
 
 object CoinAlpha {
@@ -132,6 +141,10 @@ fun CoinTheme(
         typography = MaterialTheme.typography.copy(
             subtitle1 = CoinTheme.typography.body1,
             caption = CoinTheme.typography.subtitle2,
+        ),
+        colors = MaterialTheme.colors.copy(
+            background = coinColors.background,
+            onBackground = coinColors.content
         )
     ) {
         CompositionLocalProvider(
