@@ -97,7 +97,6 @@ internal fun AddCategoryScreen(
                 )
 
                 CoinOutlinedTextField(
-                    value = newCategoryName,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
@@ -106,6 +105,7 @@ internal fun AddCategoryScreen(
                             end = 16.dp
                         )
                         .focusRequester(focusRequester),
+                    value = newCategoryName,
                     onValueChange = {
                         viewModel.setCategoryName(it)
                     },

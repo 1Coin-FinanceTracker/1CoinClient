@@ -48,6 +48,7 @@ internal fun AccountNameTextField(
             .fillMaxWidth()
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         value = titleAccount,
+        onValueChange = viewModel::onAccountNameChange,
         label = {
             Text(
                 text = stringResource(MR.strings.new_account_field_name_label),
@@ -61,9 +62,8 @@ internal fun AccountNameTextField(
                 style = CoinTheme.typography.body1.staticTextSize()
             )
         },
-        onValueChange = viewModel::onAccountNameChange,
-        maxLines = 1,
         singleLine = true,
+        maxLines = 1,
         charsLimit = AccountNameCharsLimit,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
     )
@@ -82,6 +82,7 @@ internal fun AmountTextField(
             .fillMaxWidth()
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         value = enteredBalance,
+        onValueChange = viewModel::onAmountChange,
         label = {
             Text(
                 text = stringResource(MR.strings.new_account_field_amount_label),
@@ -97,10 +98,6 @@ internal fun AmountTextField(
                 style = CoinTheme.typography.body1.staticTextSize()
             )
         },
-        onValueChange = viewModel::onAmountChange,
-        maxLines = 1,
-        singleLine = true,
-        charsLimit = AmountCharsLimit,
         trailingIcon = {
             CurrencySelector(
                 modifier = Modifier
@@ -110,6 +107,9 @@ internal fun AmountTextField(
                 onCurrencySelect = viewModel::onCurrencySelect
             )
         },
+        singleLine = true,
+        maxLines = 1,
+        charsLimit = AmountCharsLimit,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 }

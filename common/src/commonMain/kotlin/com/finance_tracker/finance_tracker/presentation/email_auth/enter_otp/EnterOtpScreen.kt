@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,7 +23,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -38,7 +36,7 @@ import com.finance_tracker.finance_tracker.core.common.statusBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.AppBarIcon
-import com.finance_tracker.finance_tracker.core.ui.CoinOutlinedTextField
+import com.finance_tracker.finance_tracker.core.ui.CoinCodeTextField
 import com.finance_tracker.finance_tracker.core.ui.PrimaryButton
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import dev.icerock.moko.resources.compose.stringResource
@@ -98,18 +96,13 @@ internal fun EnterOtpScreen(email: String) {
             Spacer(modifier = Modifier.padding(top = 24.dp))
 
             val otp by viewModel.otp.collectAsState()
-            CoinOutlinedTextField(
+
+            CoinCodeTextField(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .focusRequester(focusRequester),
-                value = otp,
-                onValueChange = viewModel::onOtpChange,
-                charsLimit = EnterOtpViewModel.OTP_LENGTH,
-                singleLine = true,
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Decimal
-                )
+                code = otp,
+                onCodeChange = viewModel::onOtpChange
             )
 
             Spacer(modifier = Modifier.height(24.dp))

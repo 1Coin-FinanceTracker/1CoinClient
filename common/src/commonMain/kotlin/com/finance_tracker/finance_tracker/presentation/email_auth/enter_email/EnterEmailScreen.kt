@@ -80,6 +80,7 @@ internal fun EnterEmailScreen() {
                         end = 16.dp
                     ),
                 value = email,
+                onValueChange = viewModel::onEmailChange,
                 label = {
                     Text(
                         text = stringResource(MR.strings.enter_email_field_email_label),
@@ -87,9 +88,8 @@ internal fun EnterEmailScreen() {
                         overflow = TextOverflow.Ellipsis,
                     )
                 },
-                onValueChange = viewModel::onEmailChange,
-                maxLines = 1,
                 singleLine = true,
+                maxLines = 1,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
