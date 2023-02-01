@@ -4,5 +4,5 @@ enum class MainNavigationTree {
     Main, AddTransaction, CategorySettings,
     AddAccount, AddCategory, DetailAccount,
     DashboardSettings, Settings, Welcome,
-    EnterEmail, EnterOtp
+    EnterEmail, EnterOtp, SelectCurrency,
 }

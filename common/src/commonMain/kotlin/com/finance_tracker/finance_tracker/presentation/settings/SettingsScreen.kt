@@ -76,11 +76,8 @@ internal fun SettingsScreen() {
                     text = stringResource(MR.strings.settings_configuration)
                 )
 
-                val chosenCurrency by viewModel.chosenCurrency.collectAsState()
                 SettingsMainCurrencyItem(
-                    selectedCurrency = chosenCurrency,
-                    onCurrencySelect = viewModel::onCurrencySelect,
-                    onCurrencyClick = viewModel::onCurrencyClick
+                    onClick = viewModel::onSelectCurrencyClick
                 )
 
                 SettingsCategoriesItem(

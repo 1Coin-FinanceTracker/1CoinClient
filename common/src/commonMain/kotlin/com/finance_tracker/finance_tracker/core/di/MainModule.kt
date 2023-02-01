@@ -21,6 +21,7 @@ import com.finance_tracker.finance_tracker.presentation.detail_account.di.detail
 import com.finance_tracker.finance_tracker.presentation.email_auth.enter_email.di.enterEmailModule
 import com.finance_tracker.finance_tracker.presentation.email_auth.enter_otp.di.enterOtpModule
 import com.finance_tracker.finance_tracker.presentation.home.di.homeModule
+import com.finance_tracker.finance_tracker.presentation.select_currency.di.currencyModule
 import com.finance_tracker.finance_tracker.presentation.settings.di.settingsModule
 import com.finance_tracker.finance_tracker.presentation.tabs_navigation.di.tabsNavigationModule
 import com.finance_tracker.finance_tracker.presentation.transactions.di.transactionsModule
@@ -54,5 +55,6 @@ fun featureModules() = listOf(
     settingsModule,
     welcomeModule,
     enterEmailModule,
-    enterOtpModule
+    enterOtpModule,
+    currencyModule,
 )

@@ -13,6 +13,7 @@ import com.finance_tracker.finance_tracker.presentation.dashboard_settings.Dashb
 import com.finance_tracker.finance_tracker.presentation.detail_account.DetailAccountScreen
 import com.finance_tracker.finance_tracker.presentation.email_auth.enter_email.EnterEmailScreen
 import com.finance_tracker.finance_tracker.presentation.email_auth.enter_otp.EnterOtpScreen
+import com.finance_tracker.finance_tracker.presentation.select_currency.SelectCurrencyScreen
 import com.finance_tracker.finance_tracker.presentation.settings.SettingsScreen
 import com.finance_tracker.finance_tracker.presentation.welcome.WelcomeScreen
 import ru.alexgladkov.odyssey.compose.extensions.screen
@@ -83,6 +84,12 @@ fun RootComposeBuilder.navigationGraph() {
     screen(MainNavigationTree.EnterOtp.name) { email ->
         CoinTheme {
             EnterOtpScreen(email as String)
+        }
+    }
+
+    screen(MainNavigationTree.SelectCurrency.name) {
+        CoinTheme {
+            SelectCurrencyScreen()
         }
     }
 

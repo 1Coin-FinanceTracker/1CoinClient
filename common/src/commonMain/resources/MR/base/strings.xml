@@ -426,4 +426,7 @@
     <string name="enter_otp_request_again_time">Request again (%ds)</string>
     <string name="enter_otp_wrong_code">Wrong code</string>
 
+    <!-- Currency screen -->
+    <string name="currency_screen_topbar_text">Currency</string>
+
 </resources>

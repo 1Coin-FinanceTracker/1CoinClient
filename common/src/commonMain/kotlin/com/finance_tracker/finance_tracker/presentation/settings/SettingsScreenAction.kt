@@ -16,6 +16,7 @@ sealed interface SettingsScreenAction {
     object ShowUsageDataInfoDialog: SettingsScreenAction
     object OpenDashboardSettingsScreen: SettingsScreenAction
     object OpenPrivacyScreen: SettingsScreenAction
+    object OpenSelectCurrencyScreen: SettingsScreenAction
     data class OpenUri(val uri: String): SettingsScreenAction
     data class CopyUserId(val userId: String): SettingsScreenAction
 }
@@ -62,6 +63,10 @@ fun handleAction(
 
         SettingsScreenAction.OpenDashboardSettingsScreen -> {
             rootController.findRootController().push(MainNavigationTree.DashboardSettings.name)
+        }
+
+        SettingsScreenAction.OpenSelectCurrencyScreen -> {
+            rootController.findRootController().push(MainNavigationTree.SelectCurrency.name)
         }
     }
 

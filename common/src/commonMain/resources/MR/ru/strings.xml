@@ -231,4 +231,7 @@
     <string name="enter_otp_request_again_time">Отправить код повторно (%dс)</string>
     <string name="enter_otp_wrong_code">Неверный код</string>
 
+    <!-- Currency screen -->
+    <string name="currency_screen_topbar_text">Валюта</string>
+
 </resources>
