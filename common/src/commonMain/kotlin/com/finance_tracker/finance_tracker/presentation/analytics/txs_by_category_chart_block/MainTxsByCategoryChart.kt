@@ -45,36 +45,45 @@ internal fun MainTxsByCategoryChart(
                 bottom = 24.dp,
             )
     ) {
+        val values = txsByCategoryChartPieces.map { it.amount.amountValue.toFloat() }
         PieChart(
             modifier = Modifier.fillMaxWidth(),
-            values = txsByCategoryChartPieces.map { it.amount.amountValue.toFloat() },
+            values = values,
             minPieDiameter = PieChartSize,
             maxPieDiameter = PieChartSize,
-            slice = { i: Int ->
-                DefaultSlice(
-                    color = txsByCategoryChartPieces[i].color,
-                    hoverExpandFactor = 1.05f,
-                    hoverElement = { Text(txsByCategoryChartPieces[i].amount.toString()) }
-                )
+            slice = { index: Int ->
+                val piece = txsByCategoryChartPieces.getOrNull(index)
+                if (piece != null) {
+                    DefaultSlice(
+                        color = piece.color,
+                        hoverExpandFactor = 1.05f,
+                        hoverElement = { Text(piece.amount.toString()) }
+                    )
+                }
             },
             label = { index ->
-                val chartPiece = txsByCategoryChartPieces[index]
-                val category = chartPiece.category ?: Category.empty(context)
-                Icon(
-                    modifier = Modifier
-                        .size(PieChartLabelSize)
-                        .clip(CircleShape)
-                        .background(chartPiece.color)
-                        .padding(3.dp),
-                    painter = rememberVectorPainter(category.iconId),
-                    contentDescription = null,
-                    tint = CoinTheme.color.primaryVariant
-                )
+                val piece = txsByCategoryChartPieces.getOrNull(index)
+                if (piece != null) {
+                    val category = piece.category ?: Category.empty(context)
+                    Icon(
+                        modifier = Modifier
+                            .size(PieChartLabelSize)
+                            .clip(CircleShape)
+                            .background(piece.color)
+                            .padding(3.dp),
+                        painter = rememberVectorPainter(category.iconId),
+                        contentDescription = null,
+                        tint = CoinTheme.color.primaryVariant
+                    )
+                }
             },
             labelConnector = { index ->
-                CoinBezierLabelConnector(
-                    connectorColor = txsByCategoryChartPieces[index].color
-                )
+                val piece = txsByCategoryChartPieces.getOrNull(index)
+                if (piece != null) {
+                    CoinBezierLabelConnector(
+                        connectorColor = piece.color
+                    )
+                }
             },
             holeSize = 0.8f,
             holeContent = {
