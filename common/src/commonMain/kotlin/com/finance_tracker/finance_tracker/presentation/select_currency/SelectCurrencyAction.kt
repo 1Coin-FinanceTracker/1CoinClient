@@ -4,7 +4,6 @@ import com.finance_tracker.finance_tracker.core.common.view_models.BaseLocalsSto
 
 sealed interface SelectCurrencyAction {
     object Close: SelectCurrencyAction
-    object SearchCurrency: SelectCurrencyAction
 }
 
 fun handleAction(
@@ -15,6 +14,5 @@ fun handleAction(
 
     when (action) {
         SelectCurrencyAction.Close -> { rootController.popBackStack() }
-        SelectCurrencyAction.SearchCurrency -> { }
     }
 }
