@@ -1,8 +1,10 @@
 package com.finance_tracker.finance_tracker.presentation.add_transaction
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.Divider
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -174,6 +176,13 @@ internal fun AddTransactionScreen(
 
                 CompositionLocalProvider(LocalContentColor provides CoinTheme.color.content) {
                     Column {
+                        if (isSystemInDarkTheme()) {
+                            Divider(
+                                thickness = 0.5.dp,
+                                color = CoinTheme.color.dividers
+                            )
+                        }
+
                         StepsEnterTransactionBar(
                             data = StepsEnterTransactionBarData(
                                 currentStep = currentStep,

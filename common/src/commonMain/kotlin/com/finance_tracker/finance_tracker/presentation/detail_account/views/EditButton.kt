@@ -65,7 +65,7 @@ internal fun EditButton(
             .clip(RoundedCornerShape(percent = 50))
             .noRippleClickable { onClick.invoke() }
             .road(Alignment.BottomEnd, Alignment.BottomEnd)
-            .background(CoinTheme.color.background)
+            .background(CoinTheme.color.white)
             .padding(vertical = state.animate(12.dp, 8.dp))
             .padding(start = 16.dp),
         verticalAlignment = Alignment.CenterVertically,

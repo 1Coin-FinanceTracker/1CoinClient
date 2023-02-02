@@ -1,7 +1,5 @@
 package com.finance_tracker.finance_tracker.presentation.settings.views
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
@@ -18,8 +16,7 @@ internal fun ListItemDivider(
             .padding(
                 vertical = 12.dp,
                 horizontal = 16.dp
-            )
-            .fillMaxWidth()
-            .background(CoinTheme.color.dividers),
+            ),
+        color = CoinTheme.color.dividers
     )
 }

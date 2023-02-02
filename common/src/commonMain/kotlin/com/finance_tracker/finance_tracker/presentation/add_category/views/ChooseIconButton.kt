@@ -75,7 +75,8 @@ internal fun ChooseIconButton(
                             }
                             .padding(7.5.dp),
                         painter = rememberVectorPainter(iconId),
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = CoinTheme.color.content
                     )
                 }
             }

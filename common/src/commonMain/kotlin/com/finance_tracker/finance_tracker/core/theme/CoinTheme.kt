@@ -140,11 +140,12 @@ fun CoinTheme(
     MaterialTheme(
         typography = MaterialTheme.typography.copy(
             subtitle1 = CoinTheme.typography.body1,
-            caption = CoinTheme.typography.subtitle2,
+            caption = CoinTheme.typography.subtitle2
         ),
         colors = MaterialTheme.colors.copy(
             background = coinColors.background,
-            onBackground = coinColors.content
+            onBackground = coinColors.content,
+            surface = CoinTheme.color.backgroundSurface
         )
     ) {
         CompositionLocalProvider(

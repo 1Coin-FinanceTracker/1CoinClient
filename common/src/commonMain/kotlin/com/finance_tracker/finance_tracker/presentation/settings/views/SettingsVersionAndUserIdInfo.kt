@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,7 +39,8 @@ internal fun SettingsVersionAndUserIdInfo(
                 horizontal = 16.dp
             )
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier.padding(vertical = 8.dp),
@@ -47,7 +48,17 @@ internal fun SettingsVersionAndUserIdInfo(
             style = CoinTheme.typography.subtitle4,
             color = CoinTheme.color.secondary
         )
-        Spacer(modifier = Modifier.width(8.dp))
+
+        Text(
+            modifier = Modifier
+                .padding(
+                    start = 6.dp,
+                    end = 2.dp
+                ),
+            style = CoinTheme.typography.subtitle4,
+            text = "•",
+            color = CoinTheme.color.secondary
+        )
 
         Row(
             modifier = Modifier
@@ -56,7 +67,7 @@ internal fun SettingsVersionAndUserIdInfo(
                 .clickable { onCopyUserId.invoke() }
                 .padding(
                     vertical = 8.dp,
-                    horizontal = 8.dp
+                    horizontal = 4.dp
                 )
         ) {
             Text(

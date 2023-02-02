@@ -57,20 +57,24 @@ internal fun SettingsScreen() {
                     .fillMaxWidth()
                     .navigationBarsPadding(),
             ) {
+
                 Spacer(modifier = Modifier.height(12.dp))
 
-                ListGroupHeader(
-                    text = stringResource(MR.strings.settings_my_profile)
-                )
+                val featuresManager = viewModel.featuresManager
+                if (featuresManager.isEnabled(FeatureFlag.Authorization)) {
+                    ListGroupHeader(
+                        text = stringResource(MR.strings.settings_my_profile)
+                    )
 
-                val userEmail by viewModel.userEmail.collectAsState()
-                val isUserAuthorized by viewModel.isUserAuthorized.collectAsState()
-                SettingsMyProfileItem(
-                    userEmail = userEmail,
-                    isUserAuthorized = isUserAuthorized,
-                )
+                    val userEmail by viewModel.userEmail.collectAsState()
+                    val isUserAuthorized by viewModel.isUserAuthorized.collectAsState()
+                    SettingsMyProfileItem(
+                        userEmail = userEmail,
+                        isUserAuthorized = isUserAuthorized,
+                    )
 
-                ListItemDivider()
+                    ListItemDivider()
+                }
 
                 ListGroupHeader(
                     text = stringResource(MR.strings.settings_configuration)
@@ -84,7 +88,6 @@ internal fun SettingsScreen() {
                     onClick = viewModel::onCategorySettingsClick
                 )
 
-                val featuresManager = viewModel.featuresManager
                 if (featuresManager.isEnabled(FeatureFlag.WidgetsSettings)) {
                     SettingsDashboardItem(
                         onClick = viewModel::onDashboardSettingsClick

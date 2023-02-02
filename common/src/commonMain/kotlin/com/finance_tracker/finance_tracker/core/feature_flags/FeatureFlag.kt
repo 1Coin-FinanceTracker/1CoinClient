@@ -5,6 +5,6 @@ import com.finance_tracker.finance_tracker.core.common.AppBuildConfig
 enum class FeatureFlag(
     val isEnabled: Boolean
 ) {
-    Authorization(isEnabled = AppBuildConfig.isTestBuild),
+    Authorization(isEnabled = false),
     WidgetsSettings(isEnabled = AppBuildConfig.isTestBuild)
 }
