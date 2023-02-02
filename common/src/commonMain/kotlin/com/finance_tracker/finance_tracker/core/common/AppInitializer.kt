@@ -11,6 +11,7 @@ import com.finance_tracker.finance_tracker.domain.interactors.AccountsInteractor
 import com.finance_tracker.finance_tracker.domain.interactors.CategoriesInteractor
 import com.finance_tracker.finance_tracker.domain.interactors.DashboardSettingsInteractor
 import com.finance_tracker.finance_tracker.domain.interactors.UserInteractor
+import com.finance_tracker.finance_tracker.domain.models.getAnalyticsName
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -71,6 +72,16 @@ class AppInitializer(
                 .distinctUntilChanged()
                 .onEach { analyticsTracker.setUserProperty(UserPropAccountsCount, it) }
                 .launchIn(this)
+
+            dashboardSettingsInteractor.getActiveDashboardWidgets()
+                .distinctUntilChanged()
+                .onEach { dashboardWidgets ->
+                    val usedWidgets = dashboardWidgets.joinToString(separator = ",") {
+                        it.getAnalyticsName()
+                    }
+                    analyticsTracker.setUserProperty(UserPropUsedWidgets, usedWidgets)
+                }
+                .launchIn(this)
         }
     }
 
@@ -92,5 +103,6 @@ class AppInitializer(
     companion object {
         private const val UserPropAccountsCount = "accounts_count"
         private const val UserPropCategoriesCount = "categories_count"
+        private const val UserPropUsedWidgets = "used_widgets"
     }
 }
