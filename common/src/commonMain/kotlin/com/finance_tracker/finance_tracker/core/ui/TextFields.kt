@@ -19,6 +19,7 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
@@ -36,8 +38,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.theme.CoinTextFieldDefaults
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun CoinOutlinedTextField(
@@ -232,6 +236,43 @@ internal fun CoinCodeTextField(
                 }
             }
         }
+    )
+}
+
+@Suppress("MagicNumber")
+@Composable
+internal fun SearchCurrencyTextField(
+    text: String,
+    onTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    length: Int = 20,
+) {
+    TextField(
+        modifier = modifier,
+        value = text,
+        onValueChange = {
+            if (it.length <= length) {
+                onTextChange(it)
+            }
+        },
+        placeholder = {
+            Text(
+                text = stringResource(MR.strings.currency_screen_search),
+                style = CoinTheme.typography.body1,
+                color = CoinTheme.color.content.copy(alpha = 0.4f),
+            )
+        },
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = CoinTheme.color.content,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = CoinTheme.color.background,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            cursorColor = CoinTheme.color.primary,
+        ),
+        textStyle = CoinTheme.typography.body1,
+        singleLine = true,
     )
 }
 

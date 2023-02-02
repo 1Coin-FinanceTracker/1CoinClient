@@ -428,5 +428,6 @@
 
     <!-- Currency screen -->
     <string name="currency_screen_topbar_text">Currency</string>
+    <string name="currency_screen_search">Search</string>
 
 </resources>

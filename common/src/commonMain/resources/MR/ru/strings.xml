@@ -233,5 +233,6 @@
 
     <!-- Currency screen -->
     <string name="currency_screen_topbar_text">Валюта</string>
+    <string name="currency_screen_search">Искать</string>
 
 </resources>

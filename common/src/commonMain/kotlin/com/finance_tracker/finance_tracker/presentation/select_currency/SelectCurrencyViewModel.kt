@@ -18,12 +18,22 @@ class SelectCurrencyViewModel(
     private val _currencies = MutableStateFlow(Currency.list)
     val currencies = _currencies.asStateFlow()
 
+    private val _searchText = MutableStateFlow("")
+    val searchText = _searchText.asStateFlow()
+
+    private val _isSearchActive = MutableStateFlow(false)
+    val isSearchActive = _isSearchActive.asStateFlow()
+
     val primaryCurrencyFlow = currenciesInteractor.getPrimaryCurrencyFlow()
         .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = Currency.default)
 
     fun onBackClick() {
         selectCurrencyAnalytics.trackBackClick()
         viewAction = SelectCurrencyAction.Close
+    }
+
+    fun onSearchTextChange(text: String) {
+        _searchText.value = text
     }
 
     fun onCurrencySelect(currency: Currency) {
@@ -35,5 +45,11 @@ class SelectCurrencyViewModel(
 
     fun onSearchClick() {
         selectCurrencyAnalytics.trackSearchClick()
+        _isSearchActive.value = true
+    }
+
+    fun onSearchBackClick() {
+        _isSearchActive.value = false
+        _searchText.value = ""
     }
 }

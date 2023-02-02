@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
@@ -28,10 +31,27 @@ internal fun SelectCurrencyScreen() {
             )
         }
 
+        val focusRequester = remember { FocusRequester() }
+
         Column {
+
+            val searchText by viewModel.searchText.collectAsState()
+            val isSearchActive by viewModel.isSearchActive.collectAsState()
+
+            LaunchedEffect(isSearchActive) {
+                if (isSearchActive) {
+                    focusRequester.requestFocus()
+                }
+            }
+
             SelectCurrencyTopBar(
                 onBackClick = viewModel::onBackClick,
-                onSearchClick = viewModel::onSearchClick
+                onBackClickWhileSearch = viewModel::onSearchBackClick,
+                onSearchClick = viewModel::onSearchClick,
+                searchText = searchText,
+                onTextChange = viewModel::onSearchTextChange,
+                isSearchActive = isSearchActive,
+                focusRequester = focusRequester,
             )
 
             val currencies by viewModel.currencies.collectAsState()
@@ -47,7 +67,10 @@ internal fun SelectCurrencyScreen() {
                     bottom = 12.dp + navigationBarsHeight
                 )
             ) {
-                items(currencies) { currency ->
+                items(currencies.filter { it.code.contains(searchText, ignoreCase = true)
+                        || it.symbol.contains(searchText, ignoreCase = true)
+                        || Currency.getInstance(it.code).displayName.contains(searchText, ignoreCase = true) })
+                { currency ->
                     CurrencyItem(
                         currency = currency,
                         currencyCode = currency.code,
