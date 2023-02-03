@@ -265,7 +265,7 @@ internal fun SearchCurrencyTextField(
         colors = TextFieldDefaults.textFieldColors(
             textColor = CoinTheme.color.content,
             disabledTextColor = Color.Transparent,
-            backgroundColor = CoinTheme.color.background,
+            backgroundColor = CoinTheme.color.backgroundSurface,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,

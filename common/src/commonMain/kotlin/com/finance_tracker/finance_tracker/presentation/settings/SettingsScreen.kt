@@ -80,8 +80,11 @@ internal fun SettingsScreen() {
                     text = stringResource(MR.strings.settings_configuration)
                 )
 
+                val primaryCurrency by viewModel.primaryCurrency.collectAsState()
+
                 SettingsMainCurrencyItem(
-                    onClick = viewModel::onSelectCurrencyClick
+                    onClick = viewModel::onSelectCurrencyClick,
+                    primaryCurrency = primaryCurrency
                 )
 
                 SettingsCategoriesItem(

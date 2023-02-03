@@ -1,5 +1,10 @@
 package com.finance_tracker.finance_tracker.presentation.select_currency.views
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -10,11 +15,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.core.ui.AppBarHeight
 import com.finance_tracker.finance_tracker.core.ui.AppBarIcon
 import com.finance_tracker.finance_tracker.core.ui.CoinTopAppBar
 import com.finance_tracker.finance_tracker.core.ui.SearchCurrencyTextField
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import dev.icerock.moko.resources.compose.stringResource
+
+private const val TopBarAnimDurationMillis = 150
 
 @Composable
 fun SelectCurrencyTopBar(
@@ -27,49 +35,69 @@ fun SelectCurrencyTopBar(
     searchText: String = "",
     onTextChange: (String) -> Unit = {},
 ) {
-    if (isSearchActive) {
-        CoinTopAppBar(
-            modifier = modifier,
-            appBarHeight = 56.dp,
-            navigationIcon = {
-                AppBarIcon(
-                    painter = rememberVectorPainter("ic_arrow_back"),
-                    onClick = onBackClickWhileSearch,
-                )
-            },
-            title = {
-                SearchCurrencyTextField(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    text = searchText,
-                    onTextChange = onTextChange,
-                )
-            }
-        )
-    } else {
-        CoinTopAppBar(
-            modifier = modifier,
-            appBarHeight = 56.dp,
-            navigationIcon = {
-                AppBarIcon(
-                    painter = rememberVectorPainter("ic_arrow_back"),
-                    onClick = onBackClick,
-                )
-            },
-            title = {
-                Text(
-                    text = stringResource(MR.strings.currency_screen_topbar_text),
-                    style = CoinTheme.typography.h4
-                )
-            },
-            actions = {
-                AppBarIcon(
-                    painter = rememberVectorPainter("ic_search"),
-                    onClick = onSearchClick,
-                )
-            }
-        )
+    Box(
+        modifier = modifier
+    ) {
+        AnimatedVisibility(
+            visible = isSearchActive,
+            enter = fadeIn(
+                animationSpec = tween(TopBarAnimDurationMillis)
+            ),
+            exit = fadeOut(
+                animationSpec = tween(TopBarAnimDurationMillis)
+            )
+        ) {
+            CoinTopAppBar(
+                appBarHeight = AppBarHeight,
+                navigationIcon = {
+                    AppBarIcon(
+                        painter = rememberVectorPainter("ic_arrow_back"),
+                        onClick = onBackClickWhileSearch,
+                    )
+                },
+                title = {
+                    SearchCurrencyTextField(
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .fillMaxWidth()
+                            .focusRequester(focusRequester),
+                        text = searchText,
+                        onTextChange = onTextChange,
+                    )
+                }
+            )
+        }
+        AnimatedVisibility(
+            visible = !isSearchActive,
+            enter = fadeIn(
+                animationSpec = tween(TopBarAnimDurationMillis)
+            ),
+            exit = fadeOut(
+                animationSpec = tween(TopBarAnimDurationMillis)
+            )
+        ) {
+            CoinTopAppBar(
+                appBarHeight = AppBarHeight,
+                navigationIcon = {
+                    AppBarIcon(
+                        painter = rememberVectorPainter("ic_arrow_back"),
+                        onClick = onBackClick,
+                    )
+                },
+                title = {
+                    Text(
+                        text = stringResource(MR.strings.currency_screen_topbar_text),
+                        style = CoinTheme.typography.h4,
+                        color = CoinTheme.color.content,
+                    )
+                },
+                actions = {
+                    AppBarIcon(
+                        painter = rememberVectorPainter("ic_search"),
+                        onClick = onSearchClick,
+                    )
+                }
+            )
+        }
     }
 }

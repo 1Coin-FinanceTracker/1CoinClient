@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
+import com.finance_tracker.finance_tracker.core.common.imePadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.presentation.select_currency.views.CurrencyItem
 import com.finance_tracker.finance_tracker.presentation.select_currency.views.SelectCurrencyTopBar
@@ -61,6 +62,7 @@ internal fun SelectCurrencyScreen() {
 
             LazyColumn(
                 modifier = Modifier
+                    .imePadding()
                     .fillMaxSize(),
                 contentPadding = PaddingValues(
                     top = 12.dp,
@@ -73,8 +75,6 @@ internal fun SelectCurrencyScreen() {
                 { currency ->
                     CurrencyItem(
                         currency = currency,
-                        currencyCode = currency.code,
-                        currencyName = Currency.getInstance(currency.code).displayName,
                         onCurrencyClick = viewModel::onCurrencySelect,
                         isCurrencySelected = currency == primaryCurrency
                     )

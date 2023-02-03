@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.CoinRadioButton
@@ -16,8 +17,6 @@ import com.finance_tracker.finance_tracker.domain.models.Currency
 @Composable
 internal fun CurrencyItem(
     currency: Currency,
-    currencyCode: String,
-    currencyName: String,
     modifier: Modifier = Modifier,
     onCurrencyClick: (Currency) -> Unit = {},
     isCurrencySelected: Boolean = false
@@ -32,8 +31,10 @@ internal fun CurrencyItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "$currencyCode - $currencyName",
-            style = CoinTheme.typography.body1
+            text = "${currency.code} - ${java.util.Currency.getInstance(currency.code).displayName}",
+            style = CoinTheme.typography.body1,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
         )
         Spacer(modifier = Modifier.weight(1f))
         CoinRadioButton(
