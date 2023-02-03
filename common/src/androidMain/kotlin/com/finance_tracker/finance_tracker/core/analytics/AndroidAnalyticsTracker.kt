@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class AndroidAnalyticsTracker(
@@ -26,23 +27,31 @@ class AndroidAnalyticsTracker(
 
     private var isAnalyticsDisabled = true
 
-    override fun init(context: Context) {
+    override fun init(context: Context, userId: String) {
         amplitude = Amplitude(
             Configuration(
                 apiKey = AppBuildConfig.AMPLITUDE_API_KEY,
                 context = context
             )
         ).apply {
-            setUserId(AnalyticsTracker.ANONYM_USER_ID)
             logger.logMode = if (AppBuildConfig.DEBUG) {
                 Logger.LogMode.DEBUG
             } else {
                 Logger.LogMode.OFF
             }
         }
-        isAnalyticsEnabledFlow
-            .onEach { isEnabled -> isAnalyticsDisabled = !isEnabled }
-            .launchIn(this)
+        setUserId(userId)
+        launch {
+            isAnalyticsEnabledFlow
+                .onEach { isEnabled -> isAnalyticsDisabled = !isEnabled }
+                .launchIn(this)
+        }
+    }
+
+    private fun setUserId(userId: String) {
+        launch {
+            amplitude.setUserId(userId) // is blocking code
+        }
     }
 
     override fun setUserProperty(property: String, value: Any) {
@@ -50,10 +59,6 @@ class AndroidAnalyticsTracker(
 
         amplitude.identify(Identify().apply { set(property, value) })
         logUserProperties(property, value)
-    }
-
-    override fun setUserId(userId: String) {
-        amplitude.setUserId(userId)
     }
 
     override fun track(event: AnalyticsEvent) {
