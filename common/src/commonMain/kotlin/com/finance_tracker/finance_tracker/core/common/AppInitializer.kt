@@ -57,10 +57,9 @@ class AppInitializer(
     }
 
     private fun initAnalytics() {
-        analyticsTracker.init(context)
         launch {
             val userId = userInteractor.getOrCreateUserId()
-            analyticsTracker.setUserId(userId)
+            analyticsTracker.init(context, userId)
 
             categoriesInteractor.getCategoriesCountFlow()
                 .distinctUntilChanged()

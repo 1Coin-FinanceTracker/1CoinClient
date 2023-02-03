@@ -1,5 +1,7 @@
 package com.finance_tracker.finance_tracker.data.repositories
 
+import com.finance_tracker.finance_tracker.core.common.Context
+import com.finance_tracker.finance_tracker.core.common.getUniqueDeviceId
 import com.finance_tracker.finance_tracker.data.settings.AnalyticsSettings
 import com.finance_tracker.finance_tracker.data.settings.UserSettings
 import kotlinx.coroutines.Dispatchers
@@ -9,18 +11,20 @@ import kotlinx.coroutines.withContext
 
 class UserRepository(
     private val userSettings: UserSettings,
-    private val analyticsSettings: AnalyticsSettings
+    private val analyticsSettings: AnalyticsSettings,
+    private val context: Context
 ) {
 
-    suspend fun saveUserId(userId: String) {
-        withContext(Dispatchers.Default) {
-            userSettings.saveUserId(userId)
-        }
-    }
-
-    suspend fun getUserId(): String? {
+    suspend fun getOrCreateUserId(): String {
         return withContext(Dispatchers.Default) {
-            userSettings.getUserId()
+            val currentUserId = userSettings.getUserId()
+            if (currentUserId != null) {
+                return@withContext currentUserId
+            }
+
+            val newUserId = getUniqueDeviceId(context)
+            userSettings.saveUserId(newUserId)
+            newUserId
         }
     }
 

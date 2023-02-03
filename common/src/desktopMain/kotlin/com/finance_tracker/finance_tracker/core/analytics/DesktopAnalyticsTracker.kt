@@ -28,9 +28,10 @@ class DesktopAnalyticsTracker(
 
     private var isAnalyticsDisabled = false
 
-    override fun init(context: DesktopContext) {
+    override fun init(context: DesktopContext, userId: String) {
         amplitude.init(AppBuildConfig.AMPLITUDE_API_KEY)
         amplitude.setLogMode(AmplitudeLog.LogMode.DEBUG)
+        this.userId = userId
 
         isAnalyticsEnabledFlow
             .onEach { isEnabled -> isAnalyticsDisabled = !isEnabled }
@@ -48,10 +49,6 @@ class DesktopAnalyticsTracker(
 
         amplitude.logEvent(desktopEvent)
         logUserProperties(userProperties)
-    }
-
-    override fun setUserId(userId: String) {
-        this.userId = userId
     }
 
     override fun track(event: AnalyticsEvent) {

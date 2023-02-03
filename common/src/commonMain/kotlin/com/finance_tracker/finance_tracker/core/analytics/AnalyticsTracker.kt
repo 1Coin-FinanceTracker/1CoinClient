@@ -4,9 +4,7 @@ import com.finance_tracker.finance_tracker.core.common.Context
 
 interface AnalyticsTracker {
 
-    fun init(context: Context)
-
-    fun setUserId(userId: String)
+    fun init(context: Context, userId: String)
 
     fun track(event: AnalyticsEvent)
 
