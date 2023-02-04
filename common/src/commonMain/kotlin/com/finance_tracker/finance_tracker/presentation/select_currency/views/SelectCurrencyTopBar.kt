@@ -38,66 +38,97 @@ fun SelectCurrencyTopBar(
     Box(
         modifier = modifier
     ) {
-        AnimatedVisibility(
-            visible = isSearchActive,
-            enter = fadeIn(
-                animationSpec = tween(TopBarAnimDurationMillis)
-            ),
-            exit = fadeOut(
-                animationSpec = tween(TopBarAnimDurationMillis)
-            )
-        ) {
-            CoinTopAppBar(
-                appBarHeight = AppBarHeight,
-                navigationIcon = {
-                    AppBarIcon(
-                        painter = rememberVectorPainter("ic_arrow_back"),
-                        onClick = onBackClickWhileSearch,
-                    )
-                },
-                title = {
-                    SearchCurrencyTextField(
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .fillMaxWidth()
-                            .focusRequester(focusRequester),
-                        text = searchText,
-                        onTextChange = onTextChange,
-                    )
+        CoinTopAppBar(
+            appBarHeight = AppBarHeight,
+            navigationIcon = {
+                if (isSearchActive) {
+                    AnimatedVisibility(
+                        visible = isSearchActive,
+                        enter = fadeIn(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        ),
+                        exit = fadeOut(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        )
+                    ) {
+                        AppBarIcon(
+                            painter = rememberVectorPainter("ic_arrow_back"),
+                            onClick = onBackClickWhileSearch
+                        )
+                    }
+                } else {
+                    AnimatedVisibility(
+                        visible = !isSearchActive,
+                        enter = fadeIn(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        ),
+                        exit = fadeOut(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        )
+                    ) {
+                        AppBarIcon(
+                            painter = rememberVectorPainter("ic_arrow_back"),
+                            onClick = onBackClick
+                        )
+                    }
                 }
-            )
-        }
-        AnimatedVisibility(
-            visible = !isSearchActive,
-            enter = fadeIn(
-                animationSpec = tween(TopBarAnimDurationMillis)
-            ),
-            exit = fadeOut(
-                animationSpec = tween(TopBarAnimDurationMillis)
-            )
-        ) {
-            CoinTopAppBar(
-                appBarHeight = AppBarHeight,
-                navigationIcon = {
-                    AppBarIcon(
-                        painter = rememberVectorPainter("ic_arrow_back"),
-                        onClick = onBackClick,
-                    )
-                },
-                title = {
-                    Text(
-                        text = stringResource(MR.strings.currency_screen_topbar_text),
-                        style = CoinTheme.typography.h4,
-                        color = CoinTheme.color.content,
-                    )
-                },
-                actions = {
-                    AppBarIcon(
-                        painter = rememberVectorPainter("ic_search"),
-                        onClick = onSearchClick,
-                    )
+            },
+            title = {
+                if (isSearchActive) {
+                    AnimatedVisibility(
+                        visible = isSearchActive,
+                        enter = fadeIn(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        ),
+                        exit = fadeOut(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        )
+                    ) {
+                        SearchCurrencyTextField(
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .fillMaxWidth()
+                                .focusRequester(focusRequester),
+                            text = searchText,
+                            onTextChange = onTextChange,
+                        )
+                    }
+                } else {
+                    AnimatedVisibility(
+                        visible = !isSearchActive,
+                        enter = fadeIn(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        ),
+                        exit = fadeOut(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(MR.strings.currency_screen_topbar_text),
+                            style = CoinTheme.typography.h4,
+                            color = CoinTheme.color.content,
+                        )
+                    }
                 }
-            )
-        }
+            },
+            actions = {
+                if (!isSearchActive) {
+                    AnimatedVisibility(
+                        visible = !isSearchActive,
+                        enter = fadeIn(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        ),
+                        exit = fadeOut(
+                            animationSpec = tween(TopBarAnimDurationMillis)
+                        )
+                    ) {
+                        AppBarIcon(
+                            painter = rememberVectorPainter("ic_search"),
+                            onClick = onSearchClick,
+                        )
+                    }
+                }
+            }
+        )
     }
 }
