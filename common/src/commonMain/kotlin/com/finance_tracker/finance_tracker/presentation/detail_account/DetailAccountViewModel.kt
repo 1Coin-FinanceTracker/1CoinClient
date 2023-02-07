@@ -34,7 +34,7 @@ class DetailAccountViewModel(
 
     fun onEditClick() {
         detailAccountAnalytics.trackEditAccountClick(account)
-        viewAction = DetailAccountAction.OpenEditAccountScreen(account)
+        viewAction = DetailAccountAction.OpenEditAccountScreen(accountData.value)
     }
 
     fun onTransactionClick(transaction: Transaction) {
@@ -44,7 +44,7 @@ class DetailAccountViewModel(
 
     fun onIconClick() {
         detailAccountAnalytics.trackIconClick(account)
-        viewAction = DetailAccountAction.OpenEditAccountScreen(account)
+        viewAction = DetailAccountAction.OpenEditAccountScreen(accountData.value)
     }
 
     fun onAddTransactionClick() {

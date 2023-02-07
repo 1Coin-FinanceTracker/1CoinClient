@@ -77,7 +77,12 @@ internal fun AddAccountScreen(
                 )
 
                 Row(
-                    modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                            start = 16.dp,
+                            end = 16.dp
+                        )
                 ) {
                     AccountTypeTextField(viewModel = viewModel)
                     Spacer(modifier = Modifier.width(8.dp))
