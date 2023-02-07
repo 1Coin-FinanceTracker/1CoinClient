@@ -5,6 +5,5 @@ rootProject.name = "FinanceTracker"
 include(
     ":common",
     ":android",
-    ":desktop",
-    //":ios" // TODO: iOS Support
+    ":desktop"
 )

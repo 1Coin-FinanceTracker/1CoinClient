@@ -5,13 +5,18 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_delete">Delete</string>
     <string name="dialog_body_delete">Are you sure you want to\u00A0delete?</string>
+    <string name="dialog_title_delete">Deleting</string>
+    <string name="transaction">Transaction</string>
+    <string name="category">Category</string>
+    <string name="transactions">Transactions</string>
+    <string name="account">Account</string>
+    <string name="tab_income">Income</string>
+    <string name="tab_expense">Expense</string>
+    <string name="total">Total</string>
     <string name="deleting_transaction">Deleting transaction</string>
     <string name="deleting_category">Deleting category</string>
     <string name="deleting_transactions">Deleting transactions</string>
     <string name="deleting_account">Deleting account</string>
-    <string name="tab_income">Income</string>
-    <string name="tab_expense">Expense</string>
-    <string name="total">Total</string>
 
     <string name="week">Week</string>
     <string name="month">Month</string>
@@ -37,154 +42,6 @@
     <string name="month_oct">Oct</string>
     <string name="month_nov">Nov</string>
     <string name="month_dec">Dec</string>
-
-    <!-- Categories -->
-    <string name="category_restoraunt">Restoraunt</string>
-    <string name="category_health">Health</string>
-    <string name="category_child">Child</string>
-    <string name="category_car">Car</string>
-    <string name="category_education">Education</string>
-    <string name="category_entertainment">Entertainment</string>
-    <string name="category_sport">Sport</string>
-    <string name="category_public_transport">Public Transport</string>
-    <string name="category_shop">Shop</string>
-    <string name="category_utilities">Utilities</string>
-    <string name="category_clothes">Clothes</string>
-    <string name="category_electronics">Electronics</string>
-    <string name="category_correct">Correct</string>
-    <string name="category_empty">Uncategorized</string>
-    <string name="category_salary">Salary</string>
-    <string name="category_allowance">Allowance</string>
-    <string name="category_gift">Gift</string>
-
-    <!-- Colors -->
-    <string name="color_purple">Purple</string>
-    <string name="color_blue">Blue</string>
-    <string name="color_yellow">Yellow</string>
-    <string name="color_brown">Brown</string>
-    <string name="color_lavender">Lavender</string>
-    <string name="color_pink">Pink</string>
-    <string name="color_green">Green</string>
-    <string name="color_orange">Orange</string>
-    <string name="color_seaweed">Seaweed</string>
-    <string name="color_grey">Grey</string>
-
-    <!-- Week days -->
-    <string name="week_day_1">Monday</string>
-    <string name="week_day_2">Tuesday</string>
-    <string name="week_day_3">Wednesday</string>
-    <string name="week_day_4">Thursday</string>
-    <string name="week_day_5">Friday</string>
-    <string name="week_day_6">Saturday</string>
-    <string name="week_day_7">Sunday</string>
-
-    <!-- Months with number -->
-    <string name="date_month_1">%d January</string>
-    <string name="date_month_2">%d February</string>
-    <string name="date_month_3">%d March</string>
-    <string name="date_month_4">%d April</string>
-    <string name="date_month_5">%d May</string>
-    <string name="date_month_6">%d June</string>
-    <string name="date_month_7">%d July</string>
-    <string name="date_month_8">%d August</string>
-    <string name="date_month_9">%d September</string>
-    <string name="date_month_10">%d October</string>
-    <string name="date_month_11">%d November</string>
-    <string name="date_month_12">%d December</string>
-
-    <!-- Months -->
-    <string name="month_1">January</string>
-    <string name="month_2">February</string>
-    <string name="month_3">March</string>
-    <string name="month_4">April</string>
-    <string name="month_5">May</string>
-    <string name="month_6">June</string>
-    <string name="month_7">July</string>
-    <string name="month_8">August</string>
-    <string name="month_9">September</string>
-    <string name="month_10">October</string>
-    <string name="month_11">November</string>
-    <string name="month_12">December</string>
-
-    <!-- Account -->
-    <string name="account_type_cash">Cash</string>
-    <string name="account_type_card">Card</string>
-    <string name="account_type_bank_account">Bank account</string>
-    <string name="account_type_credit">Credit</string>
-    <string name="account_type_deposit">Deposit</string>
-
-    <!-- Tabs -->
-    <string name="tab_home">Home</string>
-    <string name="tab_transactions">Transactions</string>
-    <string name="tab_accounts">Accounts</string>
-    <string name="tab_analytics">Analytics</string>
-
-    <!-- Add transaction -->
-    <string name="add_transaction_amount">Amount</string>
-    <string name="add_transaction_stage_account">Account</string>
-    <string name="add_transaction_stage_category">Category</string>
-    <string name="add_transaction_today">Today</string>
-    <string name="add_transaction_yesterday">Yesterday</string>
-    <string name="add_transaction_btn_add">Add</string>
-    <string name="add_transaction_btn_edit">Edit</string>
-
-    <!-- Home -->
-    <string name="home_topbar_text">Total Balance</string>
-    <string name="home_my_accounts">My Accounts</string>
-    <string name="home_last_transactions">Last Transactions</string>
-    <string name="home_add_account">Add Account</string>
-
-    <!--Accounts -->
-    <string name="accounts_screen_header">Accounts</string>
-    <string name="accounts_screen_top_bar">Account Settings</string>
-    <string name="accounts_screen_add_account">Add Account</string>
-    <string name="accounts_screen_empty">No accounts</string>
-
-    <!-- Transactions -->
-    <string name="transactions_today">Today</string>
-    <string name="transactions_yesterday">Yesterday</string>
-    <string name="transactions_title_normal">Transactions</string>
-    <string name="transactions_title_selected">Selected:</string>
-    <string name="got_it">Got it</string>
-
-    <!-- Categories -->
-    <string name="category_settings">Category Settings</string>
-    <string name="new_expense_category">New Expense Category</string>
-    <string name="new_income_category">New Income Category</string>
-    <string name="expense_category">Expense Category</string>
-    <string name="income_category">Income Category</string>
-    <string name="categories_empty">No categories</string>
-
-    <!-- New account -->
-    <string name="new_account_title">New Account</string>
-    <string name="new_account_btn_add">Add</string>
-    <string name="new_account_field_name_label">Title</string>
-    <string name="new_account_field_name_placeholder">Enter Name</string>
-    <string name="new_account_field_type_label">Type</string>
-    <string name="new_account_field_type_placeholder">Select Type</string>
-    <string name="new_account_field_color_label">Color</string>
-    <string name="new_account_field_color_placeholder">Select Color</string>
-    <string name="new_account_field_amount_label">Amount</string>
-    <string name="new_account_field_amount_placeholder">0</string>
-    <string name="new_account_error_enter_account_name">Enter account name</string>
-    <string name="new_account_error_select_account_type">Select type</string>
-    <string name="new_account_error_select_account_color">Select color</string>
-    <string name="new_account_error_enter_account_balance">Enter amount</string>
-    <string name="edit_account_btn_save">Save</string>
-
-    <!-- Analytics -->
-    <string name="expense_analytics_trend">Expense trend</string>
-    <string name="income_analytics_trend">Income trend</string>
-    <string name="analytics_by_category">%s by\u00A0category</string>
-    <string name="analytics_make_first_transactions">No transactions for\u00A0this period</string>
-
-    <!-- Detail account -->
-    <string name="detail_account_btn_edit">Edit</string>
-
-    <!-- Empty stubs -->
-    <string name="add_transaction">Add Transaction</string>
-    <string name="add_account">Add Account</string>
-    <string name="add_category">Add Category</string>
 
     <!-- Widget settings -->
     <string name="widget_settings_title">Widgets Settings</string>
@@ -194,52 +51,6 @@
     <string name="widget_settings_item_expense_by_category">Expense by Category</string>
     <string name="widget_settings_item_income_by_category">Income by Category</string>
     <string name="widget_settings_item_last_transactions">Last Transactions</string>
-
-    <!-- Settings -->
-    <string name="settings_topbar_text">Settings</string>
-    <string name="settings_my_profile">My Profile</string>
-    <string name="settings_authorization">Authorization</string>
-    <string name="settings_configuration">Configuration</string>
-    <string name="settings_other">Прочее</string>
-    <!-- General -->
-    <string name="okey">OK</string>
-    <string name="general_no_transactions">No transactions yet</string>
-    <string name="btn_cancel">Cancel</string>
-    <string name="btn_delete">Delete</string>
-    <string name="dialog_body_delete">Are you sure you want to\u00A0delete?</string>
-    <string name="dialog_title_delete">Deleting</string>
-    <string name="transaction">Transaction</string>
-    <string name="category">Category</string>
-    <string name="transactions">Transactions</string>
-    <string name="account">Account</string>
-    <string name="tab_income">Income</string>
-    <string name="tab_expense">Expense</string>
-    <string name="total">Total</string>
-
-    <string name="week">Week</string>
-    <string name="month">Month</string>
-    <string name="year">Year</string>
-
-    <string name="day_of_week_mon">Mon</string>
-    <string name="day_of_week_tue">Tue</string>
-    <string name="day_of_week_wed">Wed</string>
-    <string name="day_of_week_thu">Thu</string>
-    <string name="day_of_week_fri">Fri</string>
-    <string name="day_of_week_sat">Sat</string>
-    <string name="day_of_week_sun">Sun</string>
-
-    <string name="month_jan">Jan</string>
-    <string name="month_feb">Feb</string>
-    <string name="month_mar">Mar</string>
-    <string name="month_apr">Apr</string>
-    <string name="month_may">May</string>
-    <string name="month_jun">Jun</string>
-    <string name="month_jul">Jul</string>
-    <string name="month_aug">Aug</string>
-    <string name="month_sep">Sep</string>
-    <string name="month_oct">Oct</string>
-    <string name="month_nov">Nov</string>
-    <string name="month_dec">Dec</string>
 
     <!-- Categories -->
     <string name="category_restoraunt">Restoraunt</string>
@@ -332,7 +143,7 @@
     <string name="add_transaction_btn_edit">Edit</string>
 
     <!-- Home -->
-    <string name="home_topbar_text">Total balance</string>
+    <string name="home_topbar_text">Total Balance</string>
     <string name="home_my_accounts">My Accounts</string>
     <string name="home_last_transactions">Last Transactions</string>
     <string name="home_add_account">Add Account</string>

@@ -61,14 +61,14 @@ class AndroidAnalyticsTracker(
         logUserProperties(property, value)
     }
 
-    override fun track(event: AnalyticsEvent) {
+    override fun track(event: com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent) {
         if (isAnalyticsDisabled) return
 
         amplitude.track(event.name, event.properties)
         log(event)
     }
 
-    private fun log(event: AnalyticsEvent) {
+    private fun log(event: com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent) {
         var message = "${event.name}. "
         if (event.properties.isNotEmpty()) {
             message += "properties: ${event.properties}"

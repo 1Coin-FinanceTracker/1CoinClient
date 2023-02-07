@@ -22,8 +22,13 @@ android {
 }
 
 kotlin {
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
     sourceSets {
-        named("commonMain") {
+        val commonMain by named("commonMain") {
             dependencies {
                 api(libs.bundles.odyssey)
                 api(libs.napier)
@@ -33,12 +38,10 @@ kotlin {
                 implementation(libs.serialization)
                 implementation(libs.sqldelight.coroutines)
                 implementation(libs.bundles.ktor)
-                implementation(libs.koalaplot)
                 implementation(libs.bundles.settings)
                 implementation(libs.uuid)
                 implementation(libs.datetime)
-                implementation(libs.paging)
-                implementation(libs.bundles.mokoResources)
+                implementation(libs.mokoResources.core)
             }
         }
         named("desktopMain") {
@@ -63,6 +66,27 @@ kotlin {
                 implementation(libs.firebase.crashlytics)
                 implementation(libs.lottie)
             }
+        }
+
+        @Suppress("UnusedPrivateMember")
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.koalaplot)
+                implementation(libs.paging)
+                implementation(libs.mokoResources.compose)
+            }
+        }
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+
+        @Suppress("UnusedPrivateMember")
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
         }
     }
 }
