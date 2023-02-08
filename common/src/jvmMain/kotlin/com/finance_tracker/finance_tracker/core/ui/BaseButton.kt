@@ -1,14 +1,22 @@
 package com.finance_tracker.finance_tracker.core.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -30,6 +38,7 @@ internal fun BaseButton(
     borderColor: Color = backgroundColor,
     onClick: () -> Unit = {},
     enabled: Boolean = true,
+    loading: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
@@ -40,7 +49,7 @@ internal fun BaseButton(
                 .`if`(!enabled) {
                     alpha(CoinAlpha.Medium)
                 }
-                .scaleClickAnimation(enabled = enabled)
+                .scaleClickAnimation(enabled = enabled && !loading)
                 .clip(RoundedCornerShape(12.dp))
                 .border(
                     width = 0.5.dp,
@@ -48,12 +57,56 @@ internal fun BaseButton(
                     shape = RoundedCornerShape(12.dp)
                 )
                 .background(backgroundColor)
-                .`if`(enabled) {
+                .`if`(enabled && !loading) {
                     noRippleClickable { onClick.invoke() }
-                }
-                .padding(12.dp),
+                },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
+        ) {
+            AnimatedContent(
+                mainContentVisible = !loading,
+                secondaryContent = {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                                .padding(10.dp)
+                                .size(20.dp),
+                        strokeWidth = 2.dp,
+                        color = contentColor,
+                    )
+                }
+            ) {
+                Row(
+                    modifier = Modifier.padding(12.dp)
+                ) {
+                    content.invoke()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AnimatedContent(
+    modifier: Modifier = Modifier,
+    mainContentVisible: Boolean = true,
+    secondaryContent: @Composable () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Box(modifier = modifier) {
+        val exitTransition = remember { fadeOut(animationSpec = tween(100)) }
+        val enterTransition = remember { fadeIn(animationSpec = tween(100)) }
+
+        AnimatedVisibility(
+            visible = !mainContentVisible,
+            enter = enterTransition,
+            exit = exitTransition
+        ) {
+            secondaryContent.invoke()
+        }
+        AnimatedVisibility(
+            visible = mainContentVisible,
+            enter = enterTransition,
+            exit = exitTransition
         ) {
             content.invoke()
         }

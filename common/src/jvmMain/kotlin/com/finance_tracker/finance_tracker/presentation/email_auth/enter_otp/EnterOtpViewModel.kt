@@ -32,8 +32,7 @@ class EnterOtpViewModel(
     private val _otp = MutableStateFlow("")
     val otp = _otp.asStateFlow()
 
-    val icCreateAccountEnabled = otp.map { it.length == OTP_LENGTH }
-        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = false)
+    private val _isOtpCodeChecking = MutableStateFlow(false)
 
     init {
         enterOtpAnalytics.trackScreenOpen()
@@ -64,24 +63,12 @@ class EnterOtpViewModel(
         viewAction = EnterOtpAction.Close
     }
 
-    fun onCreateAccountClick() {
-        enterOtpAnalytics.trackCreateAccountClick()
-        viewModelScope.launch {
-            val otpCode = otp.value.toIntOrNull() ?: return@launch
-            val isCodeVerified = authInteractor.verifyOtpCode(otpCode)
-            if (isCodeVerified) {
-                viewAction = EnterOtpAction.OpenMainScreen
-            } else {
-                showWrongCodeState()
-            }
-        }
-    }
-
     private fun showWrongCodeState() {
         viewModelScope.launch {
             _isWrongCodeStateEnabled.value = true
             delay(WRONG_STATE_DELAY)
             _isWrongCodeStateEnabled.value = false
+            _otp.value = ""
         }
     }
 
@@ -93,7 +80,30 @@ class EnterOtpViewModel(
 
     fun onOtpChange(otp: String) {
         _otp.value = otp
+        if (otp.length == OTP_LENGTH) {
+            verifyEmailByOtp(otp)
+        }
     }
+
+ private fun verifyEmailByOtp(otp: String) {
+     enterOtpAnalytics.trackCreateAccountClick()
+     viewModelScope.launch {
+         _isOtpCodeChecking.value = true
+         val otpCode = otp.toIntOrNull() ?: return@launch
+         runCatching {
+             val isCodeVerified = authInteractor.verifyOtpCode(otpCode)
+             
+             if (isCodeVerified) {
+                 viewAction = EnterOtpAction.OpenMainScreen
+             } else {
+                 showWrongCodeState()
+             }
+         }.onFailure {
+            // TODO
+         }
+         _isOtpCodeChecking.value = false
+     }
+ }
 
     override fun onCleared() {
         super.onCleared()

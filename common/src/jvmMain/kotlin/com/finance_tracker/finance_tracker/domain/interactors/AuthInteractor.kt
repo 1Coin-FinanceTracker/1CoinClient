@@ -13,4 +13,8 @@ class AuthInteractor(
     suspend fun verifyOtpCode(otp: Int): Boolean {
         return authRepository.verifyOtpCode(otp)
     }
+
+    suspend fun sendGoogleAuthToken(token: String) {
+        authRepository.sendGoogleAuthToken(token)
+    }
 }

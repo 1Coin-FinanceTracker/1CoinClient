@@ -145,7 +145,9 @@ fun CoinTheme(
         colors = MaterialTheme.colors.copy(
             background = coinColors.background,
             onBackground = coinColors.content,
-            surface = CoinTheme.color.backgroundSurface
+            surface = CoinTheme.color.backgroundSurface,
+            primary = coinColors.primary,
+            primaryVariant = coinColors.primaryVariant
         )
     ) {
         CompositionLocalProvider(

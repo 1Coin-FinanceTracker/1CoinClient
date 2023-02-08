@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.presentation.email_auth.enter_email
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.finance_tracker.finance_tracker.core.common.view_models.BaseViewModel
 import com.finance_tracker.finance_tracker.domain.interactors.AuthInteractor
 import com.finance_tracker.finance_tracker.presentation.email_auth.enter_email.analytics.EnterEmailAnalytics
@@ -17,9 +18,17 @@ class EnterEmailViewModel(
 
     private val _email = MutableStateFlow("")
     val email = _email.asStateFlow()
+    private val regex = Regex("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")
 
-    val isContinueEnabled = email.map { it.isNotBlank() }
+    private val _emailTextFieldValue = MutableStateFlow(TextFieldValue())
+    val emailTextFieldValue = _emailTextFieldValue.asStateFlow()
+
+    val isContinueEnabled = _emailTextFieldValue.map { regex.matches(it.text) }
         .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = false)
+
+    private val isLoading = MutableStateFlow(false)
+    val isLoadingButton = isLoading.asStateFlow()
+    val isEmailTextFieldReadOnly = isLoading.asStateFlow()
 
     fun onBackClick() {
         enterEmailAnalytics.trackBackClick()
@@ -28,19 +37,21 @@ class EnterEmailViewModel(
 
     fun onContinueClick() {
         enterEmailAnalytics.trackContinueClick()
-        // TODO: Loading
+        isLoading.value = true
         viewModelScope.launch {
             runCatching { authInteractor.requestOtpCode() }
                 .onSuccess {
-                    viewAction = EnterEmailAction.OpenEnterOtpScreen(email.value)
+                    isLoading.value = false
+                    viewAction = EnterEmailAction.OpenEnterOtpScreen(_emailTextFieldValue.value.text)
                 }
                 .onFailure {
+                    isLoading.value = false
                     // TODO
                 }
         }
     }
 
-    fun onEmailChange(email: String) {
-        _email.value = email
+    fun onEmailChange(emailTextFieldValue: TextFieldValue) {
+        _emailTextFieldValue.value = emailTextFieldValue
     }
 }

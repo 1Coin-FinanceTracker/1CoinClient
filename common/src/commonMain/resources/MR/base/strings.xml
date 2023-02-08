@@ -232,7 +232,6 @@
     <!-- Enter OTP -->
     <string name="enter_otp_title">Verify E-mail</string>
     <string name="enter_otp_subtitle">Enter the\u00A0code sent to\u00A0</string>
-    <string name="enter_otp_btn_create_account">Create account</string>
     <string name="enter_otp_request_again">Request again</string>
     <string name="enter_otp_request_again_time">Request again (%ds)</string>
     <string name="enter_otp_wrong_code">Wrong code</string>

@@ -1,10 +1,14 @@
 package com.finance_tracker.finance_tracker.presentation.welcome
 
 import com.finance_tracker.finance_tracker.core.common.view_models.BaseViewModel
+import com.finance_tracker.finance_tracker.domain.interactors.AuthInteractor
 import com.finance_tracker.finance_tracker.presentation.welcome.analytics.WelcomeAnalytics
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.launch
 
 class WelcomeViewModel(
-    private val welcomeAnalytics: WelcomeAnalytics
+    private val welcomeAnalytics: WelcomeAnalytics,
+    private val authInteractor: AuthInteractor
 ): BaseViewModel<WelcomeAction>() {
 
     init {
@@ -13,7 +17,16 @@ class WelcomeViewModel(
 
     fun onContinueWithGoogleClick() {
         welcomeAnalytics.trackContinueWithGoogleClick()
-        viewAction = WelcomeAction.OpenGoogleAuthScreen
+    }
+
+    fun onGoogleSignInSuccess(token: String) {
+        viewModelScope.launch {
+            authInteractor.sendGoogleAuthToken(token)
+        }
+    }
+
+    fun onGoogleSignInError(exception: Exception) {
+        Napier.e(message = "GoogleSignInError", throwable = exception)
     }
 
     fun onContinueWithEmailClick() {

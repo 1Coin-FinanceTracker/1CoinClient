@@ -226,10 +226,9 @@
     <!-- Enter OTP -->
     <string name="enter_otp_title">Подтвердите E-mail</string>
     <string name="enter_otp_subtitle">Введите код, отправленный на\u00A0</string>
-    <string name="enter_otp_btn_create_account">Создать аккаунт</string>
     <string name="enter_otp_request_again">Отправить код повторно</string>
     <string name="enter_otp_request_again_time">Отправить код повторно (%dс)</string>
-    <string name="enter_otp_wrong_code">Неверный код</string>
+    <string name="enter_otp_wrong_code">Неверный код, попробуйте ещё раз</string>
 
     <!-- Currency screen -->
     <string name="currency_screen_topbar_text">Валюта</string>
