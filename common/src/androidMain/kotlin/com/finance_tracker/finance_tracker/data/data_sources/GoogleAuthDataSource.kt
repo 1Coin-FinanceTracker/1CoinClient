@@ -24,9 +24,7 @@ actual class GoogleAuthDataSource actual constructor(
     }
 
     actual fun isUserSignedIn(): Boolean {
-        return (GoogleSignIn.getLastSignedInAccount(context) != null).apply {
-            println("isUserSignedIn: $this")
-        }
+        return GoogleSignIn.getLastSignedInAccount(context) != null
     }
 
     suspend fun getFreshIdToken(context: Context): String? {
@@ -51,9 +49,9 @@ actual class GoogleAuthDataSource actual constructor(
         googleSignInClient.signOut()
             .addOnCompleteListener(context as Activity) {
                 if (it.isSuccessful) {
-                    println("SignOut - Success")
+                    // TODO: Handle SignOutSuccess
                 } else {
-                    println("SignOut - Error: ${it.exception}")
+                    // TODO: Handle SignOutError
                 }
             }
     }

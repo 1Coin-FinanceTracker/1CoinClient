@@ -19,6 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
+import com.finance_tracker.finance_tracker.core.common.imePadding
+import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -32,7 +34,9 @@ internal fun DeleteDialog(
         Column(
             modifier = Modifier
                 .background(CoinTheme.color.backgroundSurface)
-                .padding(8.dp),
+                .padding(8.dp)
+                .navigationBarsPadding()
+                .imePadding(),
         ) {
             Text(
                 modifier = Modifier
