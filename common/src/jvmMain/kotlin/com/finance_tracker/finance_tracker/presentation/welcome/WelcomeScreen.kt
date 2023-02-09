@@ -99,11 +99,14 @@ internal fun WelcomeScreen() {
 
             GoogleSignInButton(
                 modifier = Modifier
+                    .padding(bottom = 12.dp)
                     .widthIn(max = MaxButtonWidth)
                     .fillMaxWidth(),
-                onClick = viewModel::onContinueWithGoogleClick
+                onClick = viewModel::onContinueWithGoogleClick,
+                onSuccess = viewModel::onGoogleSignInSuccess,
+                onError = viewModel::onGoogleSignInError
             )
-            Spacer(modifier = Modifier.height(12.dp))
+
             EmailSignInButton(
                 modifier = Modifier
                     .widthIn(max = MaxButtonWidth)

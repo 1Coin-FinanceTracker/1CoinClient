@@ -44,7 +44,7 @@ fun handleAction(
         }
         is AddAccountAction.ShowDeleteDialog -> {
             val modalNavController = rootController.findModalController()
-            modalNavController.present(DialogConfigurations.alert) { key ->
+            modalNavController.present(DialogConfigurations.bottomSheet) { key ->
                 DeleteDialog(
                     titleEntity = stringResource(MR.strings.deleting_account),
                     onCancelClick = { onCancelDeletingClick.invoke(action.account, key) },

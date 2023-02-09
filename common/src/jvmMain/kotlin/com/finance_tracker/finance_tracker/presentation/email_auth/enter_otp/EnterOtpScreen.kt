@@ -29,14 +29,12 @@ import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
 import com.finance_tracker.finance_tracker.core.common.imePadding
-import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.noRippleClickable
 import com.finance_tracker.finance_tracker.core.common.statusBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.AppBarIcon
 import com.finance_tracker.finance_tracker.core.ui.CoinCodeTextField
-import com.finance_tracker.finance_tracker.core.ui.PrimaryButton
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import dev.icerock.moko.resources.compose.stringResource
 import org.koin.core.parameter.parametersOf
@@ -126,6 +124,7 @@ internal fun EnterOtpScreen(email: String) {
                     .scaleClickAnimation(enabled = isRequestAgainEnabled)
                     .clip(RoundedCornerShape(4.dp))
                     .noRippleClickable(enabled = isRequestAgainEnabled) { viewModel.onRequestCodeAgainClick() }
+                    .imePadding()
                     .padding(
                         vertical = 2.dp,
                         horizontal = 4.dp
@@ -138,19 +137,6 @@ internal fun EnterOtpScreen(email: String) {
                 color = CoinTheme.color.primary,
                 style = CoinTheme.typography.subtitle2_medium,
                 textAlign = TextAlign.Center
-            )
-
-            val isContinueEnabled by viewModel.icCreateAccountEnabled.collectAsState()
-            PrimaryButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
-                    .navigationBarsPadding()
-                    .imePadding(),
-                text = stringResource(MR.strings.enter_otp_btn_create_account),
-                enabled = isContinueEnabled,
-                onClick = viewModel::onCreateAccountClick
             )
         }
     }

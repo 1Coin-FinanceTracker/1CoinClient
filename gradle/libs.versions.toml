@@ -31,6 +31,7 @@ paging = "3.1.1-0.1.1"
 viewmodel = "2.5.1"
 json = "20211205"
 lottie = "5.2.0"
+googleServicesAuth = "20.4.1"
 
 [libraries]
 gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "android_plugin" }
@@ -113,6 +114,8 @@ mokoResources-core = { module = "dev.icerock.moko:resources", version.ref = "res
 mokoResources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "resources" }
 
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+googleServicesAuth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleServicesAuth" }
 
 [bundles]
 odyssey = ["odyssey-core", "odyssey-compose"]

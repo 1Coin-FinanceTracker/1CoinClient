@@ -67,7 +67,8 @@ internal fun EnterEmailScreen() {
                 textAlign = TextAlign.Center
             )
 
-            val email by viewModel.email.collectAsState()
+            val emailTextFieldValue by viewModel.emailTextFieldValue.collectAsState()
+            val isEmailTextFieldReadOnly by viewModel.isEmailTextFieldReadOnly.collectAsState()
             CoinOutlinedTextField(
                 modifier = Modifier
                     .focusRequester(focusRequester)
@@ -77,8 +78,9 @@ internal fun EnterEmailScreen() {
                         start = 16.dp,
                         end = 16.dp
                     ),
-                value = email,
+                value = emailTextFieldValue,
                 onValueChange = viewModel::onEmailChange,
+                readOnly = isEmailTextFieldReadOnly,
                 label = {
                     Text(
                         text = stringResource(MR.strings.enter_email_field_email_label),
@@ -94,6 +96,7 @@ internal fun EnterEmailScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             val isContinueEnabled by viewModel.isContinueEnabled.collectAsState()
+            val isLoadingButton by viewModel.isLoadingButton.collectAsState()
             PrimaryButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -102,6 +105,7 @@ internal fun EnterEmailScreen() {
                     .imePadding(),
                 text = stringResource(MR.strings.enter_email_btn_continue),
                 enabled = isContinueEnabled,
+                loading = isLoadingButton,
                 onClick = viewModel::onContinueClick
             )
         }

@@ -10,4 +10,9 @@ class AuthRepository {
     suspend fun verifyOtpCode(otp: Int): Boolean {
         return otp >= 2000
     }
+
+    @Suppress("UnusedPrivateMember")
+    suspend fun sendGoogleAuthToken(token: String) {
+        // TODO
+    }
 }
