@@ -2,9 +2,9 @@ package com.finance_tracker.finance_tracker.presentation.add_transaction.analyti
 
 import com.benasher44.uuid.uuid4
 import com.finance_tracker.finance_tracker.domain.models.Account
-import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Transaction
 import com.finance_tracker.finance_tracker.domain.models.TransactionType
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate

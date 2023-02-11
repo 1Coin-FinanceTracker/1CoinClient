@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.theme.staticTextSize
 import com.finance_tracker.finance_tracker.domain.models.Account
@@ -33,7 +34,7 @@ internal fun AccountCard(
         Box(
             modifier = Modifier
                 .background(
-                    color = account.colorModel.color,
+                    color = account.colorModel.color.toUIColor(),
                     shape = CircleShape
                 )
                 .size(10.dp)

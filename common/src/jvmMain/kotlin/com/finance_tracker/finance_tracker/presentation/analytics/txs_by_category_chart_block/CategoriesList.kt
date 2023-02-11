@@ -13,16 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.LocalContext
 import com.finance_tracker.finance_tracker.core.common.`if`
+import com.finance_tracker.finance_tracker.core.common.toUIColor
+import com.finance_tracker.finance_tracker.core.common.transparent
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
-import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.TxsByCategoryChart
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import com.finance_tracker.finance_tracker.presentation.common.formatters.format
+import dev.icerock.moko.graphics.Color
 import dev.icerock.moko.resources.compose.stringResource
 import io.github.koalaplot.core.pie.DefaultSlice
 import io.github.koalaplot.core.pie.PieChart
@@ -113,8 +115,8 @@ private fun CategoryPieChart(
                     color = if (index == 0) {
                         piece.color
                     } else {
-                        Color.Transparent
-                    }
+                        Color.transparent
+                    }.toUIColor()
                 )
             },
             holeSize = 0.77f,
@@ -130,7 +132,7 @@ private fun CategoryPieChart(
             slice = { index: Int ->
                 DefaultSlice(
                     color = if (index == 0) {
-                        Color.Transparent
+                        Color.transparent.toUIColor()
                     } else {
                         CoinTheme.color.dividers
                     }

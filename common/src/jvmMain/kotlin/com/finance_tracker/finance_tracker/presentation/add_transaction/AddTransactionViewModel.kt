@@ -10,11 +10,11 @@ import com.finance_tracker.finance_tracker.data.database.mappers.accountToDomain
 import com.finance_tracker.finance_tracker.data.database.mappers.categoryToDomainModel
 import com.finance_tracker.finance_tracker.domain.interactors.TransactionsInteractor
 import com.finance_tracker.finance_tracker.domain.models.Account
-import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Transaction
 import com.finance_tracker.finance_tracker.presentation.add_transaction.analytics.AddTransactionAnalytics
 import com.finance_tracker.finance_tracker.presentation.add_transaction.views.EnterTransactionStep
 import com.finance_tracker.finance_tracker.presentation.add_transaction.views.enter_transaction_controller.KeyboardCommand
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import com.financetracker.financetracker.data.AccountsEntityQueries
 import com.financetracker.financetracker.data.CategoriesEntityQueries
 import io.github.koalaplot.core.util.toString

@@ -16,6 +16,7 @@ import com.finance_tracker.finance_tracker.core.common.UpdateSystemBarsConfigEff
 import com.finance_tracker.finance_tracker.core.common.pagination.AutoRefreshList
 import com.finance_tracker.finance_tracker.core.common.pagination.collectAsLazyPagingItems
 import com.finance_tracker.finance_tracker.core.common.statusBarsPadding
+import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.AppBarIcon
@@ -60,13 +61,13 @@ internal fun DetailAccountScreen(
                         .graphicsLayer {
                             alpha = 1f - state.toolbarState.progress
                         },
-                    color = accountData.colorModel.color
+                    color = accountData.colorModel.color.toUIColor()
                 )
                 DetailAccountExpandedAppBar(
                     modifier = Modifier
                         .parallax(0.4f),
                     contentAlpha = state.toolbarState.progress,
-                    color = accountData.colorModel.color,
+                    color = accountData.colorModel.color.toUIColor(),
                     amount = accountData.balance,
                     iconId = accountData.iconId,
                     onIconClick = viewModel::onIconClick
@@ -92,7 +93,7 @@ internal fun DetailAccountScreen(
 
                 EditButton(
                     state = state,
-                    tint = accountData.colorModel.color,
+                    tint = accountData.colorModel.color.toUIColor(),
                     onClick = viewModel::onEditClick
                 )
             }

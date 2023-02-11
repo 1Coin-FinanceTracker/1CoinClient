@@ -1,7 +1,9 @@
 package com.finance_tracker.finance_tracker.domain.models
 
-import androidx.compose.ui.graphics.Color
-import io.github.koalaplot.core.util.toString
+import com.finance_tracker.finance_tracker.core.common.toString
+import com.finance_tracker.finance_tracker.core.common.transparent
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
+import dev.icerock.moko.graphics.Color
 
 data class TxsByCategoryChart(
     val mainPieces: List<Piece>,
@@ -15,7 +17,7 @@ data class TxsByCategoryChart(
         val transactionsCount: Int,
     ) {
         @Suppress("DataClassShouldBeImmutable")
-        var color: Color = Color.Transparent
+        var color: Color = Color.transparent
         val percentage = percentValue.toString(PERCENT_PRECISION)
 
         companion object {

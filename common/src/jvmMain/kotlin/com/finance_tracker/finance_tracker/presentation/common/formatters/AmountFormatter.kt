@@ -6,14 +6,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.intl.Locale
 import com.finance_tracker.finance_tracker.core.common.locale.toJavaLocale
+import com.finance_tracker.finance_tracker.core.common.math.negativeSignOrEmpty
 import com.finance_tracker.finance_tracker.domain.models.Amount
 import java.text.NumberFormat
 import java.util.Currency
+import kotlin.math.absoluteValue
 import kotlin.math.pow
 import java.util.Locale as JavaLocale
 
 @Composable
-actual fun formatAmount(
+fun formatAmount(
     number: Double,
     currencyCode: String,
     reductionMode: ReductionMode
@@ -89,7 +91,28 @@ class AmountFormat(locale: JavaLocale) {
 }
 
 @Composable
-actual fun isCurrencyPositionAtStart(): Boolean {
+internal fun Amount.format(
+    mode: AmountFormatMode = AmountFormatMode.NoSigns,
+    reductionMode: ReductionMode = ReductionMode.Soft
+): String {
+    val formattedCurrencyNumber = formatAmount(
+        number = amountValue.absoluteValue,
+        currencyCode = currency.code,
+        reductionMode = reductionMode
+    ).replace(currency.code, currency.symbol)
+
+    return when (mode) {
+        AmountFormatMode.NegativeSign -> {
+            amountValue.negativeSignOrEmpty + formattedCurrencyNumber
+        }
+        AmountFormatMode.NoSigns -> {
+            formattedCurrencyNumber
+        }
+    }
+}
+
+@Composable
+fun isCurrencyPositionAtStart(): Boolean {
     val amount = Amount.default
     val currencySymbol = amount.currency.symbol
     return amount.format().startsWith(currencySymbol)

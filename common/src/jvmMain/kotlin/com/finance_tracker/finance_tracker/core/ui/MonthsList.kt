@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.core.common.LocalContext
 import com.finance_tracker.finance_tracker.core.common.date.currentYearMonth
 import com.finance_tracker.finance_tracker.core.common.date.localizedName
 import com.finance_tracker.finance_tracker.core.common.date.minusMonth
@@ -75,8 +76,9 @@ internal fun MonthsList(
                     horizontal = 12.dp
                 )
             ) {
+                val context = LocalContext.current
                 Text(
-                    text = yearMonth.month.localizedName(),
+                    text = yearMonth.month.localizedName(context),
                     style = CoinTheme.typography.body1_medium
                 )
             }

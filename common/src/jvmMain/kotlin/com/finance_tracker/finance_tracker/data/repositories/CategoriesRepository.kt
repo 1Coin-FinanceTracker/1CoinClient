@@ -1,7 +1,7 @@
 package com.finance_tracker.finance_tracker.data.repositories
 
 import com.finance_tracker.finance_tracker.data.database.mappers.categoryToDomainModel
-import com.finance_tracker.finance_tracker.domain.models.Category
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import com.financetracker.financetracker.data.CategoriesEntityQueries
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull

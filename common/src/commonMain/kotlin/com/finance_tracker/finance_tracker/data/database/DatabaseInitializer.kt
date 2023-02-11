@@ -6,8 +6,8 @@ import com.finance_tracker.finance_tracker.core.common.getRaw
 import com.finance_tracker.finance_tracker.core.common.localizedString
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.domain.models.AccountColorModel
-import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Currency
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import com.financetracker.financetracker.data.AccountsEntityQueries
 import com.financetracker.financetracker.data.CategoriesEntityQueries
 import com.financetracker.financetracker.data.CurrencyRatesEntityQueries

@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.toDp
+import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.CoinDropdownMenu
 import com.finance_tracker.finance_tracker.domain.models.AccountColorModel
@@ -62,7 +63,7 @@ private fun AccountColorItem(
                     .size(16.dp)
                     .border(
                         width = 2.dp,
-                        color = data.color,
+                        color = data.color.toUIColor(),
                         shape = CircleShape
                     )
             )

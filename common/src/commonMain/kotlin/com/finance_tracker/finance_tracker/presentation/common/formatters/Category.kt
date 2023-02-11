@@ -1,4 +1,4 @@
-package com.finance_tracker.finance_tracker.domain.models
+package com.finance_tracker.finance_tracker.presentation.common.formatters
 
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.Context

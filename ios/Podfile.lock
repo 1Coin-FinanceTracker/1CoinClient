@@ -1,3 +1,16 @@
-PODFILE CHECKSUM: f304f402ccf786699156ec6974edc18a34e80bd4
+PODS:
+  - OneCoinShared (1.0)
+
+DEPENDENCIES:
+  - OneCoinShared (from `../common`)
+
+EXTERNAL SOURCES:
+  OneCoinShared:
+    :path: "../common"
+
+SPEC CHECKSUMS:
+  OneCoinShared: ca4107be7c2f0a5623e6aca77e2e1bcb754cd80c
+
+PODFILE CHECKSUM: 01dddc02c99e2e2b0703d03e3377b31113cfd823
 
 COCOAPODS: 1.11.3

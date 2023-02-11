@@ -1,7 +1,7 @@
 package com.finance_tracker.finance_tracker.presentation.category_settings.analytcis
 
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
-import com.finance_tracker.finance_tracker.domain.models.Category
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 
 class CategorySettingsAnalytics: com.finance_tracker.finance_tracker.core.analytics.BaseAnalytics() {
 

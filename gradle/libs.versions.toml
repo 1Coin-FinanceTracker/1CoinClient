@@ -70,8 +70,6 @@ sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extension
 
 datepicker-desktop = { module = "com.github.lgooddatepicker:LGoodDatePicker", version.ref = "datepicker_desktop" }
 
-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
-
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
@@ -121,6 +119,6 @@ googleServicesAuth = { module = "com.google.android.gms:play-services-auth", ver
 odyssey = ["odyssey-core", "odyssey-compose"]
 compose = ["compose-animation", "compose-foundation", "compose-material", "compose-ui"]
 koin-android = ["koin-android", "koin-compose"]
-kviewmodel = ["kviewmodel", "kviewmodel-compose", "kviewmodel-odyssey"]
+kviewmodel-compose = ["kviewmodel-compose", "kviewmodel-odyssey"]
 ktor = ["ktor-core", "ktor-contentNegotiation", "ktor-serialization", "ktor-logging"]
 settings = ["settings", "settings-coroutines"]

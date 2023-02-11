@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.core.common.LocalContext
 import com.finance_tracker.finance_tracker.core.common.date.currentYearMonth
 import com.finance_tracker.finance_tracker.core.common.date.localizedName
 import com.finance_tracker.finance_tracker.core.common.date.models.YearMonth
@@ -70,11 +71,12 @@ internal fun HoleTotalLabel(
                     .background(CoinTheme.color.secondaryBackground)
             )
         }
+        val context = LocalContext.current
         val currentYear = remember(Unit) { Clock.System.currentYearMonth().year }
         val periodText = if (currentYear == data.yearMonth.year) {
-            data.yearMonth.month.localizedName()
+            data.yearMonth.month.localizedName(context)
         } else {
-            "${data.yearMonth.month.localizedName()} ${data.yearMonth.year}"
+            "${data.yearMonth.month.localizedName(context)} ${data.yearMonth.year}"
         }
         Text(
             text = periodText,

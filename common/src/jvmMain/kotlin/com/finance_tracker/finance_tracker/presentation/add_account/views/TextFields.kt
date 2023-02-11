@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
+import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.theme.staticTextSize
 import com.finance_tracker.finance_tracker.core.ui.CoinOutlinedSelectTextField
@@ -228,7 +229,7 @@ private fun ColorIcon(accountColorModel: AccountColorModel?) {
             modifier = Modifier
                 .size(16.dp)
                 .background(
-                    color = accountColorModel.color,
+                    color = accountColorModel.color.toUIColor(),
                     shape = CircleShape
                 )
         )

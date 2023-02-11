@@ -6,7 +6,7 @@ interface AnalyticsTracker {
 
     fun init(context: Context, userId: String)
 
-    fun track(event: com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent)
+    fun track(event: AnalyticsEvent)
 
     fun setUserProperty(property: String, value: Any)
 

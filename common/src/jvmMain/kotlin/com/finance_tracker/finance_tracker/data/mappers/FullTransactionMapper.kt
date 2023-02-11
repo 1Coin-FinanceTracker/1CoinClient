@@ -3,10 +3,10 @@ package com.finance_tracker.finance_tracker.data.mappers
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.domain.models.AccountColorModel
 import com.finance_tracker.finance_tracker.domain.models.Amount
-import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Currency
 import com.finance_tracker.finance_tracker.domain.models.Transaction
 import com.finance_tracker.finance_tracker.domain.models.TransactionType
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import kotlinx.datetime.LocalDateTime
 
 val fullTransactionMapper: (

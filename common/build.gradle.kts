@@ -1,6 +1,11 @@
 
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.compose.ComposeCompilerKotlinSupportPlugin
+import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
+import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     id("android-setup")
@@ -10,6 +15,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.codingfeline.buildkonfig")
     id("dev.icerock.mobile.multiplatform-resources")
+    kotlin("native.cocoapods")
 }
 
 android {
@@ -27,14 +33,30 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    cocoapods {
+        version = "1.0"
+        summary = "Shared code for 1Coin client"
+        homepage = "https://github.com/1Coin-FinanceTracker/1CoinClient"
+        ios.deploymentTarget = "16.0"
+        name = "OneCoinShared"
+        podfile = project.file("../ios/Podfile")
+
+        framework {
+            baseName = "OneCoinShared"
+        }
+
+        // Maps custom Xcode configuration to NativeBuildType
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
+    }
+
     sourceSets {
         val commonMain by named("commonMain") {
             dependencies {
-                api(libs.bundles.odyssey)
-                api(libs.napier)
                 api(libs.koin.core)
 
-                implementation(libs.bundles.kviewmodel)
+                implementation(libs.napier)
+                implementation(libs.kviewmodel)
                 implementation(libs.serialization)
                 implementation(libs.sqldelight.coroutines)
                 implementation(libs.bundles.ktor)
@@ -56,7 +78,6 @@ kotlin {
         }
         named("androidMain") {
             dependencies {
-                implementation(libs.viewModel)
                 implementation(libs.bundles.koin.android)
                 implementation(libs.sqldelight.android)
                 implementation(libs.ktor.android)
@@ -72,6 +93,9 @@ kotlin {
         @Suppress("UnusedPrivateMember")
         val jvmMain by getting {
             dependencies {
+                api(libs.bundles.odyssey)
+
+                implementation(libs.bundles.kviewmodel.compose)
                 implementation(libs.koalaplot)
                 implementation(libs.paging)
                 implementation(libs.mokoResources.compose)
@@ -91,6 +115,18 @@ kotlin {
         }
     }
 }
+
+// Exclude native compose compiler
+plugins.removeAll { it is ComposeCompilerKotlinSupportPlugin }
+class ComposeNoNativePlugin : KotlinCompilerPluginSupportPlugin by ComposeCompilerKotlinSupportPlugin() {
+    override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean {
+        if (kotlinCompilation.target.platformType == KotlinPlatformType.native) {
+            return false
+        }
+        return ComposeCompilerKotlinSupportPlugin().isApplicable(kotlinCompilation)
+    }
+}
+apply<ComposeNoNativePlugin>()
 
 sqldelight {
     database("AppDatabase") {

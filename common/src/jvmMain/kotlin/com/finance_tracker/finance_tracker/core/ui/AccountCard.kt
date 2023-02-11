@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
+import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.presentation.common.formatters.AmountFormatMode
@@ -37,7 +38,7 @@ internal fun AccountCard(
             )
             .scaleClickAnimation()
             .clip(RoundedCornerShape(12.dp))
-            .background(data.colorModel.color)
+            .background(data.colorModel.color.toUIColor())
             .noRippleClickable(onClick),
     ) {
         Column {

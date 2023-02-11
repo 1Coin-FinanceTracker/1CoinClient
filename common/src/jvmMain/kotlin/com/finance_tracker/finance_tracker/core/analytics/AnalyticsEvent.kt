@@ -8,7 +8,7 @@ sealed class AnalyticsEvent(
     open class Open(
         screenName: String,
         override val properties: Map<String, Any?> = mapOf()
-    ) : com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent(
+    ) : AnalyticsEvent(
         name = "${screenName}_Open"
     )
 
@@ -16,7 +16,7 @@ sealed class AnalyticsEvent(
         source: String,
         val clickName: String,
         override val properties: Map<String, Any?> = mapOf()
-    ) : com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent(
+    ) : AnalyticsEvent(
         name = "${source}_${clickName}_Click"
     )
 
@@ -24,7 +24,7 @@ sealed class AnalyticsEvent(
         source: String,
         val selectName: String,
         override val properties: Map<String, Any?> = mapOf()
-    ) : com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent(
+    ) : AnalyticsEvent(
         name = "${source}_${selectName}_Select"
     )
 
@@ -32,7 +32,7 @@ sealed class AnalyticsEvent(
         source: String,
         eventName: String,
         override val properties: Map<String, Any?> = mapOf()
-    ) : com.finance_tracker.finance_tracker.core.analytics.AnalyticsEvent(
+    ) : AnalyticsEvent(
         name = "${source}_${eventName}"
     )
 }

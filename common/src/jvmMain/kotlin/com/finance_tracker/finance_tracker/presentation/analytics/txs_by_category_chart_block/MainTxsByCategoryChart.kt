@@ -16,13 +16,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalContext
 import com.finance_tracker.finance_tracker.core.common.date.models.YearMonth
+import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
-import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.TxsByCategoryChart
 import com.finance_tracker.finance_tracker.presentation.analytics.PieChartLabelSize
 import com.finance_tracker.finance_tracker.presentation.analytics.PieChartSize
 import com.finance_tracker.finance_tracker.presentation.analytics.views.CoinBezierLabelConnector
+import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import io.github.koalaplot.core.ChartLayout
 import io.github.koalaplot.core.pie.DefaultSlice
 import io.github.koalaplot.core.pie.PieChart
@@ -62,7 +63,7 @@ internal fun MainTxsByCategoryChart(
                 val piece = txsByCategoryChartPieces.getOrNull(index)
                 if (piece != null) {
                     DefaultSlice(
-                        color = piece.color,
+                        color = piece.color.toUIColor(),
                         hoverExpandFactor = 1.05f,
                         hoverElement = { Text(piece.amount.toString()) }
                     )
@@ -76,7 +77,7 @@ internal fun MainTxsByCategoryChart(
                         modifier = Modifier
                             .size(PieChartLabelSize)
                             .clip(CircleShape)
-                            .background(piece.color)
+                            .background(piece.color.toUIColor())
                             .padding(3.dp),
                         painter = rememberVectorPainter(category.iconId),
                         contentDescription = null,
@@ -88,7 +89,7 @@ internal fun MainTxsByCategoryChart(
                 val piece = txsByCategoryChartPieces.getOrNull(index)
                 if (piece != null) {
                     CoinBezierLabelConnector(
-                        connectorColor = piece.color
+                        connectorColor = piece.color.toUIColor()
                     )
                 }
             },
