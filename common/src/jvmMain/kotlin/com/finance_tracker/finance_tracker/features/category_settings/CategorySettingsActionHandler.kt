@@ -2,11 +2,11 @@ package com.finance_tracker.finance_tracker.features.category_settings
 
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.DialogConfigurations
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.view_models.BaseLocalsStorage
 import com.finance_tracker.finance_tracker.core.navigtion.main.MainNavigationTree
 import com.finance_tracker.finance_tracker.core.ui.DeleteDialog
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionType
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.features.add_category.AddCategoryScreenParams
 import dev.icerock.moko.resources.compose.stringResource
 import ru.alexgladkov.odyssey.compose.extensions.present

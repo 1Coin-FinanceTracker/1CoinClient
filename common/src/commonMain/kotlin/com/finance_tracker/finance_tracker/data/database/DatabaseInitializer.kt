@@ -2,11 +2,11 @@ package com.finance_tracker.finance_tracker.data.database
 
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.Context
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.getRaw
 import com.finance_tracker.finance_tracker.core.common.localizedString
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.domain.models.AccountColorModel
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Currency
 import com.financetracker.financetracker.data.AccountsEntityQueries
 import com.financetracker.financetracker.data.CategoriesEntityQueries

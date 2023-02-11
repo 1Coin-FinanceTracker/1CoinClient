@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.features.add_transaction.EnterTransactionStep
 import com.finance_tracker.finance_tracker.features.add_transaction.KeyboardCommand
 

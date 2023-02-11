@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
+import com.finance_tracker.finance_tracker.domain.models.Category
 import kotlin.math.roundToInt
 
 @Composable

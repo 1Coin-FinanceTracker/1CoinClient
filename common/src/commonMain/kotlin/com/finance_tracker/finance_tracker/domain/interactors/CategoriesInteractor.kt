@@ -1,10 +1,10 @@
 package com.finance_tracker.finance_tracker.domain.interactors
 
 import com.finance_tracker.finance_tracker.AppDatabase
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.suspendTransaction
 import com.finance_tracker.finance_tracker.data.repositories.CategoriesRepository
 import com.finance_tracker.finance_tracker.data.repositories.TransactionsRepository
+import com.finance_tracker.finance_tracker.domain.models.Category
 import kotlinx.coroutines.flow.Flow
 
 class CategoriesInteractor(

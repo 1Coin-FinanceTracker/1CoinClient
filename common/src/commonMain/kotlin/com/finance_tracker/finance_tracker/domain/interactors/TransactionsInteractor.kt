@@ -5,13 +5,13 @@ import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import com.finance_tracker.finance_tracker.AppDatabase
 import com.finance_tracker.finance_tracker.core.common.date.models.YearMonth
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.suspendTransaction
 import com.finance_tracker.finance_tracker.core.common.toString
 import com.finance_tracker.finance_tracker.core.theme.ChartConfig
 import com.finance_tracker.finance_tracker.data.repositories.AccountsRepository
 import com.finance_tracker.finance_tracker.data.repositories.TransactionsRepository
 import com.finance_tracker.finance_tracker.domain.models.Amount
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Currency
 import com.finance_tracker.finance_tracker.domain.models.CurrencyRates
 import com.finance_tracker.finance_tracker.domain.models.Transaction

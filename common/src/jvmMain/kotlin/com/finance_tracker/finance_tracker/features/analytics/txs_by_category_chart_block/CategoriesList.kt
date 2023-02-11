@@ -17,12 +17,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.LocalContext
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.formatters.format
 import com.finance_tracker.finance_tracker.core.common.`if`
 import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.common.transparent
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.TxsByCategoryChart
 import dev.icerock.moko.graphics.Color
 import dev.icerock.moko.resources.compose.stringResource

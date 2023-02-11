@@ -15,13 +15,13 @@ import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.LazyDragColumn
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.ui.CategoryCard
 import com.finance_tracker.finance_tracker.core.ui.EmptyStub
 import com.finance_tracker.finance_tracker.core.ui.ItemWrapper
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
+import com.finance_tracker.finance_tracker.domain.models.Category
 import dev.icerock.moko.resources.compose.stringResource
 
 private val CategoriesListContentPadding = 16.dp

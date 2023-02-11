@@ -2,7 +2,6 @@ package com.finance_tracker.finance_tracker.domain.models
 
 import com.finance_tracker.finance_tracker.core.common.Context
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDateTime
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 

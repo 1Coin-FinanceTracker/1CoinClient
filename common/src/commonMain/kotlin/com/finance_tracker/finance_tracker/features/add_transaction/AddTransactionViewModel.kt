@@ -2,7 +2,6 @@ package com.finance_tracker.finance_tracker.features.add_transaction
 
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDate
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDateTime
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.toString
 import com.finance_tracker.finance_tracker.core.common.view_models.BaseViewModel
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
@@ -12,6 +11,7 @@ import com.finance_tracker.finance_tracker.data.database.mappers.accountToDomain
 import com.finance_tracker.finance_tracker.data.database.mappers.categoryToDomainModel
 import com.finance_tracker.finance_tracker.domain.interactors.TransactionsInteractor
 import com.finance_tracker.finance_tracker.domain.models.Account
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.domain.models.Transaction
 import com.finance_tracker.finance_tracker.features.add_transaction.analytics.AddTransactionAnalytics
 import com.financetracker.financetracker.data.AccountsEntityQueries

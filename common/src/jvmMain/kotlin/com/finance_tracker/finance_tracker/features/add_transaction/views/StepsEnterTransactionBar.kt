@@ -22,12 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
-import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.`if`
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.theme.staticTextSize
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.domain.models.Account
+import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.features.add_transaction.EnterTransactionStep
 import com.finance_tracker.finance_tracker.features.add_transaction.views.enter_transaction_controller.AccountCard
 import dev.icerock.moko.resources.compose.stringResource
