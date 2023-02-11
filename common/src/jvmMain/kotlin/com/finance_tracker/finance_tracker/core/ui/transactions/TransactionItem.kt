@@ -14,17 +14,18 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalContext
+import com.finance_tracker.finance_tracker.core.common.formatters.format
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.domain.models.TransactionListModel
 import com.finance_tracker.finance_tracker.domain.models.TransactionType
-import com.finance_tracker.finance_tracker.presentation.common.formatters.format
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,7 +38,7 @@ internal fun TransactionItem(
     val context = LocalContext.current
     val transaction = transactionData.transaction
     val category = transaction.getCategoryOrUncategorized(context)
-    val isSelected by transactionData.isSelected
+    val isSelected by transactionData.isSelected.collectAsState()
     Row(
         modifier = modifier
             .combinedClickable(

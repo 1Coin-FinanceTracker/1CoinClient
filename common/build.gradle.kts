@@ -64,6 +64,7 @@ kotlin {
                 implementation(libs.uuid)
                 implementation(libs.datetime)
                 implementation(libs.mokoResources.core)
+                api(libs.paging)
             }
         }
         named("desktopMain") {
@@ -97,7 +98,6 @@ kotlin {
 
                 implementation(libs.bundles.kviewmodel.compose)
                 implementation(libs.koalaplot)
-                implementation(libs.paging)
                 implementation(libs.mokoResources.compose)
             }
         }
@@ -112,6 +112,10 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+
+            dependencies {
+                implementation("app.cash.paging:paging-runtime:3.1.1-0.1.1")
+            }
         }
     }
 }

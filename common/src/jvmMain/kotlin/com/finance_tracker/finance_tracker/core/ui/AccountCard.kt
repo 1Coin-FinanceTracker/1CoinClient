@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
+import com.finance_tracker.finance_tracker.core.common.formatters.AmountFormatMode
+import com.finance_tracker.finance_tracker.core.common.formatters.format
 import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
-import com.finance_tracker.finance_tracker.presentation.common.formatters.AmountFormatMode
-import com.finance_tracker.finance_tracker.presentation.common.formatters.format
 import ru.alexgladkov.odyssey.compose.helpers.noRippleClickable
 
 val AccountCardHeight = 128.dp

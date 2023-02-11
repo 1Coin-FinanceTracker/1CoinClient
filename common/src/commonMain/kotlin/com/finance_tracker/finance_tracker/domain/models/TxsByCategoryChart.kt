@@ -1,8 +1,8 @@
 package com.finance_tracker.finance_tracker.domain.models
 
+import com.finance_tracker.finance_tracker.core.common.formatters.Category
 import com.finance_tracker.finance_tracker.core.common.toString
 import com.finance_tracker.finance_tracker.core.common.transparent
-import com.finance_tracker.finance_tracker.presentation.common.formatters.Category
 import dev.icerock.moko.graphics.Color
 
 data class TxsByCategoryChart(
