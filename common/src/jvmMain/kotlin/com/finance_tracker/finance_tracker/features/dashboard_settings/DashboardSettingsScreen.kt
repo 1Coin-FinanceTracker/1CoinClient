@@ -1,4 +1,4 @@
-package com.finance_tracker.finance_tracker.presentation.dashboard_settings
+package com.finance_tracker.finance_tracker.features.dashboard_settings
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -24,8 +24,8 @@ import com.finance_tracker.finance_tracker.core.ui.DraggableItem
 import com.finance_tracker.finance_tracker.core.ui.dragContainerForDragHandle
 import com.finance_tracker.finance_tracker.core.ui.rememberDragDropState
 import com.finance_tracker.finance_tracker.domain.models.DashboardWidgetData
-import com.finance_tracker.finance_tracker.presentation.dashboard_settings.views.DashboardItem
-import com.finance_tracker.finance_tracker.presentation.dashboard_settings.views.DashboardSettingsAppBar
+import com.finance_tracker.finance_tracker.features.dashboard_settings.views.DashboardItem
+import com.finance_tracker.finance_tracker.features.dashboard_settings.views.DashboardSettingsAppBar
 
 private val DashboardWidgetsContentPadding = 16.dp
 
