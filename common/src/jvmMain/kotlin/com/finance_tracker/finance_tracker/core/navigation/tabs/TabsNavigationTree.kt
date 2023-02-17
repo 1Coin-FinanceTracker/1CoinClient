@@ -1,14 +1,15 @@
 package com.finance_tracker.finance_tracker.core.navigation.tabs
 
 import androidx.compose.runtime.Composable
-import com.finance_tracker.finance_tracker.presentation.accounts.AccountsScreen
-import com.finance_tracker.finance_tracker.presentation.analytics.AnalyticsScreen
-import com.finance_tracker.finance_tracker.presentation.home.HomeScreen
-import com.finance_tracker.finance_tracker.presentation.tabs_navigation.tabs.AccountsTab
-import com.finance_tracker.finance_tracker.presentation.tabs_navigation.tabs.AnalyticsTab
-import com.finance_tracker.finance_tracker.presentation.tabs_navigation.tabs.HomeTab
-import com.finance_tracker.finance_tracker.presentation.tabs_navigation.tabs.TransactionsTab
-import com.finance_tracker.finance_tracker.presentation.transactions.TransactionsScreen
+import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.features.accounts.AccountsScreen
+import com.finance_tracker.finance_tracker.features.analytics.AnalyticsScreen
+import com.finance_tracker.finance_tracker.features.home.HomeScreen
+import com.finance_tracker.finance_tracker.features.tabs_navigation.tabs.AccountsTab
+import com.finance_tracker.finance_tracker.features.tabs_navigation.tabs.AnalyticsTab
+import com.finance_tracker.finance_tracker.features.tabs_navigation.tabs.HomeTab
+import com.finance_tracker.finance_tracker.features.tabs_navigation.tabs.TransactionsTab
+import com.finance_tracker.finance_tracker.features.transactions.TransactionsScreen
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TabItem
 
 enum class TabsNavigationTree(
@@ -17,18 +18,34 @@ enum class TabsNavigationTree(
 ) {
     Home(
         tab = HomeTab(),
-        screen = { HomeScreen() }
+        screen = {
+            CoinTheme {
+                HomeScreen()
+            }
+        }
     ),
     Transactions(
         tab = TransactionsTab(),
-        screen = { TransactionsScreen() }
+        screen = {
+            CoinTheme {
+                TransactionsScreen()
+            }
+        }
     ),
     Accounts(
         tab = AccountsTab(),
-        screen = { AccountsScreen() }
+        screen = {
+            CoinTheme {
+                AccountsScreen()
+            }
+        }
     ),
     Analytics(
         tab = AnalyticsTab(),
-        screen = { AnalyticsScreen() }
+        screen = {
+            CoinTheme {
+                AnalyticsScreen()
+            }
+        }
     )
 }

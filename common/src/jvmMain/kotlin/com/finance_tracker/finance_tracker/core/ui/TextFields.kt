@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -43,15 +45,18 @@ import com.finance_tracker.finance_tracker.core.theme.CoinTextFieldDefaults
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import dev.icerock.moko.resources.compose.stringResource
 
+private const val TextFieldReadOnlyAlpha = 0.6f
+
 @Composable
 internal fun CoinOutlinedTextField(
     modifier: Modifier = Modifier,
     value: String = "",
     onValueChange: (String) -> Unit = {},
-    label: @Composable() (() -> Unit)? = null,
-    placeholder: @Composable() (() -> Unit)? = null,
-    leadingIcon: @Composable() (() -> Unit)? = null,
-    trailingIcon: @Composable() (() -> Unit)? = null,
+    readOnly: Boolean = false,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
     charsLimit: Int = Int.MAX_VALUE,
@@ -59,14 +64,55 @@ internal fun CoinOutlinedTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     OutlinedTextField(
-        modifier = modifier,
+        modifier = modifier
+            .alpha(alpha = if (readOnly) TextFieldReadOnlyAlpha else 1f),
         value = value,
         label = label,
+        readOnly = readOnly,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         onValueChange = {
             if (it.length <= charsLimit) {
+                onValueChange.invoke(it)
+            }
+        },
+        colors = CoinTextFieldDefaults.outlinedTextFieldColors(),
+        shape = RoundedCornerShape(12.dp),
+        maxLines = maxLines,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        singleLine = singleLine,
+    )
+}
+
+@Composable
+internal fun CoinOutlinedTextField(
+    modifier: Modifier = Modifier,
+    value: TextFieldValue = TextFieldValue(),
+    onValueChange: (TextFieldValue) -> Unit = {},
+    readOnly: Boolean = false,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    singleLine: Boolean = false,
+    maxLines: Int = Int.MAX_VALUE,
+    charsLimit: Int = Int.MAX_VALUE,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .alpha(alpha = if (readOnly) TextFieldReadOnlyAlpha else 1f),
+        value = value,
+        label = label,
+        readOnly = readOnly,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        onValueChange = {
+            if (it.text.length <= charsLimit) {
                 onValueChange.invoke(it)
             }
         },

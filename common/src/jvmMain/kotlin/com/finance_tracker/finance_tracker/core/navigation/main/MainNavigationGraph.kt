@@ -1,21 +1,22 @@
 package com.finance_tracker.finance_tracker.core.navigation.main
 
 import com.finance_tracker.finance_tracker.core.navigation.tabs.tabsNavigationGraph
+import com.finance_tracker.finance_tracker.core.navigtion.main.MainNavigationTree
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
-import com.finance_tracker.finance_tracker.presentation.add_account.AddAccountScreen
-import com.finance_tracker.finance_tracker.presentation.add_category.AddCategoryScreen
-import com.finance_tracker.finance_tracker.presentation.add_category.AddCategoryScreenParams
-import com.finance_tracker.finance_tracker.presentation.add_transaction.AddTransactionScreen
-import com.finance_tracker.finance_tracker.presentation.add_transaction.AddTransactionScreenParams
-import com.finance_tracker.finance_tracker.presentation.category_settings.CategorySettingsScreen
-import com.finance_tracker.finance_tracker.presentation.dashboard_settings.DashboardSettingsScreen
-import com.finance_tracker.finance_tracker.presentation.detail_account.DetailAccountScreen
-import com.finance_tracker.finance_tracker.presentation.email_auth.enter_email.EnterEmailScreen
-import com.finance_tracker.finance_tracker.presentation.email_auth.enter_otp.EnterOtpScreen
-import com.finance_tracker.finance_tracker.presentation.select_currency.SelectCurrencyScreen
-import com.finance_tracker.finance_tracker.presentation.settings.SettingsScreen
-import com.finance_tracker.finance_tracker.presentation.welcome.WelcomeScreen
+import com.finance_tracker.finance_tracker.features.add_account.AddAccountScreen
+import com.finance_tracker.finance_tracker.features.add_category.AddCategoryScreen
+import com.finance_tracker.finance_tracker.features.add_category.AddCategoryScreenParams
+import com.finance_tracker.finance_tracker.features.add_transaction.AddTransactionScreen
+import com.finance_tracker.finance_tracker.features.add_transaction.AddTransactionScreenParams
+import com.finance_tracker.finance_tracker.features.category_settings.CategorySettingsScreen
+import com.finance_tracker.finance_tracker.features.dashboard_settings.DashboardSettingsScreen
+import com.finance_tracker.finance_tracker.features.detail_account.DetailAccountScreen
+import com.finance_tracker.finance_tracker.features.email_auth.enter_email.EnterEmailScreen
+import com.finance_tracker.finance_tracker.features.email_auth.enter_otp.EnterOtpScreen
+import com.finance_tracker.finance_tracker.features.select_currency.SelectCurrencyScreen
+import com.finance_tracker.finance_tracker.features.settings.SettingsScreen
+import com.finance_tracker.finance_tracker.features.welcome.WelcomeScreen
 import ru.alexgladkov.odyssey.compose.extensions.screen
 import ru.alexgladkov.odyssey.compose.navigation.RootComposeBuilder
 

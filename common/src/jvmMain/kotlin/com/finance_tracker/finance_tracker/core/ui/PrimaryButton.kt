@@ -12,10 +12,12 @@ fun PrimaryButton(
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    loading: Boolean = false,
     enabled: Boolean = true,
 ) {
     BaseButton(
         modifier = modifier,
+        loading = loading,
         enabled = enabled,
         onClick = onClick
     ) {

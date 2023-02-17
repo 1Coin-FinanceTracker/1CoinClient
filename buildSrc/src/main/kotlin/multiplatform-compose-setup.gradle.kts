@@ -15,10 +15,6 @@ kotlin {
         }
         val commonMain by named("commonMain") {
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
-                api(compose.ui)
             }
         }
         val desktopMain by named("desktopMain") {
@@ -32,6 +28,12 @@ kotlin {
             dependsOn(commonMain)
             androidMain.dependsOn(this)
             desktopMain.dependsOn(this)
+            dependencies {
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
+                api(compose.ui)
+            }
         }
     }
 }
