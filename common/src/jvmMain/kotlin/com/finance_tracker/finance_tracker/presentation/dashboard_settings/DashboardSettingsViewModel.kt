@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class DashboardSettingsViewModel(
     private val dashboardSettingsAnalytics: DashboardSettingsAnalytics,
     private val dashboardSettingsInteractor: DashboardSettingsInteractor
-): BaseViewModel<com.finance_tracker.finance_tracker.presentation.dashboard_settings.DashboardSettingsAction>() {
+): BaseViewModel<DashboardSettingsAction>() {
 
     val dashboardWidgets = dashboardSettingsInteractor.getDashboardWidgets()
         .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = emptyList())
@@ -22,7 +22,7 @@ class DashboardSettingsViewModel(
 
     fun onBackClick() {
         dashboardSettingsAnalytics.trackBackClick()
-        viewAction = com.finance_tracker.finance_tracker.presentation.dashboard_settings.DashboardSettingsAction.Close
+        viewAction = DashboardSettingsAction.Close
     }
 
     fun onDashboardItemClick(dashboardWidgetData: DashboardWidgetData) {
