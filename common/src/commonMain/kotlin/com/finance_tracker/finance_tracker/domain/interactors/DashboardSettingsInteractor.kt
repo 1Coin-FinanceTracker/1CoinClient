@@ -13,7 +13,7 @@ class DashboardSettingsInteractor(
         dashboardSettingsRepository.updateDashboardItems()
     }
 
-    fun getDashboardWidgets(): Flow<List<DashboardWidgetData>> {
+    suspend fun getDashboardWidgets(): List<DashboardWidgetData> {
         return dashboardSettingsRepository.getDashboardWidgets()
     }
 
@@ -27,7 +27,7 @@ class DashboardSettingsInteractor(
     }
 
     fun getActiveDashboardWidgets(): Flow<List<DashboardWidgetData>> {
-        return getDashboardWidgets()
+        return dashboardSettingsRepository.getDashboardWidgetsFlow()
             .map { items -> items.filter { it.isEnabled } }
     }
 

@@ -2,47 +2,53 @@ package com.finance_tracker.finance_tracker.core.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.zIndex
+import com.finance_tracker.finance_tracker.core.common.`if`
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 @Composable
 fun <T: Any> rememberDragDropState(
     lazyListState: LazyListState,
-    list: SnapshotStateList<T>,
+    list: ImmutableList<T>,
     onMove: (Int, Int) -> Unit,
-): DragDropState {
+): DragState {
     val scope = rememberCoroutineScope()
     val state = remember(lazyListState, list.size) {
-        DragDropState(
+        DragState(
             state = lazyListState,
             onMove = onMove,
             scope = scope
         )
     }
-    LaunchedEffect(state) {
-        while (true) {
+    LaunchedEffect(lazyListState, state) {
+        while (isActive) {
             val diff = state.scrollChannel.receive()
             lazyListState.scrollBy(diff)
         }
@@ -50,7 +56,8 @@ fun <T: Any> rememberDragDropState(
     return state
 }
 
-class DragDropState internal constructor(
+@Stable
+class DragState internal constructor(
     private val state: LazyListState,
     private val scope: CoroutineScope,
     private val onMove: (Int, Int) -> Unit
@@ -63,9 +70,10 @@ class DragDropState internal constructor(
     private var draggingItemDraggedDelta by mutableStateOf(0f)
     private var draggingItemInitialOffset by mutableStateOf(0)
     internal val draggingItemOffset: Float
-        get() = draggingItemLayoutInfo?.let { item ->
-            draggingItemInitialOffset + draggingItemDraggedDelta - item.offset
-        } ?: 0f
+        get() {
+            val itemInfo = draggingItemLayoutInfo ?: return 0f
+            return draggingItemInitialOffset + draggingItemDraggedDelta - itemInfo.offset
+        }
 
     private val draggingItemLayoutInfo: LazyListItemInfo?
         get() = state.layoutInfo.visibleItemsInfo
@@ -80,9 +88,9 @@ class DragDropState internal constructor(
         get() = this.offset + this.size
 
     internal fun onDragStartWithKey(key: Any) {
-        draggingItemIndex = state.layoutInfo.visibleItemsInfo.firstOrNull { it.key == key }?.index
-        draggingItemInitialOffset = state.layoutInfo
-            .visibleItemsInfo[draggingItemIndex?.minus(state.firstVisibleItemIndex) ?: 0].offset
+        val draggingItem = state.layoutInfo.visibleItemsInfo.firstOrNull { it.key == key } ?: return
+        draggingItemIndex =  draggingItem.index
+        draggingItemInitialOffset = draggingItem.offset
     }
 
     internal fun onDragInterrupted() {
@@ -149,48 +157,61 @@ class DragDropState internal constructor(
     }
 }
 
-fun Modifier.dragContainerForDragHandle(
-    dragDropState: DragDropState,
+private fun Modifier.dragContainerForDragHandle(
+    dragState: DragState,
     key: Any
 ): Modifier {
-    return pointerInput(dragDropState) {
+    return pointerInput(dragState) {
         detectDragGesturesAfterLongPress(
             onDrag = { change, offset ->
                 change.consume()
-                dragDropState.onDrag(offset)
+                dragState.onDrag(offset)
             },
-            onDragStart = { dragDropState.onDragStartWithKey(key) },
-            onDragEnd = { dragDropState.onDragInterrupted() },
-            onDragCancel = { dragDropState.onDragInterrupted() }
+            onDragStart = { dragState.onDragStartWithKey(key) },
+            onDragEnd = { dragState.onDragInterrupted() },
+            onDragCancel = { dragState.onDragInterrupted() }
         )
     }
 }
 
 @ExperimentalFoundationApi
 @Composable
-fun DraggableItem(
-    dragDropState: DragDropState,
+fun LazyItemScope.DraggableItem(
+    dragState: DragState,
+    key: Any,
     index: Int,
     modifier: Modifier = Modifier,
     content: @Composable (ColumnScope.(isDragging: Boolean) -> Unit)
 ) {
-    val dragging = index == dragDropState.draggingItemIndex
+    val dragging = index == dragState.draggingItemIndex
     val draggingModifier = if (dragging) {
         Modifier
             .zIndex(1f)
             .graphicsLayer {
-                translationY = dragDropState.draggingItemOffset
+                translationY = dragState.draggingItemOffset
             }
-    } else if (index == dragDropState.previousIndexOfDraggedItem) {
+    } else if (index == dragState.previousIndexOfDraggedItem) {
         Modifier
             .zIndex(1f)
             .graphicsLayer {
-                translationY = dragDropState.previousItemOffset.value
+                translationY = dragState.previousItemOffset.value
             }
     } else {
         Modifier
     }
-    Column(modifier = modifier.then(draggingModifier)) {
+    Column(
+        modifier = modifier
+            .`if`(dragState.draggingItemIndex != index) {
+                animateItemPlacement(
+                    spring(
+                        stiffness = Spring.StiffnessMedium,
+                        visibilityThreshold = IntOffset.VisibilityThreshold
+                    )
+                )
+            }
+            .dragContainerForDragHandle(dragState = dragState, key = key)
+            .then(draggingModifier)
+    ) {
         content(dragging)
     }
 }

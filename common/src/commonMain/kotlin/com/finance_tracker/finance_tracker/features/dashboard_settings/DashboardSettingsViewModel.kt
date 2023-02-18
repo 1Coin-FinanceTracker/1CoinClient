@@ -4,8 +4,12 @@ import com.finance_tracker.finance_tracker.core.common.view_models.BaseViewModel
 import com.finance_tracker.finance_tracker.domain.interactors.DashboardSettingsInteractor
 import com.finance_tracker.finance_tracker.domain.models.DashboardWidgetData
 import com.finance_tracker.finance_tracker.features.dashboard_settings.analytics.DashboardSettingsAnalytics
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DashboardSettingsViewModel(
@@ -13,11 +17,19 @@ class DashboardSettingsViewModel(
     private val dashboardSettingsInteractor: DashboardSettingsInteractor
 ): BaseViewModel<DashboardSettingsAction>() {
 
-    val dashboardWidgets = dashboardSettingsInteractor.getDashboardWidgets()
-        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = emptyList())
+    private val _dashboardWidgets = MutableStateFlow<ImmutableList<DashboardWidgetData>>(persistentListOf())
+    val dashboardWidgets = _dashboardWidgets.asStateFlow()
 
     init {
         dashboardSettingsAnalytics.trackScreenOpen()
+        loadDashboardWidgets()
+    }
+
+    private fun loadDashboardWidgets() {
+        viewModelScope.launch {
+            _dashboardWidgets.value = dashboardSettingsInteractor.getDashboardWidgets()
+                .toImmutableList()
+        }
     }
 
     fun onBackClick() {
@@ -28,6 +40,17 @@ class DashboardSettingsViewModel(
     fun onDashboardItemClick(dashboardWidgetData: DashboardWidgetData) {
         dashboardSettingsAnalytics.trackDashboardItemClick(dashboardWidgetData)
         dashboardSettingsInteractor.changeDashboardWidgetEnabledState(dashboardWidgetData)
+
+        _dashboardWidgets.update {
+            val oldList = it.toMutableList()
+            val itemPosition = oldList.indexOfFirst { item ->
+                item.id == dashboardWidgetData.id
+            }
+            oldList[itemPosition] = dashboardWidgetData.copy(
+                isEnabled = !dashboardWidgetData.isEnabled
+            )
+            oldList.toImmutableList()
+        }
     }
 
     fun onDashboardItemPositionChange(fromPosition: Int, toPosition: Int) {
@@ -40,6 +63,12 @@ class DashboardSettingsViewModel(
             dashboardWidgetData = fromItem
         )
 
+        _dashboardWidgets.update {
+            val newList = dashboardWidgets.value.toMutableList()
+            newList[fromPosition] = toItem
+            newList[toPosition] = fromItem
+            newList.toImmutableList()
+        }
         saveDashboardWidgetsOrder(
             itemId1 = fromItem.id, newPosition1 = toPosition,
             itemId2 = toItem.id, newPosition2 = fromPosition

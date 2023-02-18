@@ -64,7 +64,8 @@ kotlin {
                 implementation(libs.uuid)
                 implementation(libs.datetime)
                 implementation(libs.mokoResources.core)
-                api(libs.paging)
+                implementation(libs.immutableCollections)
+                implementation(libs.paging)
             }
         }
         named("desktopMain") {

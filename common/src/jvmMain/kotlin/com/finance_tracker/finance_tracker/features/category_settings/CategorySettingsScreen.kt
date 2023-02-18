@@ -14,8 +14,9 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
@@ -26,12 +27,12 @@ import com.finance_tracker.finance_tracker.core.ui.CategoryCard
 import com.finance_tracker.finance_tracker.core.ui.DraggableItem
 import com.finance_tracker.finance_tracker.core.ui.EmptyStub
 import com.finance_tracker.finance_tracker.core.ui.ItemWrapper
-import com.finance_tracker.finance_tracker.core.ui.dragContainerForDragHandle
 import com.finance_tracker.finance_tracker.core.ui.rememberDragDropState
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
 import com.finance_tracker.finance_tracker.domain.models.Category
 import dev.icerock.moko.resources.compose.stringResource
+import kotlinx.collections.immutable.ImmutableList
 
 private val CategoriesListContentPadding = 16.dp
 
@@ -106,7 +107,7 @@ internal fun CategorySettingsScreen() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CategoryDragColumn(
-    categories: List<Category>,
+    categories: ImmutableList<Category>,
     onClick: (Category) -> Unit,
     onSwap: (Int, Int) -> Unit,
     onCrossDeleteClick: (Category) -> Unit,
@@ -114,32 +115,36 @@ private fun CategoryDragColumn(
 ) {
     val navigationBarsHeight = LocalFixedInsets.current.navigationBarsHeight
 
-    val list = categories.toMutableStateList()
-
     val listState = rememberLazyListState()
-    val dragDropState = rememberDragDropState(listState, list) { fromIndex, toIndex ->
-        list.add(toIndex, list.removeAt(fromIndex))
+    val dragState = rememberDragDropState(
+        listState,
+        categories
+    ) { fromIndex, toIndex ->
         onSwap.invoke(fromIndex, toIndex)
     }
 
-    val itemShape = { index: Int ->
-        when (index) {
-            0 -> {
-                RoundedCornerShape(
-                    topStart = 12.dp,
-                    topEnd = 12.dp,
-                )
-            }
+    val itemShape by remember(categories.lastIndex) {
+        derivedStateOf {
+            { index: Int ->
+                when (index) {
+                    0 -> {
+                        RoundedCornerShape(
+                            topStart = 12.dp,
+                            topEnd = 12.dp,
+                        )
+                    }
 
-            categories.lastIndex -> {
-                RoundedCornerShape(
-                    bottomStart = 12.dp,
-                    bottomEnd = 12.dp
-                )
-            }
+                    categories.lastIndex -> {
+                        RoundedCornerShape(
+                            bottomStart = 12.dp,
+                            bottomEnd = 12.dp
+                        )
+                    }
 
-            else -> {
-                RoundedCornerShape(0.dp)
+                    else -> {
+                        RoundedCornerShape(0.dp)
+                    }
+                }
             }
         }
     }
@@ -154,32 +159,45 @@ private fun CategoryDragColumn(
             bottom = CategoriesListContentPadding + navigationBarsHeight
         ),
     ) {
-        itemsIndexed(list, key = { _, item -> item.id }) { index, category ->
-            DraggableItem(dragDropState, index) { isDragging ->
+        itemsIndexed(categories, key = { _, item -> item.id }) { index, category ->
+            DraggableItem(
+                key = category.id,
+                dragState = dragState,
+                index = index
+            ) { isDragging ->
                 val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
+                val itemShapeLambda by remember(index) {
+                    derivedStateOf { itemShape.invoke(index) }
+                }
                 Card(
                     elevation = elevation,
-                    shape = itemShape.invoke(index),
-                    modifier = Modifier
-                        .dragContainerForDragHandle(dragDropState = dragDropState, key = category.id)
+                    shape = itemShapeLambda
                 ) {
                     ItemWrapper(
                         isFirstItem = index == 0,
                         isLastItem = index == categories.lastIndex,
                     ) {
+                        val onClickLambda = remember(category) {
+                            { onClick.invoke(category) }
+                        }
+                        val onCrossDeleteClickLambda = remember(category) {
+                            { onCrossDeleteClick.invoke(category) }
+                        }
+                        val topPadding by remember(index) {
+                            derivedStateOf { if (index == 0) 8.dp else 0.dp }
+                        }
+                        val bottomPadding by remember(index) {
+                            derivedStateOf { if (index == categories.lastIndex) 8.dp else 0.dp }
+                        }
                         CategoryCard(
                             data = category,
                             modifier = Modifier
                                 .padding(
-                                    top = if (index == 0) 8.dp else 0.dp,
-                                    bottom = if (index == categories.lastIndex) 8.dp else 0.dp
+                                    top = topPadding,
+                                    bottom = bottomPadding
                                 ),
-                            onClick = {
-                                onClick.invoke(category)
-                            },
-                            onCrossDeleteClick = {
-                                onCrossDeleteClick.invoke(category)
-                            },
+                            onClick = onClickLambda,
+                            onCrossDeleteClick = onCrossDeleteClickLambda
                         )
                     }
                 }
@@ -187,4 +205,3 @@ private fun CategoryDragColumn(
         }
     }
 }
-

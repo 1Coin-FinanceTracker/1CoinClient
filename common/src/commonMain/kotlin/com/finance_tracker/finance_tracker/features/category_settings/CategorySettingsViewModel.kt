@@ -6,6 +6,9 @@ import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionType
 import com.finance_tracker.finance_tracker.domain.interactors.CategoriesInteractor
 import com.finance_tracker.finance_tracker.domain.models.Category
 import com.finance_tracker.finance_tracker.features.category_settings.analytcis.CategorySettingsAnalytics
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -15,10 +18,10 @@ class CategorySettingsViewModel(
     private val categorySettingsAnalytics: CategorySettingsAnalytics
 ): BaseViewModel<CategorySettingsAction>() {
 
-    private val _expenseCategories = MutableStateFlow<List<Category>>(emptyList())
+    private val _expenseCategories = MutableStateFlow<ImmutableList<Category>>(persistentListOf())
     val expenseCategories = _expenseCategories.asStateFlow()
 
-    private val _incomeCategories = MutableStateFlow<List<Category>>(emptyList())
+    private val _incomeCategories = MutableStateFlow<ImmutableList<Category>>(persistentListOf())
     val incomeCategories = _incomeCategories.asStateFlow()
 
     private val _selectedTransactionType = MutableStateFlow(TransactionTypeTab.Expense)
@@ -45,12 +48,14 @@ class CategorySettingsViewModel(
     private fun loadAllExpenseCategories() {
         viewModelScope.launch {
             _expenseCategories.value = categoriesInteractor.getAllExpenseCategories()
+                .toImmutableList()
         }
     }
 
     private fun loadAllIncomeCategories() {
         viewModelScope.launch {
             _incomeCategories.value = categoriesInteractor.getAllIncomeCategories()
+                .toImmutableList()
         }
     }
 
@@ -67,7 +72,7 @@ class CategorySettingsViewModel(
             category = fromItem
         )
 
-        _expenseCategories.value = newList
+        _expenseCategories.value = newList.toImmutableList()
         saveCategoriesOrder(
             categoryId1 = fromItem.id, newPosition1 = to,
             categoryId2 = toItem.id, newPosition2 = from
@@ -87,7 +92,7 @@ class CategorySettingsViewModel(
             category = fromItem
         )
 
-        _incomeCategories.value = newList
+        _incomeCategories.value = newList.toImmutableList()
         saveCategoriesOrder(
             categoryId1 = fromItem.id, newPosition1 = to,
             categoryId2 = toItem.id, newPosition2 = from

@@ -14,18 +14,19 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.ui.DraggableItem
-import com.finance_tracker.finance_tracker.core.ui.dragContainerForDragHandle
 import com.finance_tracker.finance_tracker.core.ui.rememberDragDropState
 import com.finance_tracker.finance_tracker.domain.models.DashboardWidgetData
 import com.finance_tracker.finance_tracker.features.dashboard_settings.views.DashboardItem
 import com.finance_tracker.finance_tracker.features.dashboard_settings.views.DashboardSettingsAppBar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 private val DashboardWidgetsContentPadding = 16.dp
 
@@ -46,7 +47,7 @@ internal fun DashboardSettingsScreen() {
             )
 
             val dashboardItems by viewModel.dashboardWidgets.collectAsState()
-            DragDashboardWidgetColumn(
+            DashboardWidgetDragColumn(
                 widgets = dashboardItems,
                 onClick = viewModel::onDashboardItemClick,
                 onSwap = viewModel::onDashboardItemPositionChange
@@ -57,19 +58,16 @@ internal fun DashboardSettingsScreen() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun DragDashboardWidgetColumn(
-    widgets: List<DashboardWidgetData>,
+private fun DashboardWidgetDragColumn(
+    widgets: ImmutableList<DashboardWidgetData>,
     onClick: (DashboardWidgetData) -> Unit,
     onSwap: (Int, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val navigationBarsHeight = LocalFixedInsets.current.navigationBarsHeight
 
-    val list = widgets.toMutableStateList()
-
     val listState = rememberLazyListState()
-    val dragDropState = rememberDragDropState(listState, list) { fromIndex, toIndex ->
-        list.add(toIndex, list.removeAt(fromIndex))
+    val dragState = rememberDragDropState(listState, widgets.toImmutableList()) { fromIndex, toIndex ->
         onSwap.invoke(fromIndex, toIndex)
     }
 
@@ -84,18 +82,23 @@ private fun DragDashboardWidgetColumn(
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        itemsIndexed(list, key = { _, item -> item.id }) { index, widget ->
-            DraggableItem(dragDropState, index) { isDragging ->
+        itemsIndexed(widgets, key = { _, item -> item.id }) { index, widget ->
+            DraggableItem(
+                key = widget.id,
+                dragState = dragState,
+                index = index
+            ) { isDragging ->
                 val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
                 Card(
                     elevation = elevation,
-                    shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier
-                        .dragContainerForDragHandle(dragDropState = dragDropState, key = widget.id)
+                    shape = RoundedCornerShape(12.dp)
                 ) {
+                    val onClickLambda = remember(widget) {
+                        {  onClick.invoke(widget) }
+                    }
                     DashboardItem(
                         data = widget,
-                        onClick = { onClick.invoke(widget) },
+                        onClick = onClickLambda,
                     )
                 }
             }

@@ -1,5 +1,6 @@
 
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("io.gitlab.arturbosch.detekt")
@@ -38,6 +39,25 @@ allprojects {
                     "androidTestFixturesDebug",
                     "androidTestFixturesRelease",
                 ).contains(sourceSet.name)
+            }
+        }
+    }
+}
+
+subprojects {
+    tasks.withType(KotlinCompile::class).configureEach {
+        kotlinOptions {
+            if (project.findProperty("myapp.enableComposeCompilerReports") == "true") {
+                freeCompilerArgs = freeCompilerArgs + listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                            project.buildDir.absolutePath + "/compose_metrics"
+                )
+                freeCompilerArgs = freeCompilerArgs + listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                            project.buildDir.absolutePath + "/compose_metrics"
+                )
             }
         }
     }

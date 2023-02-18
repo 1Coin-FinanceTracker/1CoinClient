@@ -7,6 +7,7 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -48,7 +49,7 @@ class DashboardSettingsRepository(
         )
     }
 
-    fun getDashboardWidgets(): Flow<List<DashboardWidgetData>> {
+    fun getDashboardWidgetsFlow(): Flow<List<DashboardWidgetData>> {
         return dashboardWidgetEntityQueries.getDashboardWidgets()
             .asFlow()
             .mapToList(Dispatchers.Default)
@@ -58,6 +59,10 @@ class DashboardSettingsRepository(
                 )
             }
             .map { items -> items.sortedBy { it.position } }
+    }
+
+    suspend fun getDashboardWidgets(): List<DashboardWidgetData> {
+        return getDashboardWidgetsFlow().first()
     }
 
     private fun getDashboardWidgets(

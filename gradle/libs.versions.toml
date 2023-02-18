@@ -32,6 +32,7 @@ viewmodel = "2.5.1"
 json = "20211205"
 lottie = "5.2.0"
 googleServicesAuth = "20.4.1"
+immutableCollections = "0.3.5"
 
 [libraries]
 gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "android_plugin" }
@@ -114,6 +115,8 @@ mokoResources-compose = { module = "dev.icerock.moko:resources-compose", version
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 
 googleServicesAuth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleServicesAuth" }
+
+immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutableCollections" }
 
 [bundles]
 odyssey = ["odyssey-core", "odyssey-compose"]
