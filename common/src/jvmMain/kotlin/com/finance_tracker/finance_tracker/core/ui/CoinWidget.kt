@@ -13,6 +13,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,20 +71,27 @@ internal fun CoinWidget(
             }
         }
 
+        val shape by remember(withBorder) {
+            derivedStateOf {
+                if (withBorder) {
+                    RoundedCornerShape(12.dp)
+                } else {
+                    RoundedCornerShape(0.dp)
+                }
+            }
+        }
         Box(
             modifier = Modifier
                 .`if`(withHorizontalPadding) {
                     padding(horizontal = HorizontalPadding)
                 }
                 .padding(top = 4.dp)
-                .`if`(withBorder) {
-                    border(
-                        width = 1.dp,
-                        color = CoinTheme.color.dividers,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                }
-                .clip(RoundedCornerShape(12.dp))
+                .border(
+                    width = if (withBorder) 1.dp else 0.dp,
+                    color = CoinTheme.color.dividers,
+                    shape = shape
+                )
+                .clip(shape)
                 .background(CoinTheme.color.background)
         ) {
             content.invoke()
