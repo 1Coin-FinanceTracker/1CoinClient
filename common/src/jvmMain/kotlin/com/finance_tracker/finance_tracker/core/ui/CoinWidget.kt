@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
 import com.finance_tracker.finance_tracker.core.common.`if`
@@ -88,7 +89,7 @@ internal fun CoinWidget(
                 .padding(top = 4.dp)
                 .border(
                     width = if (withBorder) 1.dp else 0.dp,
-                    color = CoinTheme.color.dividers,
+                    color = if (withBorder) CoinTheme.color.dividers else Color.Transparent,
                     shape = shape
                 )
                 .clip(shape)
