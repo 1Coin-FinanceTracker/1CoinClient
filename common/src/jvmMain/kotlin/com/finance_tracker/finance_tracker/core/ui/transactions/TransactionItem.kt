@@ -75,7 +75,7 @@ internal fun TransactionItem(
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = transaction.account.name,
+                text = transaction.primaryAccount.name,
                 style = CoinTheme.typography.subtitle2,
                 color = LocalContentColor.current.copy(alpha = 0.5f)
             )
@@ -83,7 +83,7 @@ internal fun TransactionItem(
 
         val sign = if (transaction.type == TransactionType.Income) "+" else "-"
         Text(
-            text = sign + transaction.amount.format(),
+            text = sign + transaction.primaryAmount.format(),
             style = CoinTheme.typography.body1,
             color = if (transaction.type == TransactionType.Income) {
                 CoinTheme.color.accentGreen

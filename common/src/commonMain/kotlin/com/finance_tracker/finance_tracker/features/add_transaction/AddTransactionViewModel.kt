@@ -1,9 +1,12 @@
 package com.finance_tracker.finance_tracker.features.add_transaction
 
+import com.finance_tracker.finance_tracker.core.common.combineExtended
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDate
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDateTime
+import com.finance_tracker.finance_tracker.core.common.stateIn
 import com.finance_tracker.finance_tracker.core.common.toString
 import com.finance_tracker.finance_tracker.core.common.view_models.BaseViewModel
+import com.finance_tracker.finance_tracker.core.feature_flags.FeaturesManager
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionType
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionTypeTab
@@ -16,13 +19,16 @@ import com.finance_tracker.finance_tracker.domain.models.Transaction
 import com.finance_tracker.finance_tracker.features.add_transaction.analytics.AddTransactionAnalytics
 import com.financetracker.financetracker.data.AccountsEntityQueries
 import com.financetracker.financetracker.data.CategoriesEntityQueries
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -32,7 +38,8 @@ class AddTransactionViewModel(
     private val accountsEntityQueries: AccountsEntityQueries,
     private val categoriesEntityQueries: CategoriesEntityQueries,
     params: AddTransactionScreenParams,
-    private val addTransactionAnalytics: AddTransactionAnalytics
+    private val addTransactionAnalytics: AddTransactionAnalytics,
+    val featuresManager: FeaturesManager
 ): BaseViewModel<AddTransactionAction>() {
 
     private val preselectedAccount: Account? = params.preselectedAccount
@@ -43,28 +50,42 @@ class AddTransactionViewModel(
     private val _accounts: MutableStateFlow<List<Account>> = MutableStateFlow(emptyList())
     val accounts: StateFlow<List<Account>> = _accounts.asStateFlow()
 
-    private val _selectedAccount: MutableStateFlow<Account?> = MutableStateFlow(
-        value = transaction?.account ?: params.preselectedAccount
+    private val _selectedPrimaryAccount: MutableStateFlow<Account?> = MutableStateFlow(
+        value = transaction?.primaryAccount ?: params.preselectedAccount
     )
-    val selectedAccount: StateFlow<Account?> = _selectedAccount.asStateFlow()
+    val selectedPrimaryAccount: StateFlow<Account?> = _selectedPrimaryAccount.asStateFlow()
+
+    private val _selectedSecondaryAccount: MutableStateFlow<Account?> = MutableStateFlow(
+        value = transaction?.secondaryAccount
+    )
+    val selectedSecondaryAccount: StateFlow<Account?> = _selectedSecondaryAccount.asStateFlow()
 
     val transactionInsertionDate = transaction?.insertionDateTime
-    val currency = selectedAccount
+    val primaryCurrency = selectedPrimaryAccount
         .map { it?.balance?.currency }
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+        .stateIn(viewModelScope, initialValue = null)
 
-    private val _selectedCategory: MutableStateFlow<Category?> = MutableStateFlow(transaction?._category)
-    val selectedCategory: StateFlow<Category?> = _selectedCategory.asStateFlow()
+    val secondaryCurrency = selectedSecondaryAccount
+        .map { it?.balance?.currency }
+        .stateIn(viewModelScope, initialValue = null)
+
+    private val selectedIncomeCategory = MutableStateFlow(transaction?._category)
+    private val selectedExpenseCategory = MutableStateFlow(transaction?._category)
 
     private val initialSelectedDate = transaction?.dateTime?.date ?: Clock.System.currentLocalDate()
     private val _selectedDate: MutableStateFlow<LocalDate> = MutableStateFlow(initialSelectedDate)
     val selectedDate: StateFlow<LocalDate> = _selectedDate.asStateFlow()
 
-    private val initialAmount = transaction?.amount
-    private val _amountText: MutableStateFlow<String> = MutableStateFlow(
+    private val initialAmount = transaction?.primaryAmount
+    private val _primaryAmountText: MutableStateFlow<String> = MutableStateFlow(
         initialAmount?.amountValue?.toString(precision = 2) ?: "0"
     )
-    val amountText: StateFlow<String> = _amountText.asStateFlow()
+    val primaryAmountText: StateFlow<String> = _primaryAmountText.asStateFlow()
+
+    private val _secondaryAmountText: MutableStateFlow<String> = MutableStateFlow(
+        initialAmount?.amountValue?.toString(precision = 2) ?: "0"
+    )
+    val secondaryAmountText: StateFlow<String> = _secondaryAmountText.asStateFlow()
 
     private val _expenseCategories: MutableStateFlow<List<Category>> = MutableStateFlow(emptyList())
     val expenseCategories: StateFlow<List<Category>> = _expenseCategories.asStateFlow()
@@ -72,33 +93,91 @@ class AddTransactionViewModel(
     private val _incomeCategories: MutableStateFlow<List<Category>> = MutableStateFlow(emptyList())
     val incomeCategories: StateFlow<List<Category>> = _incomeCategories.asStateFlow()
 
-    private val steps = EnterTransactionStep.values()
-    val firstStep = when {
-        preselectedAccount != null -> {
-            EnterTransactionStep.Category
-        }
-        transaction == null -> {
-            steps.first()
-        }
-        else -> {
-            null
-        }
-    }
-
-    @Suppress("UnnecessaryParentheses")
-    val isAddTransactionEnabled = combine(selectedAccount, selectedCategory, amountText) {
-            selectedAccount, selectedCategory, amountText ->
-        selectedAccount != null && selectedCategory != null && (amountText.toDoubleOrNull() ?: 0.0) > 0.0
-    }
-        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = false)
-
     private val initialSelectedTransactionType = transaction?.type?.toTransactionTypeTab() ?: TransactionTypeTab.Expense
     private val _selectedTransactionType: MutableStateFlow<TransactionTypeTab> =
         MutableStateFlow(initialSelectedTransactionType)
     val selectedTransactionType: StateFlow<TransactionTypeTab> = _selectedTransactionType.asStateFlow()
 
+    private val flowStates = AddTransactionFlowState.createNewStatesForAllFlow()
+    private val defaultFlow = AddTransactionFlow.Expense
+    private val currentFlowState = selectedTransactionType
+        .map {
+            flowStates[it.toAddTransactionFlow()]
+                ?: error("No FlowState for transactionTypeTab $it")
+        }
+        .stateIn(viewModelScope, initialValue = AddTransactionFlowState(defaultFlow))
+    val currentFlow = currentFlowState
+        .map { it.flow }
+        .stateIn(viewModelScope, initialValue = defaultFlow)
+
+    val selectedCategory = combine(currentFlow, selectedIncomeCategory, selectedExpenseCategory) {
+            currentFlow, selectedIncomeCategory, selectedExpenseCategory ->
+        when (currentFlow) {
+            AddTransactionFlow.Expense -> selectedExpenseCategory
+            AddTransactionFlow.Income -> selectedIncomeCategory
+            AddTransactionFlow.Transfer -> null
+        }
+    }.stateIn(viewModelScope, initialValue = null)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val currentStep = currentFlowState
+        .flatMapLatest { it.currentStepFlow }
+        .stateIn(viewModelScope, initialValue = null)
+
+    @Suppress("UnnecessaryParentheses")
+    val isAddTransactionEnabled = combineExtended(
+        currentFlow, selectedPrimaryAccount, selectedSecondaryAccount,
+        selectedCategory, primaryAmountText, secondaryAmountText
+    ) { currentFlow, selectedPrimaryAccount, selectedSecondaryAccount,
+        selectedCategory, primaryAmountText, secondaryAmountText ->
+
+        when (currentFlow) {
+            AddTransactionFlow.Expense,
+            AddTransactionFlow.Income -> {
+                selectedPrimaryAccount != null &&
+                        selectedCategory != null &&
+                        primaryAmountText.isNotEmptyAmount()
+            }
+            AddTransactionFlow.Transfer -> {
+                selectedPrimaryAccount != null &&
+                        selectedSecondaryAccount != null &&
+                        primaryAmountText.isNotEmptyAmount() &&
+                        secondaryAmountText.isNotEmptyAmount()
+            }
+        }
+    }
+        .stateIn(viewModelScope, initialValue = false)
+
     init {
         addTransactionAnalytics.trackAddTransactionScreenOpen()
+        observeCurrentFlowState()
+        initCurrentStep()
+    }
+
+    @Suppress("UnnecessaryParentheses")
+    private fun String.isNotEmptyAmount(): Boolean {
+        return (this.toDoubleOrNull() ?: 0.0) > 0.0
+    }
+
+    private fun observeCurrentFlowState() {
+        viewModelScope.launch {
+            currentFlowState
+                .onEach { currentFlowState ->
+                    currentFlowState.setCurrentStepForFlowState(
+                        isPrimaryAccountEmpty = selectedPrimaryAccount.value == null,
+                        isSecondaryAccountEmpty = selectedSecondaryAccount.value == null,
+                        isExpenseCategoryEmpty = selectedExpenseCategory.value == null,
+                        isIncomeCategoryEmpty = selectedIncomeCategory.value == null
+                    )
+                }
+                .launchIn(this)
+        }
+    }
+
+    private fun initCurrentStep() {
+        if (preselectedAccount != null) {
+            currentFlowState.value.setStepAfter(EnterTransactionStep.PrimaryAccount)
+        }
     }
 
     fun onScreenComposed() {
@@ -160,6 +239,15 @@ class AddTransactionViewModel(
         }
     }
 
+    fun onBackClick() {
+        val flowState = currentFlowState.value
+        if (flowState.hasPreviousStep) {
+            flowState.previous()
+        } else {
+            viewAction = AddTransactionAction.Close
+        }
+    }
+
     fun onDuplicateTransactionClick(transaction: Transaction?) {
         if (transaction == null) return
 
@@ -174,12 +262,32 @@ class AddTransactionViewModel(
 
     fun onAccountSelect(account: Account) {
         addTransactionAnalytics.trackAccountSelect(account)
-        _selectedAccount.value = account
+        when (currentStep.value) {
+            EnterTransactionStep.PrimaryAccount -> {
+                _selectedPrimaryAccount.value = account
+            }
+            EnterTransactionStep.SecondaryAccount -> {
+                _selectedSecondaryAccount.value = account
+            }
+            else -> {
+            }
+        }
+        currentFlowState.value.next()
     }
 
     fun onCategorySelect(category: Category) {
         addTransactionAnalytics.trackCategorySelect(category)
-        _selectedCategory.value = category
+        when (currentFlow.value) {
+            AddTransactionFlow.Expense -> {
+                selectedExpenseCategory.value = category
+            }
+            AddTransactionFlow.Income -> {
+                selectedIncomeCategory.value = category
+            }
+            else -> {
+            }
+        }
+        currentFlowState.value.next()
     }
 
     fun onDateSelect(date: LocalDate) {
@@ -192,41 +300,13 @@ class AddTransactionViewModel(
     }
 
     fun onKeyboardButtonClick(command: KeyboardCommand) {
-        val amountText = _amountText.value
-        var newAmountText = amountText
-        when (command) {
-            KeyboardCommand.Delete -> {
-                when {
-                    amountText.length <= 1 && amountText.toDouble() == 0.0 -> {
-                        /* ignore */
-                    }
-
-                    amountText.length <= 1 && amountText.toDouble() != 0.0 -> {
-                        newAmountText = "0"
-                    }
-
-                    else -> {
-                        newAmountText = newAmountText.dropLast(1)
-                    }
-                }
-            }
-
-            is KeyboardCommand.Digit -> {
-                if (amountText == "0") {
-                    newAmountText = command.value.toString()
-                } else {
-                    newAmountText += command.value.toString()
-                }
-            }
-
-            KeyboardCommand.Point -> {
-                if (!newAmountText.contains(".")) {
-                    newAmountText += "."
-                }
-            }
+        val amountTextStateFlow = if (currentStep.value == EnterTransactionStep.SecondaryAmount) {
+            _secondaryAmountText
+        } else {
+            _primaryAmountText
         }
-        if (newAmountText.matches(Regex("^\\d*\\.?\\d*"))) {
-            _amountText.value = newAmountText
+        amountTextStateFlow.update {
+            amountTextStateFlow.value.applyKeyboardCommand(command)
         }
     }
 
@@ -235,17 +315,6 @@ class AddTransactionViewModel(
             transactionType = transactionTypeTab.toTransactionType()
         )
         _selectedTransactionType.value = transactionTypeTab
-        resetSelectedCategory(transactionTypeTab)
-    }
-
-    private fun resetSelectedCategory(transactionTypeTab: TransactionTypeTab) {
-        val currentCategories = when (transactionTypeTab) {
-            TransactionTypeTab.Income -> _incomeCategories.value
-            TransactionTypeTab.Expense -> _expenseCategories.value
-        }
-        if (selectedCategory.value !in currentCategories) {
-            _selectedCategory.value = null
-        }
     }
 
     fun onAccountAdd() {
@@ -264,16 +333,43 @@ class AddTransactionViewModel(
     }
 
     fun onCurrentStepSelect(step: EnterTransactionStep) {
+        trackCurrentStepSelect(step)
+        currentFlowState.value.setStep(step)
+    }
+
+    private fun trackCurrentStepSelect(step: EnterTransactionStep) {
         when (step) {
-            EnterTransactionStep.Account -> {
-                addTransactionAnalytics.trackAccountClick()
+            EnterTransactionStep.PrimaryAccount -> {
+                addTransactionAnalytics.trackPrimaryAccountClick()
             }
             EnterTransactionStep.Category -> {
                 addTransactionAnalytics.trackCategoryClick()
             }
-            EnterTransactionStep.Amount -> {
-                addTransactionAnalytics.trackAmountClick(amountText.value)
+            EnterTransactionStep.PrimaryAmount -> {
+                addTransactionAnalytics.trackPrimaryAmountClick(primaryAmountText.value)
             }
+            EnterTransactionStep.SecondaryAccount -> {
+                addTransactionAnalytics.trackSecondaryAccountClick()
+            }
+            EnterTransactionStep.SecondaryAmount -> {
+                addTransactionAnalytics.trackSecondaryAmountClick(secondaryAmountText.value)
+            }
+        }
+    }
+
+    fun onPrimaryAmountClick() {
+        onCurrentStepSelect(EnterTransactionStep.PrimaryAmount)
+    }
+
+    fun onSecondaryAmountClick() {
+        onCurrentStepSelect(EnterTransactionStep.SecondaryAmount)
+    }
+
+    private fun TransactionTypeTab.toAddTransactionFlow(): AddTransactionFlow {
+        return when (this) {
+            TransactionTypeTab.Expense -> AddTransactionFlow.Expense
+            TransactionTypeTab.Income -> AddTransactionFlow.Income
+            TransactionTypeTab.Transfer -> AddTransactionFlow.Transfer
         }
     }
 }

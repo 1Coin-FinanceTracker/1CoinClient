@@ -22,7 +22,7 @@ class DetailAccountAnalytics: BaseAnalytics() {
         trackClick(
             eventName = "Transaction",
             properties = mapOf(
-                "account_name" to transaction.account.name,
+                "account_name" to transaction.primaryAccount.name,
                 "type" to transaction.type.analyticsName
             )
         )

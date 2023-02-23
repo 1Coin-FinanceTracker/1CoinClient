@@ -99,6 +99,9 @@ internal fun CategorySettingsScreen() {
                         )
                     }
                 }
+                TransactionTypeTab.Transfer -> {
+                    /* empty */
+                }
             }
         }
     }

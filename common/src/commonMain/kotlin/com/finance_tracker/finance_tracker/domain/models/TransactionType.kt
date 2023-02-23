@@ -4,5 +4,6 @@ enum class TransactionType(
     val analyticsName: String
 ) {
     Expense(analyticsName = "Expense"),
-    Income(analyticsName = "Income")
+    Income(analyticsName = "Income"),
+    Transfer(analyticsName = "Transfer"),
 }

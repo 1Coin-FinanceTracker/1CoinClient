@@ -31,6 +31,9 @@ internal fun AnalyticsTrendWidget(
             TransactionTypeTab.Income -> {
                 stringResource(MR.strings.income_analytics_trend)
             }
+            TransactionTypeTab.Transfer -> {
+                ""
+            }
         },
         withBorder = true
     ) {

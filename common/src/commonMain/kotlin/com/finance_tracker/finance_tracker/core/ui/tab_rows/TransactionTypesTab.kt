@@ -16,12 +16,17 @@ enum class TransactionTypeTab(
         textId = MR.strings.tab_income,
         analyticsName = "Income"
     ),
+    Transfer(
+        textId = MR.strings.tab_transfer,
+        analyticsName = "Transfer"
+    ),
 }
 
 fun TransactionTypeTab.toTransactionType(): TransactionType {
     return when (this) {
         TransactionTypeTab.Expense -> TransactionType.Expense
         TransactionTypeTab.Income -> TransactionType.Income
+        TransactionTypeTab.Transfer -> TransactionType.Transfer
     }
 }
 
@@ -29,5 +34,6 @@ fun TransactionType.toTransactionTypeTab(): TransactionTypeTab {
     return when (this) {
         TransactionType.Expense -> TransactionTypeTab.Expense
         TransactionType.Income -> TransactionTypeTab.Income
+        TransactionType.Transfer -> TransactionTypeTab.Transfer
     }
 }

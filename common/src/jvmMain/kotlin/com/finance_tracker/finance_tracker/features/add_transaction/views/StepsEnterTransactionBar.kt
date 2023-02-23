@@ -16,6 +16,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -28,15 +31,18 @@ import com.finance_tracker.finance_tracker.core.theme.staticTextSize
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.domain.models.Category
+import com.finance_tracker.finance_tracker.features.add_transaction.AddTransactionFlow
 import com.finance_tracker.finance_tracker.features.add_transaction.EnterTransactionStep
 import com.finance_tracker.finance_tracker.features.add_transaction.views.enter_transaction_controller.AccountCard
 import dev.icerock.moko.resources.compose.stringResource
 import ru.alexgladkov.odyssey.compose.helpers.noRippleClickable
 
 data class StepsEnterTransactionBarData(
-    val currentStep: EnterTransactionStep? = EnterTransactionStep.Account,
-    val accountData: Account? = null,
-    val categoryData: Category? = null
+    val flow: AddTransactionFlow,
+    val currentStep: EnterTransactionStep? = EnterTransactionStep.PrimaryAccount,
+    val primaryAccountData: Account? = null,
+    val secondaryAccountData: Account? = null,
+    val categoryData: Category? = null,
 )
 
 @Composable
@@ -45,6 +51,14 @@ internal fun StepsEnterTransactionBar(
     modifier: Modifier = Modifier,
     onStepSelect: (EnterTransactionStep) -> Unit = {}
 ) {
+    val steps by remember(data.flow.steps) {
+        derivedStateOf {
+            data.flow.steps.filter {
+                it != EnterTransactionStep.PrimaryAmount &&
+                        it != EnterTransactionStep.SecondaryAmount
+            }
+        }
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -55,30 +69,49 @@ internal fun StepsEnterTransactionBar(
         horizontalArrangement = Arrangement.Center
     ) {
 
-        AccountStage(
-            data = data,
-            onStageSelect = onStepSelect
-        )
+        steps.forEachIndexed { index, enterTransactionStep ->
+            when (enterTransactionStep) {
+                EnterTransactionStep.PrimaryAccount,
+                EnterTransactionStep.SecondaryAccount -> {
+                    AccountStage(
+                        data = data,
+                        currentStep = enterTransactionStep,
+                        onStageSelect = onStepSelect
+                    )
+                }
+                EnterTransactionStep.Category -> {
+                    CategoryStage(
+                        data = data,
+                        onStageSelect = onStepSelect
+                    )
+                }
+                EnterTransactionStep.PrimaryAmount,
+                EnterTransactionStep.SecondaryAmount -> {
+                }
+            }
 
-        NextIcon()
-
-        CategoryStage(
-            data = data,
-            onStageSelect = onStepSelect
-        )
+            if (index < steps.lastIndex) {
+                NextIcon()
+            }
+        }
     }
 }
 
 @Composable
 internal fun RowScope.AccountStage(
     data: StepsEnterTransactionBarData,
+    currentStep: EnterTransactionStep,
     modifier: Modifier = Modifier,
     onStageSelect: (EnterTransactionStep) -> Unit = {}
 ) {
     StageText(
         modifier = modifier,
-        currentStep = EnterTransactionStep.Account,
-        data = data.accountData,
+        currentStep = currentStep,
+        data = if (currentStep == EnterTransactionStep.SecondaryAccount) {
+            data.secondaryAccountData
+        } else {
+            data.primaryAccountData
+        },
         selectedStep = data.currentStep,
         onStepSelect = onStageSelect,
         dataContent = {

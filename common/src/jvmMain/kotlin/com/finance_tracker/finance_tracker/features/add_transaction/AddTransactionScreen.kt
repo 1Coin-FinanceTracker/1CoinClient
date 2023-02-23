@@ -1,9 +1,11 @@
 package com.finance_tracker.finance_tracker.features.add_transaction
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
@@ -15,12 +17,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.BackHandler
 import com.finance_tracker.finance_tracker.core.common.DialogConfigurations
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
+import com.finance_tracker.finance_tracker.core.common.asSp
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDateTime
 import com.finance_tracker.finance_tracker.core.common.`if`
 import com.finance_tracker.finance_tracker.core.common.toDateTime
@@ -39,6 +43,7 @@ import com.finance_tracker.finance_tracker.features.add_transaction.views.StepsE
 import com.finance_tracker.finance_tracker.features.add_transaction.views.StepsEnterTransactionBarData
 import com.finance_tracker.finance_tracker.features.add_transaction.views.enter_transaction_controller.EnterTransactionController
 import dev.icerock.moko.resources.compose.stringResource
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
 import org.koin.core.parameter.parametersOf
 import ru.alexgladkov.odyssey.compose.controllers.ModalController
@@ -62,49 +67,88 @@ internal fun AddTransactionScreen(
         }
 
         val selectedTransactionType by viewModel.selectedTransactionType.collectAsState()
+        val currentStep by viewModel.currentStep.collectAsState()
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            val amountText by viewModel.amountText.collectAsState()
-            val accountData by viewModel.selectedAccount.collectAsState()
+            val primaryAmountText by viewModel.primaryAmountText.collectAsState()
+            val secondaryAmountText by viewModel.secondaryAmountText.collectAsState()
+            val primaryAccountData by viewModel.selectedPrimaryAccount.collectAsState()
+            val secondaryAccountData by viewModel.selectedSecondaryAccount.collectAsState()
             val categoryData by viewModel.selectedCategory.collectAsState()
             val localDate by viewModel.selectedDate.collectAsState()
-            val currencyData by viewModel.currency.collectAsState()
-            val amountDouble = amountText.toDoubleOrNull() ?: 0.0
+            val primaryCurrencyData by viewModel.primaryCurrency.collectAsState()
+            val secondaryCurrencyData by viewModel.secondaryCurrency.collectAsState()
+            val primaryAmountDouble = primaryAmountText.toDoubleOrNull() ?: 0.0
+            val secondaryAmountDouble = secondaryAmountText.toDoubleOrNull() ?: 0.0
+            val currentFlow by viewModel.currentFlow.collectAsState()
             val isAddTransactionEnabled by viewModel.isAddTransactionEnabled.collectAsState()
             val transactionInsertionDate = viewModel.transactionInsertionDate
             val onAddTransaction = { fromButtonClick: Boolean ->
-                val account = accountData
-                val currency = currencyData
-                if (account != null && currency != null) {
-                    viewModel.onAddTransactionClick(
-                        transaction = Transaction(
-                            type = selectedTransactionType.toTransactionType(),
-                            account = account,
-                            _category = categoryData,
-                            amount = Amount(
-                                currency = currency,
-                                amountValue = amountDouble
+                val primaryAccount = primaryAccountData
+                val primaryCurrency = primaryCurrencyData
+                if (currentFlow == AddTransactionFlow.Transfer) {
+                    val secondaryAccount = secondaryAccountData
+                    val secondaryCurrency = secondaryCurrencyData
+
+                    @Suppress("ComplexCondition")
+                    if (
+                        primaryAccount != null &&
+                        secondaryAccount != null &&
+                        primaryCurrency != null &&
+                        secondaryCurrency != null
+                    ) {
+                        viewModel.onAddTransactionClick(
+                            transaction = Transaction(
+                                type = selectedTransactionType.toTransactionType(),
+                                primaryAccount = primaryAccount,
+                                _category = null,
+                                primaryAmount = Amount(
+                                    currency = primaryCurrency,
+                                    amountValue = primaryAmountDouble
+                                ),
+                                secondaryAmount = Amount(
+                                    currency = secondaryCurrency,
+                                    amountValue = secondaryAmountDouble
+                                ),
+                                secondaryAccount = secondaryAccount,
+                                dateTime = localDate.toDateTime(),
+                                insertionDateTime = Clock.System.currentLocalDateTime()
                             ),
-                            dateTime = localDate.toDateTime(),
-                            insertionDateTime = Clock.System.currentLocalDateTime()
-                        ),
-                        isFromButtonClick = fromButtonClick
-                    )
+                            isFromButtonClick = fromButtonClick
+                        )
+                    }
+                } else {
+                    if (primaryAccount != null && primaryCurrency != null) {
+                        viewModel.onAddTransactionClick(
+                            transaction = Transaction(
+                                type = selectedTransactionType.toTransactionType(),
+                                primaryAccount = primaryAccount,
+                                _category = categoryData,
+                                primaryAmount = Amount(
+                                    currency = primaryCurrency,
+                                    amountValue = primaryAmountDouble
+                                ),
+                                dateTime = localDate.toDateTime(),
+                                insertionDateTime = Clock.System.currentLocalDateTime()
+                            ),
+                            isFromButtonClick = fromButtonClick
+                        )
+                    }
                 }
             }
             val onEditTransaction = { fromButtonClick: Boolean ->
-                val account = accountData
-                val currency = currencyData
+                val account = primaryAccountData
+                val currency = primaryCurrencyData
                 if (account != null && currency != null) {
                     viewModel.onEditTransactionClick(
                         transaction = Transaction(
                             type = selectedTransactionType.toTransactionType(),
-                            account = account,
+                            primaryAccount = account,
                             _category = categoryData,
-                            amount = Amount(
+                            primaryAmount = Amount(
                                 currency = currency,
-                                amountValue = amountDouble
+                                amountValue = primaryAmountDouble
                             ),
                             dateTime = localDate.toDateTime(),
                             insertionDateTime = transactionInsertionDate
@@ -116,6 +160,7 @@ internal fun AddTransactionScreen(
             CategoriesAppBar(
                 doneButtonEnabled = isAddTransactionEnabled,
                 selectedTransactionType = selectedTransactionType,
+                featuresManager = viewModel.featuresManager,
                 onTransactionTypeSelect = viewModel::onTransactionTypeSelect,
                 onDoneClick = {
                     if (viewModel.isEditMode) {
@@ -126,19 +171,38 @@ internal fun AddTransactionScreen(
                 }
             )
 
-            var currentStep by rememberSaveable { mutableStateOf(viewModel.firstStep) }
-
-            AmountTextField(
+            Column(
                 modifier = Modifier
                     .weight(1f),
-                currency = currencyData,
-                amount = amountText,
-                active = currentStep == EnterTransactionStep.Amount,
-                onClick = {
-                    viewModel.onCurrentStepSelect(EnterTransactionStep.Amount)
-                    currentStep = EnterTransactionStep.Amount
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AmountTextField(
+                    currency = primaryCurrencyData,
+                    amount = primaryAmountText,
+                    amountFontSize = if (currentFlow == AddTransactionFlow.Transfer) {
+                        38.dp.asSp()
+                    } else {
+                        42.dp.asSp()
+                    },
+                    active = currentStep == EnterTransactionStep.PrimaryAmount,
+                    label = stringResource(MR.strings.add_transaction_amount),
+                    onClick = viewModel::onPrimaryAmountClick
+                )
+
+                if (currentFlow == AddTransactionFlow.Transfer) {
+                    AmountTextField(
+                        modifier = Modifier
+                            .padding(top = 24.dp),
+                        currency = secondaryCurrencyData,
+                        amount = secondaryAmountText,
+                        amountFontSize = 24.dp.asSp(),
+                        active = currentStep == EnterTransactionStep.SecondaryAmount,
+                        label = stringResource(MR.strings.add_transaction_target_amount),
+                        onClick = viewModel::onSecondaryAmountClick
+                    )
                 }
-            )
+            }
 
             CalendarDayView(
                 date = localDate,
@@ -157,11 +221,7 @@ internal fun AddTransactionScreen(
                     mutableStateOf(currentStep?.let { it.ordinal - 1 })
                 }
                 BackHandler {
-                    if (currentStep != viewModel.firstStep) {
-                        currentStep = currentStep?.previous()
-                    } else {
-                        navController.popBackStack()
-                    }
+                    viewModel.onBackClick()
                 }
                 LaunchedEffect(currentStep) {
                     previousStepIndex = currentStep?.ordinal
@@ -178,19 +238,19 @@ internal fun AddTransactionScreen(
 
                         StepsEnterTransactionBar(
                             data = StepsEnterTransactionBarData(
+                                flow = currentFlow,
                                 currentStep = currentStep,
-                                accountData = accountData,
+                                primaryAccountData = primaryAccountData,
+                                secondaryAccountData = secondaryAccountData,
                                 categoryData = categoryData
                             ),
-                            onStepSelect = {
-                                viewModel.onCurrentStepSelect(it)
-                                currentStep = it
-                            }
+                            onStepSelect = viewModel::onCurrentStepSelect
                         )
 
                         val categoriesFlow = when (selectedTransactionType) {
                             TransactionTypeTab.Expense -> viewModel.expenseCategories
                             TransactionTypeTab.Income -> viewModel.incomeCategories
+                            TransactionTypeTab.Transfer -> MutableStateFlow(emptyList())
                         }
                         val accounts by viewModel.accounts.collectAsState()
                         val categories by categoriesFlow.collectAsState()
@@ -211,15 +271,9 @@ internal fun AddTransactionScreen(
                                 currentStep!!.ordinal >= previousStepIndex!! -> 1
                                 else -> -1
                             },
-                            onAccountSelect = {
-                                viewModel.onAccountSelect(it)
-                                currentStep = currentStep?.next()
-                            },
+                            onAccountSelect = viewModel::onAccountSelect,
                             onAccountAdd = viewModel::onAccountAdd,
-                            onCategorySelect = {
-                                viewModel.onCategorySelect(it)
-                                currentStep = currentStep?.next()
-                            },
+                            onCategorySelect = viewModel::onCategorySelect,
                             onCategoryAdd = viewModel::onCategoryAdd,
                             onKeyboardButtonClick = { command ->
                                 viewModel.onKeyboardButtonClick(command)

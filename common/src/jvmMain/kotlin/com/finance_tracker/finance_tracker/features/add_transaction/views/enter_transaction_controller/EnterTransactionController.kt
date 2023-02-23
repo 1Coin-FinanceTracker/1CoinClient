@@ -51,7 +51,8 @@ internal fun EnterTransactionController(
             }
         ) { targetStep ->
             when (targetStep) {
-                EnterTransactionStep.Account -> {
+                EnterTransactionStep.PrimaryAccount,
+                EnterTransactionStep.SecondaryAccount-> {
                     AccountSelector(
                         accounts = accounts,
                         onAccountSelect = onAccountSelect,
@@ -67,7 +68,8 @@ internal fun EnterTransactionController(
                     )
                 }
 
-                EnterTransactionStep.Amount -> {
+                EnterTransactionStep.PrimaryAmount,
+                EnterTransactionStep.SecondaryAmount -> {
                     AmountKeyboard(
                         onButtonClick = onKeyboardButtonClick
                     )

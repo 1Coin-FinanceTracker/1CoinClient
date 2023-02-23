@@ -6,5 +6,6 @@ enum class FeatureFlag(
     val isEnabled: Boolean
 ) {
     Authorization(isEnabled = AppBuildConfig.isTestBuild),
-    WidgetsSettings(isEnabled = AppBuildConfig.isTestBuild)
+    WidgetsSettings(isEnabled = AppBuildConfig.isTestBuild),
+    Transfer(isEnabled = AppBuildConfig.isTestBuild),
 }

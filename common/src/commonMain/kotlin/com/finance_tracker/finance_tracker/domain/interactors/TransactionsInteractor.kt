@@ -48,7 +48,7 @@ class TransactionsInteractor(
         val oldTransactionAmount = oldTransaction.signedAmountValue()
         val newTransactionAmount = newTransaction.signedAmountValue()
 
-        val accountId = transaction.account.id
+        val accountId = transaction.primaryAccount.id
         val accountBalanceDiff = newTransactionAmount - oldTransactionAmount
         accountsRepository.increaseAccountBalance(accountId, accountBalanceDiff)
     }
@@ -56,7 +56,7 @@ class TransactionsInteractor(
     private fun Transaction?.signedAmountValue(): Double {
         if (this == null) return 0.0
 
-        return amount.amountValue.unaryMinusIf { type == TransactionType.Expense }
+        return primaryAmount.amountValue.unaryMinusIf { type == TransactionType.Expense }
     }
 
     private fun Double.unaryMinusIf(condition: () -> Boolean): Double {
@@ -128,7 +128,7 @@ class TransactionsInteractor(
         return withContext(Dispatchers.Default) {
             val transactions = transactionsRepository.getTransactions(transactionType, yearMonth)
             val totalAmount = transactions.sumOf {
-                it.amount.convertToCurrency(currencyRates, primaryCurrency)
+                it.primaryAmount.convertToCurrency(currencyRates, primaryCurrency)
             }
 
             val sortRules: (TxsByCategoryChart.Piece) -> Double = {
@@ -142,7 +142,7 @@ class TransactionsInteractor(
                         amount = Amount(
                             currency = primaryCurrency,
                             amountValue = transactions.sumOf {
-                                it.amount.convertToCurrency(currencyRates, primaryCurrency)
+                                it.primaryAmount.convertToCurrency(currencyRates, primaryCurrency)
                             }
                         ),
                         percentValue = 0f,

@@ -11,6 +11,7 @@
     <string name="deleting_account">Удаление счета</string>
     <string name="tab_income">Доход</string>
     <string name="tab_expense">Расход</string>
+    <string name="tab_transfer">Перевод</string>
     <string name="total">Всего</string>
 
     <string name="week">Неделя</string>
@@ -120,6 +121,7 @@
 
     <!-- Add transaction -->
     <string name="add_transaction_amount">Сумма</string>
+    <string name="add_transaction_target_amount">Целевая сумма</string>
     <string name="add_transaction_stage_account">Счет</string>
     <string name="add_transaction_stage_category">Категория</string>
     <string name="add_transaction_today">Сегодня</string>

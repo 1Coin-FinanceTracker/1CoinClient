@@ -63,10 +63,10 @@ class TransactionsRepository(
             transactionsEntityQueries.insertTransaction(
                 id = transaction.id,
                 type = transaction.type,
-                amount = transaction.amount.amountValue,
-                amountCurrency = transaction.amount.currency.code,
+                amount = transaction.primaryAmount.amountValue,
+                amountCurrency = transaction.primaryAmount.currency.code,
                 categoryId = transaction._category?.id,
-                accountId = transaction.account.id,
+                accountId = transaction.primaryAccount.id,
                 insertionDate = transaction.insertionDateTime ?: Clock.System.currentLocalDateTime(),
                 date = transaction.dateTime,
             )

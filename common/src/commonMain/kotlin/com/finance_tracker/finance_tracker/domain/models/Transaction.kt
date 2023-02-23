@@ -8,8 +8,10 @@ import kotlinx.datetime.LocalDateTime
 data class Transaction(
     val id: Long? = null,
     val type: TransactionType,
-    val account: Account,
-    val amount: Amount = Amount.default,
+    val primaryAccount: Account,
+    val secondaryAccount: Account? = null,
+    val primaryAmount: Amount = Amount.default,
+    val secondaryAmount: Amount? = null,
     @Suppress("ConstructorParameterNaming")
     val _category: Category? = null,
     val dateTime: LocalDateTime,
@@ -24,8 +26,8 @@ data class Transaction(
         val EMPTY = Transaction(
             id = null,
             type = TransactionType.Expense,
-            account = Account.EMPTY,
-            amount = Amount.default,
+            primaryAccount = Account.EMPTY,
+            primaryAmount = Amount.default,
             _category = null,
             dateTime = Clock.System.currentLocalDateTime(),
             insertionDateTime = null

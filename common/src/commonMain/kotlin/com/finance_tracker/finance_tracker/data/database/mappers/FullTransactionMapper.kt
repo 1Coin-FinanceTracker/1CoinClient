@@ -37,7 +37,7 @@ val fullTransactionMapper: (
     Transaction(
         id = id,
         type = type,
-        account = Account(
+        primaryAccount = Account(
             id = accountId ?: 0L,
             type = accountType,
             colorModel = AccountColorModel.from(accountColorId),
@@ -56,7 +56,7 @@ val fullTransactionMapper: (
         } else {
                null
         },
-        amount = Amount(
+        primaryAmount = Amount(
             currency = currency,
             amountValue = amount
         ),

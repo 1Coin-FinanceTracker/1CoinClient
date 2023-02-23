@@ -45,9 +45,18 @@ class AddTransactionAnalytics: BaseAnalytics() {
         )
     }
 
-    fun trackAccountClick() {
+    fun trackPrimaryAccountClick() {
         trackClick(
             eventName = "Account",
+            properties = mapOf(
+                ActionIdKey to actionId
+            )
+        )
+    }
+
+    fun trackSecondaryAccountClick() {
+        trackClick(
+            eventName = "SecondaryAccount",
             properties = mapOf(
                 ActionIdKey to actionId
             )
@@ -92,9 +101,19 @@ class AddTransactionAnalytics: BaseAnalytics() {
         )
     }
 
-    fun trackAmountClick(amountText: String) {
+    fun trackPrimaryAmountClick(amountText: String) {
         trackClick(
             eventName = "Amount",
+            properties = mapOf(
+                ActionIdKey to actionId,
+                "amount_text" to amountText
+            )
+        )
+    }
+
+    fun trackSecondaryAmountClick(amountText: String) {
+        trackClick(
+            eventName = "SecondaryAmount",
             properties = mapOf(
                 ActionIdKey to actionId,
                 "amount_text" to amountText
@@ -227,11 +246,11 @@ class AddTransactionAnalytics: BaseAnalytics() {
     private fun Transaction.getTransactionProperties(keyPrefix: String = ""): Map<String, Any?> {
         return mapOf(
             "${keyPrefix}transaction_type" to type.analyticsName,
-            "${keyPrefix}account_name" to account.name,
+            "${keyPrefix}account_name" to primaryAccount.name,
             "${keyPrefix}category_name" to _category?.name,
             "${keyPrefix}date" to dateTime.toString(),
-            "${keyPrefix}amount_value" to amount.amountValue,
-            "${keyPrefix}amount_currency" to amount.currency.code
+            "${keyPrefix}amount_value" to primaryAmount.amountValue,
+            "${keyPrefix}amount_currency" to primaryAmount.currency.code
         )
     }
 

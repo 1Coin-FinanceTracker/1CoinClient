@@ -203,6 +203,7 @@ class TrendsAnalyticsDelegate(
         when (selectedTransactionType) {
             TransactionType.Expense -> expense
             TransactionType.Income -> income
+            else -> emptyList()
         }
     }
         .flowOn(Dispatchers.Default)
