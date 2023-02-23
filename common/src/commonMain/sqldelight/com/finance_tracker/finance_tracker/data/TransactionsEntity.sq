@@ -9,13 +9,17 @@ CREATE TABLE IF NOT EXISTS TransactionsEntity (
     categoryId INTEGER,
     accountId INTEGER,
     insertionDate TEXT AS LocalDateTime NOT NULL,
-    date TEXT AS LocalDateTime NOT NULL
+    date TEXT AS LocalDateTime NOT NULL,
+    secondaryAmount REAL,
+    secondaryAmountCurrency TEXT,
+    secondaryAccountId INTEGER
 );
 
 getAllFullTransactions:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE accounts.id IS NOT NULL
 ORDER BY
@@ -26,6 +30,7 @@ getFullTransactionsByAccountId:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE accounts.id = :accountId
 ORDER BY
@@ -36,6 +41,7 @@ getFullTransactions:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE
     TransactionsEntity.type = :transactionType AND
@@ -49,18 +55,20 @@ getTotalTransactionAmountByDateAndType:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE DATE(date) = :date AND TransactionsEntity.type = :type AND accounts.id IS NOT NULL;
 
 insertTransaction:
 INSERT OR REPLACE
 INTO TransactionsEntity
-VALUES (?,?,?,?,?,?,?,?);
+VALUES (?,?,?,?,?,?,?,?,?,?,?);
 
 getAllFullTransactionsPaginated:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE accounts.id IS NOT NULL
 ORDER BY
@@ -72,6 +80,7 @@ getFullTransactionsByAccountIdPaginated:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE accounts.id = :accountId
 ORDER BY
@@ -92,6 +101,7 @@ getTransactionsForPeriod:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 WHERE TransactionsEntity.type = :transactionType AND date >= :fromDate AND date < :toDate
 ORDER BY
@@ -102,6 +112,7 @@ getLastTransactions:
 SELECT *
 FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
+LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
 ORDER BY
     date DESC,

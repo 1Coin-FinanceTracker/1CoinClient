@@ -69,6 +69,9 @@ class TransactionsRepository(
                 accountId = transaction.primaryAccount.id,
                 insertionDate = transaction.insertionDateTime ?: Clock.System.currentLocalDateTime(),
                 date = transaction.dateTime,
+                secondaryAmount = transaction.secondaryAmount?.amountValue,
+                secondaryAmountCurrency = transaction.secondaryAmount?.currency?.code,
+                secondaryAccountId = transaction.secondaryAccount?.id
             )
         }
     }
