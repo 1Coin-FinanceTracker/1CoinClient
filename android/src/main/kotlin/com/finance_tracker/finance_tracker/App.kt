@@ -14,6 +14,6 @@ class App : Application(), KoinComponent {
         super.onCreate()
 
         Di.init(this)
-        appInitializer.init()
+        appInitializer.configure()
     }
 }

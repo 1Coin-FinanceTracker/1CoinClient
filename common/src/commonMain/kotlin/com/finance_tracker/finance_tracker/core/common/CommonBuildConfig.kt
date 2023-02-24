@@ -8,7 +8,7 @@ object AppBuildConfig {
     val isReleaseBuild: Boolean = BuildInfo.buildType == BuildType.Release
     val isTestBuild: Boolean = BuildInfo.buildType != BuildType.Release
 
-    val DEBUG = BuildInfo.isDebug
+    val DEBUG_BUILD_TYPE = BuildInfo.isDebug
     val AMPLITUDE_API_KEY = if (isReleaseBuild) {
         "53a89fb85c5895ac9fb42631eacd28c2"
     } else {

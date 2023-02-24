@@ -46,7 +46,7 @@ class AppInitializer(
                 Napier.e("AppInitializer", throwable)
             }
 
-    fun init() {
+    fun configure() {
         initLogger()
         initDatabase()
         initAnalytics()

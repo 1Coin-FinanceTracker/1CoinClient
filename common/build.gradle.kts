@@ -115,7 +115,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
-                implementation("app.cash.paging:paging-runtime:3.1.1-0.1.1")
+                implementation(libs.sqldelight.ios)
             }
         }
     }

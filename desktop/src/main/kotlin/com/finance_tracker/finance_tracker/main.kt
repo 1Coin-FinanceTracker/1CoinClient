@@ -34,7 +34,7 @@ fun main() = singleWindowApplication(
     }
 ) {
     Di.init(EmptyContext)
-    appInitializer.init()
+    appInitializer.configure()
 
     CoinTheme {
         setNavigationContent(

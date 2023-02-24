@@ -34,7 +34,7 @@ class AndroidAnalyticsTracker(
                 context = context
             )
         ).apply {
-            logger.logMode = if (AppBuildConfig.DEBUG) {
+            logger.logMode = if (AppBuildConfig.DEBUG_BUILD_TYPE) {
                 Logger.LogMode.DEBUG
             } else {
                 Logger.LogMode.OFF

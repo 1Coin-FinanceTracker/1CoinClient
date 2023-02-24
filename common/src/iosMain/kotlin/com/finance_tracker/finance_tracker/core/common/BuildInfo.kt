@@ -4,9 +4,9 @@ actual object BuildInfo {
 
     @Suppress("NotImplementedDeclaration")
     actual val isDebug: Boolean
-        get() = TODO()
+        get() = true // TODO
 
     @Suppress("NotImplementedDeclaration")
     actual val buildType: BuildType
-        get() = TODO()
+        get() = BuildType.Debug //TODO
 }

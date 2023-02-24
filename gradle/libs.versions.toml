@@ -68,6 +68,7 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = 
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 
 datepicker-desktop = { module = "com.github.lgooddatepicker:LGoodDatePicker", version.ref = "datepicker_desktop" }
 
