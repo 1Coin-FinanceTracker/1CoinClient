@@ -121,7 +121,8 @@
 
     <!-- Add transaction -->
     <string name="add_transaction_amount">Сумма</string>
-    <string name="add_transaction_target_amount">Целевая сумма</string>
+    <string name="add_transaction_amount_from">Откуда: %s</string>
+    <string name="add_transaction_amount_to">Куда: %s</string>
     <string name="add_transaction_stage_account">Счет</string>
     <string name="add_transaction_stage_category">Категория</string>
     <string name="add_transaction_today">Сегодня</string>

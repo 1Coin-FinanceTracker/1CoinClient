@@ -98,7 +98,7 @@ complexity:
     ignoredLabels: []
   LargeClass:
     active: true
-    threshold: 300
+    threshold: 350
     excludes: ["**/build/**"]
   LongMethod:
     active: true

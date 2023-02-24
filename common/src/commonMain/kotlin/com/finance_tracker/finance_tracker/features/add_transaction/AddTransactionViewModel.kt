@@ -152,11 +152,22 @@ class AddTransactionViewModel(
         addTransactionAnalytics.trackAddTransactionScreenOpen()
         observeCurrentFlowState()
         initCurrentStep()
+        observePrimaryAmount()
     }
 
     @Suppress("UnnecessaryParentheses")
     private fun String.isNotEmptyAmount(): Boolean {
         return (this.toDoubleOrNull() ?: 0.0) > 0.0
+    }
+
+    private fun observePrimaryAmount() {
+        primaryAmountText
+            .onEach { primaryAmount ->
+                if (primaryCurrency.value == secondaryCurrency.value) {
+                    _secondaryAmountText.value = primaryAmount
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun observeCurrentFlowState() {

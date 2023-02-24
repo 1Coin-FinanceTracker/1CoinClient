@@ -136,7 +136,8 @@
 
     <!-- Add transaction -->
     <string name="add_transaction_amount">Amount</string>
-    <string name="add_transaction_target_amount">Target amount</string>
+    <string name="add_transaction_amount_from">From: %s</string>
+    <string name="add_transaction_amount_to">To: %s</string>
     <string name="add_transaction_stage_account">Account</string>
     <string name="add_transaction_stage_category">Category</string>
     <string name="add_transaction_today">Today</string>

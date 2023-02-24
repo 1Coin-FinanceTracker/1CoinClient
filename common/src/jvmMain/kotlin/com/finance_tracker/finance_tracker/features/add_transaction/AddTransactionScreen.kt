@@ -182,7 +182,14 @@ internal fun AddTransactionScreen(
                         42.dp.asSp()
                     },
                     active = currentStep == EnterTransactionStep.PrimaryAmount,
-                    label = stringResource(MR.strings.add_transaction_amount),
+                    label = if (currentFlow == AddTransactionFlow.Transfer) {
+                        stringResource(
+                            MR.strings.add_transaction_amount_from,
+                            primaryAccountData?.name.orEmpty()
+                        )
+                    } else {
+                        stringResource(MR.strings.add_transaction_amount)
+                    },
                     onClick = viewModel::onPrimaryAmountClick
                 )
 
@@ -194,7 +201,10 @@ internal fun AddTransactionScreen(
                         amount = secondaryAmountText,
                         amountFontSize = 24.dp.asSp(),
                         active = currentStep == EnterTransactionStep.SecondaryAmount,
-                        label = stringResource(MR.strings.add_transaction_target_amount),
+                        label = stringResource(
+                            MR.strings.add_transaction_amount_to,
+                            secondaryAccountData?.name.orEmpty()
+                        ),
                         onClick = viewModel::onSecondaryAmountClick
                     )
                 }
