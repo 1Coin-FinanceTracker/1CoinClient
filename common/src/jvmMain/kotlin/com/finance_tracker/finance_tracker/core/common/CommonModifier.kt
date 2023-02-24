@@ -25,7 +25,7 @@ expect fun Modifier.navigationBarsPadding(): Modifier
 expect fun Modifier.imePadding(): Modifier
 
 object ModifierConstants {
-    const val PREVENT_MULTIPLE_CLICKS_DURATION = 400L
+    const val PreventMultipleClicksDuration = 400L
 }
 
 /**
@@ -38,7 +38,7 @@ class MultipleEventsCutter {
     private var lastEventTimeMs: Long = 0
 
     operator fun invoke(event: () -> Unit) {
-        if (now - lastEventTimeMs >= ModifierConstants.PREVENT_MULTIPLE_CLICKS_DURATION) {
+        if (now - lastEventTimeMs >= ModifierConstants.PreventMultipleClicksDuration) {
             event.invoke()
         }
         lastEventTimeMs = now
