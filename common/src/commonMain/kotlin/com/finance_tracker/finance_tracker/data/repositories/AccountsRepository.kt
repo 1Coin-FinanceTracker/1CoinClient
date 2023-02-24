@@ -52,6 +52,12 @@ class AccountsRepository(
         }
     }
 
+    suspend fun decreaseAccountBalance(id: Long, value: Double) {
+        withContext(Dispatchers.Default) {
+            accountsEntityQueries.decreaseBalanceByAccountId(value, id)
+        }
+    }
+
     suspend fun updateAccount(
         type: Account.Type,
         name: String,

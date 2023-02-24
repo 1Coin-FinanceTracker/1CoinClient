@@ -36,6 +36,11 @@ UPDATE AccountsEntity
 SET balance = balance + :balance
 WHERE id = :id;
 
+decreaseBalanceByAccountId:
+UPDATE AccountsEntity
+SET balance = balance - :balance
+WHERE id = :id;
+
 reduceBalanceByAccountId:
 UPDATE AccountsEntity
 SET balance = balance - :balance

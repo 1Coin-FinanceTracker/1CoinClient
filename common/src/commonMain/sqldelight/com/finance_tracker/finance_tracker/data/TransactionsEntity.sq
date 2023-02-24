@@ -70,7 +70,7 @@ FROM TransactionsEntity
 INNER JOIN AccountsEntity AS accounts ON TransactionsEntity.accountId = accounts.id
 LEFT JOIN AccountsEntity AS secondaryAccounts ON TransactionsEntity.secondaryAccountId = secondaryAccounts.id
 LEFT JOIN CategoriesEntity AS categories ON TransactionsEntity.categoryId = categories.id
-WHERE accounts.id IS NOT NULL
+WHERE TransactionsEntity.accountId IS NOT NULL
 ORDER BY
     date DESC,
     insertionDate DESC

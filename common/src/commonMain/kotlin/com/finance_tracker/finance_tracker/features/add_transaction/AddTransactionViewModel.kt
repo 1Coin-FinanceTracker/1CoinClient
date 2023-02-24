@@ -83,7 +83,7 @@ class AddTransactionViewModel(
     val primaryAmountText: StateFlow<String> = _primaryAmountText.asStateFlow()
 
     private val _secondaryAmountText: MutableStateFlow<String> = MutableStateFlow(
-        initialAmount?.amountValue?.toString(precision = 2) ?: "0"
+        transaction?.secondaryAmount?.amountValue?.toString(precision = 2) ?: "0"
     )
     val secondaryAmountText: StateFlow<String> = _secondaryAmountText.asStateFlow()
 

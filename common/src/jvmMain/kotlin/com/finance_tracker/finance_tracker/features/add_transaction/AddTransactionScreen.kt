@@ -84,9 +84,18 @@ internal fun AddTransactionScreen(
             val currentFlow by viewModel.currentFlow.collectAsState()
             val isAddTransactionEnabled by viewModel.isAddTransactionEnabled.collectAsState()
             val transactionInsertionDate = viewModel.transactionInsertionDate
-            val onAddTransaction = { fromButtonClick: Boolean ->
+            val onUpdateTransaction = { fromButtonClick: Boolean ->
                 val primaryAccount = primaryAccountData
                 val primaryCurrency = primaryCurrencyData
+                val isEdit = viewModel.isEditMode
+
+                val insertionDateTime = if (isEdit) {
+                    transactionInsertionDate
+                } else {
+                    Clock.System.currentLocalDateTime()
+                }
+
+                var transaction: Transaction? = null
                 if (currentFlow == AddTransactionFlow.Transfer) {
                     val secondaryAccount = secondaryAccountData
                     val secondaryCurrency = secondaryCurrencyData
@@ -98,76 +107,63 @@ internal fun AddTransactionScreen(
                         primaryCurrency != null &&
                         secondaryCurrency != null
                     ) {
-                        viewModel.onAddTransactionClick(
-                            transaction = Transaction(
-                                type = selectedTransactionType.toTransactionType(),
-                                primaryAccount = primaryAccount,
-                                _category = null,
-                                primaryAmount = Amount(
-                                    currency = primaryCurrency,
-                                    amountValue = primaryAmountDouble
-                                ),
-                                secondaryAmount = Amount(
-                                    currency = secondaryCurrency,
-                                    amountValue = secondaryAmountDouble
-                                ),
-                                secondaryAccount = secondaryAccount,
-                                dateTime = localDate.toDateTime(),
-                                insertionDateTime = Clock.System.currentLocalDateTime()
+                        transaction = Transaction(
+                            type = selectedTransactionType.toTransactionType(),
+                            primaryAccount = primaryAccount,
+                            _category = null,
+                            primaryAmount = Amount(
+                                currency = primaryCurrency,
+                                amountValue = primaryAmountDouble
                             ),
-                            isFromButtonClick = fromButtonClick
+                            secondaryAmount = Amount(
+                                currency = secondaryCurrency,
+                                amountValue = secondaryAmountDouble
+                            ),
+                            secondaryAccount = secondaryAccount,
+                            dateTime = localDate.toDateTime(),
+                            insertionDateTime = insertionDateTime
                         )
                     }
                 } else {
                     if (primaryAccount != null && primaryCurrency != null) {
-                        viewModel.onAddTransactionClick(
-                            transaction = Transaction(
-                                type = selectedTransactionType.toTransactionType(),
-                                primaryAccount = primaryAccount,
-                                _category = categoryData,
-                                primaryAmount = Amount(
-                                    currency = primaryCurrency,
-                                    amountValue = primaryAmountDouble
-                                ),
-                                dateTime = localDate.toDateTime(),
-                                insertionDateTime = Clock.System.currentLocalDateTime()
+                        transaction = Transaction(
+                            type = selectedTransactionType.toTransactionType(),
+                            primaryAccount = primaryAccount,
+                            _category = categoryData,
+                            primaryAmount = Amount(
+                                currency = primaryCurrency,
+                                amountValue = primaryAmountDouble
                             ),
+                            dateTime = localDate.toDateTime(),
+                            insertionDateTime = insertionDateTime
+                        )
+                    }
+                }
+
+                if (transaction != null) {
+                    if (isEdit) {
+                        viewModel.onEditTransactionClick(
+                            transaction = transaction,
+                            isFromButtonClick = fromButtonClick
+                        )
+                    } else {
+                        viewModel.onAddTransactionClick(
+                            transaction = transaction,
                             isFromButtonClick = fromButtonClick
                         )
                     }
                 }
             }
-            val onEditTransaction = { fromButtonClick: Boolean ->
-                val account = primaryAccountData
-                val currency = primaryCurrencyData
-                if (account != null && currency != null) {
-                    viewModel.onEditTransactionClick(
-                        transaction = Transaction(
-                            type = selectedTransactionType.toTransactionType(),
-                            primaryAccount = account,
-                            _category = categoryData,
-                            primaryAmount = Amount(
-                                currency = currency,
-                                amountValue = primaryAmountDouble
-                            ),
-                            dateTime = localDate.toDateTime(),
-                            insertionDateTime = transactionInsertionDate
-                        ),
-                        isFromButtonClick = fromButtonClick
-                    )
-                }
-            }
+
+
             CategoriesAppBar(
                 doneButtonEnabled = isAddTransactionEnabled,
                 selectedTransactionType = selectedTransactionType,
                 featuresManager = viewModel.featuresManager,
                 onTransactionTypeSelect = viewModel::onTransactionTypeSelect,
                 onDoneClick = {
-                    if (viewModel.isEditMode) {
-                        onEditTransaction.invoke(false)
-                    } else {
-                        onAddTransaction.invoke(false)
-                    }
+                    val fromButtonClick = false
+                    onUpdateTransaction.invoke(fromButtonClick)
                 }
             )
 
@@ -283,8 +279,14 @@ internal fun AddTransactionScreen(
                         ActionButtonsSection(
                             hasActiveStep = currentStep != null,
                             enabled = isAddTransactionEnabled,
-                            onAddClick = { onAddTransaction.invoke(true) },
-                            onEditClick = { onEditTransaction.invoke(true) },
+                            onAddClick = {
+                                val fromButtonClick = true
+                                onUpdateTransaction.invoke(fromButtonClick)
+                            },
+                            onEditClick = {
+                                val fromButtonClick = true
+                                onUpdateTransaction.invoke(fromButtonClick)
+                            },
                             isEditMode = viewModel.isEditMode,
                             onDeleteClick = {
                                 modalNavController.present(DialogConfigurations.alert) { dialogKey ->
