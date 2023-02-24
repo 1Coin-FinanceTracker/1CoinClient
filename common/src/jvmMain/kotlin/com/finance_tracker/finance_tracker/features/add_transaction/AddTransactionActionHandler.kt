@@ -32,5 +32,8 @@ fun handleAction(
                 )
             )
         }
+        AddTransactionAction.NavigateBack -> {
+            navController.popBackStack()
+        }
     }
 }

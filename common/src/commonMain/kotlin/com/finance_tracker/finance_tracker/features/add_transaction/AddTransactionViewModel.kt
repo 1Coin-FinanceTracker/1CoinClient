@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -33,7 +34,7 @@ class AddTransactionViewModel(
     private val categoriesEntityQueries: CategoriesEntityQueries,
     params: AddTransactionScreenParams,
     private val addTransactionAnalytics: AddTransactionAnalytics
-): BaseViewModel<AddTransactionAction>() {
+) : BaseViewModel<AddTransactionAction>() {
 
     private val preselectedAccount: Account? = params.preselectedAccount
     private val transaction: Transaction? = params.transaction
@@ -85,12 +86,17 @@ class AddTransactionViewModel(
         }
     }
 
+    private val _currentStep: MutableStateFlow<EnterTransactionStep?> = MutableStateFlow(firstStep)
+    val currentStep: StateFlow<EnterTransactionStep?> = _currentStep.asStateFlow()
+
+    private val _previousStepIndex: MutableStateFlow<Int?> = MutableStateFlow(currentStep.value?.let { it.ordinal - 1 })
+    val previousStepIndex: StateFlow<Int?> = _previousStepIndex.asStateFlow()
+
     @Suppress("UnnecessaryParentheses")
-    val isAddTransactionEnabled = combine(selectedAccount, selectedCategory, amountText) {
-            selectedAccount, selectedCategory, amountText ->
-        selectedAccount != null && selectedCategory != null && (amountText.toDoubleOrNull() ?: 0.0) > 0.0
-    }
-        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = false)
+    val isAddTransactionEnabled =
+        combine(selectedAccount, selectedCategory, amountText) { selectedAccount, selectedCategory, amountText ->
+            selectedAccount != null && selectedCategory != null && (amountText.toDoubleOrNull() ?: 0.0) > 0.0
+        }.stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = false)
 
     private val initialSelectedTransactionType = transaction?.type?.toTransactionTypeTab() ?: TransactionTypeTab.Expense
     private val _selectedTransactionType: MutableStateFlow<TransactionTypeTab> =
@@ -175,11 +181,13 @@ class AddTransactionViewModel(
     fun onAccountSelect(account: Account) {
         addTransactionAnalytics.trackAccountSelect(account)
         _selectedAccount.value = account
+        performWizardStepForward()
     }
 
     fun onCategorySelect(category: Category) {
         addTransactionAnalytics.trackCategorySelect(category)
         _selectedCategory.value = category
+        performWizardStepForward()
     }
 
     fun onDateSelect(date: LocalDate) {
@@ -264,6 +272,8 @@ class AddTransactionViewModel(
     }
 
     fun onCurrentStepSelect(step: EnterTransactionStep) {
+        _currentStep.update { step }
+
         when (step) {
             EnterTransactionStep.Account -> {
                 addTransactionAnalytics.trackAccountClick()
@@ -274,6 +284,23 @@ class AddTransactionViewModel(
             EnterTransactionStep.Amount -> {
                 addTransactionAnalytics.trackAmountClick(amountText.value)
             }
+        }
+    }
+
+    private fun updateCurrentStep(step: EnterTransactionStep?) {
+        _previousStepIndex.update { _currentStep.value?.ordinal }
+        _currentStep.update { step }
+    }
+
+    private fun performWizardStepForward() = updateCurrentStep(currentStep.value?.next())
+
+    private fun performWizardStepBack() = updateCurrentStep(currentStep.value?.previous())
+
+    fun onBackButtonPress() {
+        if (currentStep.value != firstStep) {
+            performWizardStepBack()
+        } else {
+            viewAction = AddTransactionAction.NavigateBack
         }
     }
 }

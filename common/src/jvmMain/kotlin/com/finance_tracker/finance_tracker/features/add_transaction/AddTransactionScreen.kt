@@ -12,9 +12,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
@@ -73,6 +70,8 @@ internal fun AddTransactionScreen(
             val amountDouble = amountText.toDoubleOrNull() ?: 0.0
             val isAddTransactionEnabled by viewModel.isAddTransactionEnabled.collectAsState()
             val transactionInsertionDate = viewModel.transactionInsertionDate
+            val currentStep by viewModel.currentStep.collectAsState()
+            val previousStepIndex by viewModel.previousStepIndex.collectAsState()
             val onAddTransaction = { fromButtonClick: Boolean ->
                 val account = accountData
                 val currency = currencyData
@@ -93,6 +92,7 @@ internal fun AddTransactionScreen(
                     )
                 }
             }
+
             val onEditTransaction = { fromButtonClick: Boolean ->
                 val account = accountData
                 val currency = currencyData
@@ -126,8 +126,6 @@ internal fun AddTransactionScreen(
                 }
             )
 
-            var currentStep by rememberSaveable { mutableStateOf(viewModel.firstStep) }
-
             AmountTextField(
                 modifier = Modifier
                     .weight(1f),
@@ -136,7 +134,6 @@ internal fun AddTransactionScreen(
                 active = currentStep == EnterTransactionStep.Amount,
                 onClick = {
                     viewModel.onCurrentStepSelect(EnterTransactionStep.Amount)
-                    currentStep = EnterTransactionStep.Amount
                 }
             )
 
@@ -153,19 +150,7 @@ internal fun AddTransactionScreen(
                     },
                 elevation = 8.dp
             ) {
-                var previousStepIndex by rememberSaveable {
-                    mutableStateOf(currentStep?.let { it.ordinal - 1 })
-                }
-                BackHandler {
-                    if (currentStep != viewModel.firstStep) {
-                        currentStep = currentStep?.previous()
-                    } else {
-                        navController.popBackStack()
-                    }
-                }
-                LaunchedEffect(currentStep) {
-                    previousStepIndex = currentStep?.ordinal
-                }
+                BackHandler(viewModel::onBackButtonPress)
 
                 CompositionLocalProvider(LocalContentColor provides CoinTheme.color.content) {
                     Column {
@@ -182,10 +167,7 @@ internal fun AddTransactionScreen(
                                 accountData = accountData,
                                 categoryData = categoryData
                             ),
-                            onStepSelect = {
-                                viewModel.onCurrentStepSelect(it)
-                                currentStep = it
-                            }
+                            onStepSelect = viewModel::onCurrentStepSelect
                         )
 
                         val categoriesFlow = when (selectedTransactionType) {
@@ -211,19 +193,11 @@ internal fun AddTransactionScreen(
                                 currentStep!!.ordinal >= previousStepIndex!! -> 1
                                 else -> -1
                             },
-                            onAccountSelect = {
-                                viewModel.onAccountSelect(it)
-                                currentStep = currentStep?.next()
-                            },
+                            onAccountSelect = viewModel::onAccountSelect,
                             onAccountAdd = viewModel::onAccountAdd,
-                            onCategorySelect = {
-                                viewModel.onCategorySelect(it)
-                                currentStep = currentStep?.next()
-                            },
+                            onCategorySelect = viewModel::onCategorySelect,
                             onCategoryAdd = viewModel::onCategoryAdd,
-                            onKeyboardButtonClick = { command ->
-                                viewModel.onKeyboardButtonClick(command)
-                            }
+                            onKeyboardButtonClick = viewModel::onKeyboardButtonClick
                         )
 
                         ActionButtonsSection(

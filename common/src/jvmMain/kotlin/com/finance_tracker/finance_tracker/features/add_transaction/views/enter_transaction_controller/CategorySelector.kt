@@ -1,6 +1,5 @@
 package com.finance_tracker.finance_tracker.features.add_transaction.views.enter_transaction_controller
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.core.common.clickableSingle
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.domain.models.Category
@@ -64,7 +64,7 @@ internal fun CategorySelector(
                             cellWidth = it.width
                         }
                     }
-                    .clickable {
+                    .clickableSingle {
                         onCategorySelect.invoke(category)
                     },
                 columnCount = columnCount,

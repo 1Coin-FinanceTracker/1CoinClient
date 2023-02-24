@@ -15,4 +15,6 @@ sealed interface AddTransactionAction {
     data class OpenAddCategoryScreen(
         val type: TransactionTypeTab
     ): AddTransactionAction
+
+    object NavigateBack: AddTransactionAction
 }
