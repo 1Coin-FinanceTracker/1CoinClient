@@ -1,6 +1,5 @@
 package com.finance_tracker.finance_tracker.features.add_transaction.views.enter_transaction_controller
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -16,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.core.common.clickableSingle
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
 import kotlin.math.roundToInt
@@ -51,7 +51,7 @@ internal fun AccountSelector(
     ) {
         itemsIndexed(accounts) { index, account ->
             BoxWithDividers(
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickableSingle {
                     onAccountSelect.invoke(account)
                 },
                 columnCount = columnCount,
