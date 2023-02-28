@@ -6,7 +6,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     id("android-setup")
@@ -29,16 +28,9 @@ android {
 }
 
 kotlin {
-
-    val xcf = XCFramework(xcFrameworkName = "OneCoinShared")
-    val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
-    iosTargets.forEach {
-        it.binaries.framework {
-            export("dev.icerock.moko:resources:0.20.1")
-            baseName = "OneCoinShared"
-            xcf.add(this)
-        }
-    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     cocoapods {
         version = "1.0"
@@ -49,7 +41,7 @@ kotlin {
         podfile = project.file("../ios/Podfile")
 
         framework {
-            export("dev.icerock.moko:resources:0.20.1")
+            export(libs.mokoResources.core)
             baseName = "OneCoinShared"
         }
 
@@ -63,7 +55,6 @@ kotlin {
             dependencies {
                 api(libs.koin.core)
                 api(libs.mokoResources.core)
-                api("io.github.qdsfdhvh:image-loader:1.2.9")
 
                 implementation(libs.napier)
                 implementation(libs.kviewmodel)
@@ -106,6 +97,7 @@ kotlin {
             dependencies {
                 api(libs.bundles.odyssey)
 
+                implementation(libs.imageloader)
                 implementation(libs.bundles.kviewmodel.compose)
                 implementation(libs.koalaplot)
                 implementation(libs.mokoResources.compose)

@@ -34,6 +34,7 @@ lottie = "5.2.0"
 googleServicesAuth = "20.4.1"
 immutableCollections = "0.3.5"
 coil = "2.2.2"
+imageloader = "1.2.9"
 
 [libraries]
 gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "android_plugin" }
@@ -120,9 +121,7 @@ googleServicesAuth = { module = "com.google.android.gms:play-services-auth", ver
 
 immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutableCollections" }
 
-coil = { module = "io.coil-kt:coil", version.ref = "coil" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
+imageloader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageloader" }
 
 [bundles]
 odyssey = ["odyssey-core", "odyssey-compose"]
@@ -131,4 +130,3 @@ koin-android = ["koin-android", "koin-compose"]
 kviewmodel-compose = ["kviewmodel-compose", "kviewmodel-odyssey"]
 ktor = ["ktor-core", "ktor-contentNegotiation", "ktor-serialization", "ktor-logging"]
 settings = ["settings", "settings-coroutines"]
-coil = ["coil", "coil-compose", "coil-svg"]
