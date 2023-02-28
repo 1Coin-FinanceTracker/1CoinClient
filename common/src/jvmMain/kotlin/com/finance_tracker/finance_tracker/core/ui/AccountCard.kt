@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
 import com.finance_tracker.finance_tracker.core.common.formatters.AmountFormatMode
 import com.finance_tracker.finance_tracker.core.common.formatters.format
+import com.finance_tracker.finance_tracker.core.common.rememberAsyncImagePainter
 import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
@@ -43,7 +44,7 @@ internal fun AccountCard(
     ) {
         Column {
             Icon(
-                painter = rememberVectorPainter(data.iconId),
+                painter = rememberAsyncImagePainter(data.icon),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(
