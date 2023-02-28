@@ -124,6 +124,8 @@ class AddTransactionViewModel(
         .flatMapLatest { it.currentStepFlow }
         .stateIn(viewModelScope, initialValue = null)
 
+    private val hasPreviousStep = currentFlowState.value.hasPreviousStep
+
     @Suppress("UnnecessaryParentheses")
     val isAddTransactionEnabled = combineExtended(
         currentFlow, selectedPrimaryAccount, selectedSecondaryAccount,
@@ -252,7 +254,8 @@ class AddTransactionViewModel(
 
     fun onBackClick() {
         val flowState = currentFlowState.value
-        if (flowState.hasPreviousStep) {
+
+        if (hasPreviousStep.value) {
             flowState.previous()
         } else {
             viewAction = AddTransactionAction.Close
