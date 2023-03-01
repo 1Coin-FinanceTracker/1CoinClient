@@ -9,6 +9,7 @@ import com.finance_tracker.finance_tracker.domain.interactors.TransactionsIntera
 import com.finance_tracker.finance_tracker.domain.interactors.UserInteractor
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
+import com.finance_tracker.finance_tracker.domain.interactors.ThemeInteractor
 
 internal val domainModule = module {
     factoryOf(::TransactionsInteractor)
@@ -18,4 +19,5 @@ internal val domainModule = module {
     factoryOf(::AccountsInteractor)
     factoryOf(::DashboardSettingsInteractor)
     factoryOf(::AuthInteractor)
+    factoryOf(::ThemeInteractor)
 }

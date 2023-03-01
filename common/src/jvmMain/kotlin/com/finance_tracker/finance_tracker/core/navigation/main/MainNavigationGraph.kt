@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.core.navigation.main
 
+import androidx.compose.runtime.SideEffect
 import com.finance_tracker.finance_tracker.core.navigation.tabs.tabsNavigationGraph
 import com.finance_tracker.finance_tracker.core.navigtion.main.MainNavigationTree
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
@@ -73,6 +74,9 @@ fun RootComposeBuilder.navigationGraph() {
     screen(MainNavigationTree.Welcome.name) {
         CoinTheme {
             WelcomeScreen()
+            SideEffect {
+                println("welcome screen")
+            }
         }
     }
 

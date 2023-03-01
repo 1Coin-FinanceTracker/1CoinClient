@@ -12,6 +12,13 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -23,6 +30,10 @@ import com.finance_tracker.finance_tracker.core.common.asSp
 import com.finance_tracker.finance_tracker.core.common.getContext
 import com.finance_tracker.finance_tracker.core.common.getFixedInsets
 import com.finance_tracker.finance_tracker.core.common.updateSystemBarsConfig
+import com.finance_tracker.finance_tracker.domain.models.ThemeMode
+import kotlinx.coroutines.delay
+
+//private val themeSettings: ThemeSettings by lazy { getKoin().get() }
 
 @Immutable
 data class CoinColors(
@@ -125,10 +136,34 @@ internal fun TextStyle.staticTextSize(isStaticContentSize: Boolean = true): Text
 
 @Composable
 fun CoinTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val coinColors = if (darkTheme) {
+    //val themeMode by themeSettings.themeMode.collectAsState()
+
+    var themeMode by remember { mutableStateOf(ThemeMode.Dark) }
+    LaunchedEffect(Unit) {
+        delay(5000)
+        themeMode = if (themeMode == ThemeMode.Dark) {
+            ThemeMode.Light
+        } else {
+            ThemeMode.Dark
+        }
+    }
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    val isDarkTheme by remember(themeMode, isSystemInDarkTheme) {
+        derivedStateOf {
+            when (themeMode) {
+                null, ThemeMode.System -> isSystemInDarkTheme
+                ThemeMode.Light -> false
+                ThemeMode.Dark -> true
+            }
+        }
+    }
+
+    SideEffect {
+        println("isDarkTheme: $isDarkTheme")
+    }
+    val coinColors = if (isDarkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
@@ -150,6 +185,11 @@ fun CoinTheme(
             primaryVariant = coinColors.primaryVariant
         )
     ) {
+
+        SideEffect {
+            println("CompositionLocalProvider")
+        }
+
         CompositionLocalProvider(
             LocalContext provides context,
             LocalCoinColors provides coinColors,
