@@ -1,16 +1,36 @@
 PODS:
+  - CocoaLumberjack (3.8.0):
+    - CocoaLumberjack/Core (= 3.8.0)
+  - CocoaLumberjack/Core (3.8.0)
   - OneCoinShared (1.0)
+  - SVGKit (3.1.0):
+    - CocoaLumberjack (~> 3.0)
 
 DEPENDENCIES:
   - OneCoinShared (from `../common`)
+  - SVGKit (from `https://github.com/SVGKit/SVGKit.git`, branch `3.x`)
+
+SPEC REPOS:
+  trunk:
+    - CocoaLumberjack
 
 EXTERNAL SOURCES:
   OneCoinShared:
     :path: "../common"
+  SVGKit:
+    :branch: 3.x
+    :git: https://github.com/SVGKit/SVGKit.git
+
+CHECKOUT OPTIONS:
+  SVGKit:
+    :commit: 8c290ceee19254f6d0da1940201d5efa31b48f9f
+    :git: https://github.com/SVGKit/SVGKit.git
 
 SPEC CHECKSUMS:
+  CocoaLumberjack: 78abfb691154e2a9df8ded4350d504ee19d90732
   OneCoinShared: ca4107be7c2f0a5623e6aca77e2e1bcb754cd80c
+  SVGKit: 3c8468aab0026048532a3b27a0c81cdd939f0649
 
-PODFILE CHECKSUM: 01dddc02c99e2e2b0703d03e3377b31113cfd823
+PODFILE CHECKSUM: ec002b7c694dc19e2e10e390d74b6f8b8bb06dbf
 
 COCOAPODS: 1.11.3

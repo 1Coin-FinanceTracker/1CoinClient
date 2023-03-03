@@ -33,6 +33,8 @@ json = "20211205"
 lottie = "5.2.0"
 googleServicesAuth = "20.4.1"
 immutableCollections = "0.3.5"
+coil = "2.2.2"
+imageloader = "1.2.9"
 
 [libraries]
 gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "android_plugin" }
@@ -118,6 +120,8 @@ lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" 
 googleServicesAuth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleServicesAuth" }
 
 immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutableCollections" }
+
+imageloader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageloader" }
 
 [bundles]
 odyssey = ["odyssey-core", "odyssey-compose"]

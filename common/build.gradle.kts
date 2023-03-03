@@ -28,7 +28,6 @@ android {
 }
 
 kotlin {
-
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -42,6 +41,7 @@ kotlin {
         podfile = project.file("../ios/Podfile")
 
         framework {
+            export(libs.mokoResources.core)
             baseName = "OneCoinShared"
         }
 
@@ -54,6 +54,7 @@ kotlin {
         val commonMain by named("commonMain") {
             dependencies {
                 api(libs.koin.core)
+                api(libs.mokoResources.core)
 
                 implementation(libs.napier)
                 implementation(libs.kviewmodel)
@@ -63,7 +64,6 @@ kotlin {
                 implementation(libs.bundles.settings)
                 implementation(libs.uuid)
                 implementation(libs.datetime)
-                implementation(libs.mokoResources.core)
                 implementation(libs.immutableCollections)
                 implementation(libs.paging)
             }
@@ -97,6 +97,7 @@ kotlin {
             dependencies {
                 api(libs.bundles.odyssey)
 
+                implementation(libs.imageloader)
                 implementation(libs.bundles.kviewmodel.compose)
                 implementation(libs.koalaplot)
                 implementation(libs.mokoResources.compose)
