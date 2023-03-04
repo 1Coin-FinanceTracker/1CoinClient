@@ -26,7 +26,7 @@ struct OneCoinApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TabsNavigationScreen()
+            AppScreen()
         }
     }
 }

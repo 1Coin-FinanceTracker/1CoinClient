@@ -9,7 +9,12 @@ import SwiftUI
 
 struct TransactionsScreen: View {
     var body: some View {
-        Text("TransactionsScreen")
+        VStack {
+            TransactionsAppBar()
+            Spacer()
+            Text("TransactionsScreen")
+            Spacer()
+        }
     }
 }
 

@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.BottomNavigationItem
@@ -109,12 +110,16 @@ private fun NavBarIcon(
     Box(modifier = modifier) {
         AnimatedVisibility(visible = selected, enter = fadeIn(), exit = fadeOut()) {
             Icon(
+                modifier = Modifier
+                    .size(24.dp),
                 painter = selectedIcon,
                 contentDescription = contentDescription
             )
         }
         AnimatedVisibility(visible = !selected, enter = fadeIn(), exit = fadeOut()) {
             Icon(
+                modifier = Modifier
+                    .size(24.dp),
                 painter = unselectedIcon,
                 contentDescription = contentDescription
             )

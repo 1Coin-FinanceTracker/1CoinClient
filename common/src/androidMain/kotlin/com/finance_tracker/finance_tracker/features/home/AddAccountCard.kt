@@ -18,9 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
+import com.finance_tracker.finance_tracker.core.common.rememberAsyncImagePainter
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.AccountCardWidth
-import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import dev.icerock.moko.resources.compose.stringResource
 import ru.alexgladkov.odyssey.compose.helpers.noRippleClickable
 
@@ -52,7 +52,7 @@ internal fun AddAccountCard(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = rememberVectorPainter("ic_plus"),
+            painter = rememberAsyncImagePainter(MR.files.ic_plus),
             contentDescription = null,
             modifier = Modifier.size(20.dp),
             tint = CoinTheme.color.primary

@@ -42,6 +42,7 @@ kotlin {
 
         framework {
             export(libs.mokoResources.core)
+            export(libs.mokoResources.graphics)
             baseName = "OneCoinShared"
         }
 

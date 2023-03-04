@@ -18,6 +18,16 @@
 		3A5BA2E129A901C100085ACF /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2E029A901C100085ACF /* AddTransactionScreen.swift */; };
 		3A5BA2E429A9FFDF00085ACF /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2E329A9FFDF00085ACF /* SVGImageView.swift */; };
 		3A5BA2E729AA674B00085ACF /* CoinTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2E629AA674B00085ACF /* CoinTabView.swift */; };
+		3A5BA2EC29B10B0A00085ACF /* CoinTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2EB29B10B0A00085ACF /* CoinTheme.swift */; };
+		3A5BA2EE29B10B2D00085ACF /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2ED29B10B2D00085ACF /* Typography.swift */; };
+		3A5BA2F029B10BE000085ACF /* CoinColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2EF29B10BE000085ACF /* CoinColors.swift */; };
+		3A5BA2F629B138DD00085ACF /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2F529B138DD00085ACF /* ThemeManager.swift */; };
+		3A5BA2FA29B376E300085ACF /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2F929B376E300085ACF /* AppScreen.swift */; };
+		3A5BA2FC29B37D1E00085ACF /* CustomEnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2FB29B37D1E00085ACF /* CustomEnvironmentValues.swift */; };
+		3A5BA2FE29B3895200085ACF /* CoinTopAppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2FD29B3895200085ACF /* CoinTopAppBar.swift */; };
+		3A5BA30029B39BB800085ACF /* HomeTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA2FF29B39BB800085ACF /* HomeTopBar.swift */; };
+		3A5BA30229B3A83000085ACF /* TransactionsAppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA30129B3A83000085ACF /* TransactionsAppBar.swift */; };
+		3A5BA30529B3A98300085ACF /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5BA30429B3A98300085ACF /* SettingsScreen.swift */; };
 		3AE30BF929957A1400482B0D /* OneCoinShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE30BF829957A1400482B0D /* OneCoinShared.framework */; };
 		B3E49C0266F031A1198D961B /* Pods_OneCoin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20EC0D6E66424714DD8562F4 /* Pods_OneCoin.framework */; };
 /* End PBXBuildFile section */
@@ -37,6 +47,16 @@
 		3A5BA2E029A901C100085ACF /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		3A5BA2E329A9FFDF00085ACF /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		3A5BA2E629AA674B00085ACF /* CoinTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTabView.swift; sourceTree = "<group>"; };
+		3A5BA2EB29B10B0A00085ACF /* CoinTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTheme.swift; sourceTree = "<group>"; };
+		3A5BA2ED29B10B2D00085ACF /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		3A5BA2EF29B10BE000085ACF /* CoinColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinColors.swift; sourceTree = "<group>"; };
+		3A5BA2F529B138DD00085ACF /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		3A5BA2F929B376E300085ACF /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppScreen.swift; path = ../AppScreen.swift; sourceTree = "<group>"; };
+		3A5BA2FB29B37D1E00085ACF /* CustomEnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnvironmentValues.swift; sourceTree = "<group>"; };
+		3A5BA2FD29B3895200085ACF /* CoinTopAppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTopAppBar.swift; sourceTree = "<group>"; };
+		3A5BA2FF29B39BB800085ACF /* HomeTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopBar.swift; sourceTree = "<group>"; };
+		3A5BA30129B3A83000085ACF /* TransactionsAppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsAppBar.swift; sourceTree = "<group>"; };
+		3A5BA30429B3A98300085ACF /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		3AE30BF829957A1400482B0D /* OneCoinShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneCoinShared.framework; path = ../common/build/cocoapods/framework/OneCoinShared.framework; sourceTree = "<group>"; };
 		3AE30BFA2997C00000482B0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9EE0A9CAE319A78AC1868C04 /* Pods-OneCoin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneCoin.debug.xcconfig"; path = "Target Support Files/Pods-OneCoin/Pods-OneCoin.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,10 +96,10 @@
 		3A23C5CE299256BA0033CCF8 /* OneCoin */ = {
 			isa = PBXGroup;
 			children = (
-				3A5BA2E529AA673300085ACF /* Views */,
-				3A5BA2E229A9FFC600085ACF /* Utils */,
+				3A5BA2E829B10AB900085ACF /* Core */,
 				3A5BA2CF29A8FD2200085ACF /* Features */,
 				3AE30BFA2997C00000482B0D /* Info.plist */,
+				3A5BA2F929B376E300085ACF /* AppScreen.swift */,
 				3A23C5CF299256BA0033CCF8 /* OneCoinApp.swift */,
 				3A23C5D3299256BB0033CCF8 /* Assets.xcassets */,
 				3A23C5D5299256BB0033CCF8 /* Preview Content */,
@@ -107,6 +127,7 @@
 		3A5BA2CF29A8FD2200085ACF /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				3A5BA30329B3A97400085ACF /* Settings */,
 				3A5BA2DF29A901A000085ACF /* AddTransaction */,
 				3A5BA2D629A900F300085ACF /* Analytics */,
 				3A5BA2D529A900E600085ACF /* Accounts */,
@@ -129,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				3A23C5D1299256BA0033CCF8 /* HomeScreen.swift */,
+				3A5BA2FF29B39BB800085ACF /* HomeTopBar.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -137,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				3A5BA2DD29A9017700085ACF /* TransactionsScreen.swift */,
+				3A5BA30129B3A83000085ACF /* TransactionsAppBar.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -168,7 +191,7 @@
 		3A5BA2E229A9FFC600085ACF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3A5BA2E329A9FFDF00085ACF /* SVGImageView.swift */,
+				3A5BA2FB29B37D1E00085ACF /* CustomEnvironmentValues.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -176,9 +199,40 @@
 		3A5BA2E529AA673300085ACF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3A5BA2E329A9FFDF00085ACF /* SVGImageView.swift */,
 				3A5BA2E629AA674B00085ACF /* CoinTabView.swift */,
+				3A5BA2FD29B3895200085ACF /* CoinTopAppBar.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3A5BA2E829B10AB900085ACF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				3A5BA2EA29B10AF900085ACF /* Theme */,
+				3A5BA2E529AA673300085ACF /* Views */,
+				3A5BA2E229A9FFC600085ACF /* Utils */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		3A5BA2EA29B10AF900085ACF /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				3A5BA2EB29B10B0A00085ACF /* CoinTheme.swift */,
+				3A5BA2ED29B10B2D00085ACF /* Typography.swift */,
+				3A5BA2EF29B10BE000085ACF /* CoinColors.swift */,
+				3A5BA2F529B138DD00085ACF /* ThemeManager.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		3A5BA30329B3A97400085ACF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3A5BA30429B3A98300085ACF /* SettingsScreen.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		B69A29D5410520987788C79C /* Pods */ = {
@@ -304,14 +358,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A5BA2FE29B3895200085ACF /* CoinTopAppBar.swift in Sources */,
 				3A5BA2DA29A9014300085ACF /* AnalyticsScreen.swift in Sources */,
+				3A5BA2FA29B376E300085ACF /* AppScreen.swift in Sources */,
+				3A5BA2F029B10BE000085ACF /* CoinColors.swift in Sources */,
 				3A23C5D2299256BA0033CCF8 /* HomeScreen.swift in Sources */,
 				3A5BA2D129A8FE0D00085ACF /* TabsNavigationScreen.swift in Sources */,
 				3A5BA2E429A9FFDF00085ACF /* SVGImageView.swift in Sources */,
 				3A5BA2DC29A9016200085ACF /* AccountsScreen.swift in Sources */,
+				3A5BA2F629B138DD00085ACF /* ThemeManager.swift in Sources */,
 				3A5BA2DE29A9017700085ACF /* TransactionsScreen.swift in Sources */,
+				3A5BA2FC29B37D1E00085ACF /* CustomEnvironmentValues.swift in Sources */,
+				3A5BA30529B3A98300085ACF /* SettingsScreen.swift in Sources */,
+				3A5BA2EC29B10B0A00085ACF /* CoinTheme.swift in Sources */,
+				3A5BA30229B3A83000085ACF /* TransactionsAppBar.swift in Sources */,
 				3A23C5D0299256BA0033CCF8 /* OneCoinApp.swift in Sources */,
 				3A5BA2E729AA674B00085ACF /* CoinTabView.swift in Sources */,
+				3A5BA2EE29B10B2D00085ACF /* Typography.swift in Sources */,
+				3A5BA30029B39BB800085ACF /* HomeTopBar.swift in Sources */,
 				3A5BA2E129A901C100085ACF /* AddTransactionScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +506,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OneCoin/Preview Content\"";
+				DEVELOPMENT_TEAM = 493TY65FU6;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -475,6 +540,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OneCoin/Preview Content\"";
+				DEVELOPMENT_TEAM = 493TY65FU6;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;

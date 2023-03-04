@@ -20,12 +20,13 @@ enum Tab {
 struct TabsNavigationScreen: View {
     
     @State private var selectedTab: Tab = .home
+    @Environment(\.safeAreaInsets) private var safeAreaInsets: (top: CGFloat, bottom: CGFloat)
+    @EnvironmentObject private var theme: CoinTheme
     
     var body: some View {
         VStack {
             ZStack {
-                
-                Color.red
+                theme.colors.background
                 
                 switch selectedTab {
                 case .home:
@@ -41,6 +42,9 @@ struct TabsNavigationScreen: View {
                 }
             }
             CoinTabView(selectedTab: $selectedTab)
+                .safeAreaInset(edge: .bottom) {
+                    Spacer().frame(height: safeAreaInsets.bottom)
+                }
         }
     }
 }

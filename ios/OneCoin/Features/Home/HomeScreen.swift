@@ -12,10 +12,33 @@ struct HomeScreen: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("HomeScreen")
+            HomeTopBar(
+                //totalBalance: OneCoinShared.Amount(currency: OneCoinShared.Currency(code: "", symbol: ""), amountValue: 1),
+                onSettingsClick: {}
+            )
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    ForEach(0..<10) {
+                                Text("Item \($0)")
+                                    .foregroundColor(.white)
+                                    .font(.largeTitle)
+                                    .frame(width: 200, height: 200)
+                                    .background(.red)
+                            }
+                }
+            }
+            Spacer()
+//            CoinTopAppBar(
+//                title: {
+//                    Text("HomeScreen")
+//                },
+//                actions: {
+//                    Image(systemName: "globe")
+//                        .imageScale(.large)
+//                        .foregroundColor(.accentColor)
+//                },
+//                appBarHeight: 56
+//            )
         }
     }
 }

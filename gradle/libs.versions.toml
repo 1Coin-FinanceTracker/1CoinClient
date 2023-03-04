@@ -19,6 +19,7 @@ slf4j = "1.7.36"
 settings = "1.0.0"
 buildkonfig = "0.13.3"
 resources = "0.20.1"
+resourcesGraphics = "0.9.0"
 datetime = "0.4.0"
 uuid = "0.6.0"
 amplitude_java = "1.10.0"
@@ -34,7 +35,7 @@ lottie = "5.2.0"
 googleServicesAuth = "20.4.1"
 immutableCollections = "0.3.5"
 coil = "2.2.2"
-imageloader = "1.2.9"
+imageloader = "1.2.10"
 
 [libraries]
 gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "android_plugin" }
@@ -113,6 +114,7 @@ uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
 datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 
 mokoResources-core = { module = "dev.icerock.moko:resources", version.ref = "resources" }
+mokoResources-graphics = { module = "dev.icerock.moko:graphics", version.ref = "resourcesGraphics" }
 mokoResources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "resources" }
 
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }

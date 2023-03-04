@@ -2,6 +2,7 @@ package com.finance_tracker.finance_tracker.features.tabs_navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -15,14 +16,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
 import com.finance_tracker.finance_tracker.core.common.getKoin
+import com.finance_tracker.finance_tracker.core.common.rememberAsyncImagePainter
 import com.finance_tracker.finance_tracker.core.navigation.tabs.TabsNavigationTree
 import com.finance_tracker.finance_tracker.core.navigtion.main.MainNavigationTree
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.theme.NoRippleTheme
 import com.finance_tracker.finance_tracker.core.ui.BottomNavigationBar
-import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.features.tabs_navigation.analytics.TabsNavigationAnalytics
 import com.finance_tracker.finance_tracker.features.tabs_navigation.tabs.AccountsTab
 import com.finance_tracker.finance_tracker.features.tabs_navigation.tabs.AnalyticsTab
@@ -76,7 +79,8 @@ internal fun TabsNavigationScreen() {
                     }
                 ) {
                     Icon(
-                        painter = rememberVectorPainter("ic_plus"),
+                        modifier = Modifier.size(30.dp),
+                        painter = rememberAsyncImagePainter(MR.files.ic_plus),
                         contentDescription = null,
                         tint = CoinTheme.color.white
                     )
