@@ -21,10 +21,10 @@ android {
                 res.srcDirs("src/commonMain/resources")
             } else {
                 val os = DefaultNativePlatform.getCurrentOperatingSystem()
+                // "Crutch" due to a bug in Gradle up to version 8.0.0 not inclusive.
+                // Without this, MokoResources throws an "Unresolved reference:" error
                 when {
                     os.isMacOsX -> {
-                        // "Crutch" due to a bug in Gradle up to version 8.0.0 not inclusive.
-                        // Without this, MokoResources throws an "Unresolved reference:" error
                         res.srcDirs(
                             "src/commonMain/resources",
                             File(buildDir, "generated/moko/androidMain/res")
