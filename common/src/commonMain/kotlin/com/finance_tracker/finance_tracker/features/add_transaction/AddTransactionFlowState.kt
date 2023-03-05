@@ -8,32 +8,37 @@ data class AddTransactionFlowState(
 ) {
     private val currentStepIndex = MutableStateFlow(-1)
     val currentStepFlow = currentStepIndex.map { flow.steps.getOrNull(it) }
-    val hasPreviousStep = currentStepIndex.value > 0
+    val hasPreviousStep = MutableStateFlow(currentStepIndex.value > 0)
 
     fun previous() {
         val previousIndex = currentStepIndex.value - 1
         if (previousIndex < 0) return
 
-        currentStepIndex.value = previousIndex
+        setCurrentStepIndex(previousIndex)
     }
 
     fun next() {
         val nextIndex = currentStepIndex.value + 1
         if (nextIndex >= flow.steps.size) return
 
-        currentStepIndex.value = nextIndex
+        setCurrentStepIndex(nextIndex)
     }
 
     fun setStep(step: EnterTransactionStep?) {
         val index = flow.steps.indexOf(step)
-        currentStepIndex.value = index
+        setCurrentStepIndex(index)
     }
 
     fun setStepAfter(step: EnterTransactionStep) {
         val nextStepIndex = flow.steps.indexOf(step) + 1
         if (nextStepIndex in flow.steps.indices) {
-            currentStepIndex.value = nextStepIndex
+            setCurrentStepIndex(nextStepIndex)
         }
+    }
+
+    private fun setCurrentStepIndex(step: Int) {
+        currentStepIndex.value = step
+        hasPreviousStep.value = step > 0
     }
 
     companion object {
