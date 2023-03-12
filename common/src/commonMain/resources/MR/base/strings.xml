@@ -210,6 +210,10 @@
     <string name="settings_configuration">Configuration</string>
     <string name="settings_other">Other</string>
     <string name="settings_privacy">Privacy</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_system">System</string>
     <string name="settings_dashboard">Widgets settings</string>
     <string name="settings_main_currency">Main currency</string>
     <string name="settings_telegram_community">Telegram community</string>

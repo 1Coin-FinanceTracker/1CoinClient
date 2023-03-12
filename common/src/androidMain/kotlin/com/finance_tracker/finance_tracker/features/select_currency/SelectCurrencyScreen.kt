@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.features.select_currency
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
 import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.imePadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
+import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.features.select_currency.views.CurrencyItem
 import com.finance_tracker.finance_tracker.features.select_currency.views.SelectCurrencyTopBar
 import java.util.Currency
@@ -28,13 +30,16 @@ internal fun SelectCurrencyScreen() {
         viewModel.watchViewActions { action, baseLocalsStorage ->
             handleAction(
                 action = action,
-                baseLocalsStorage = baseLocalsStorage,
+                baseLocalsStorage = baseLocalsStorage
             )
         }
 
         val focusRequester = remember { FocusRequester() }
 
-        Column {
+        Column(
+            modifier = Modifier
+                .background(CoinTheme.color.background)
+        ) {
 
             val searchText by viewModel.searchText.collectAsState()
             val isSearchActive by viewModel.isSearchActive.collectAsState()

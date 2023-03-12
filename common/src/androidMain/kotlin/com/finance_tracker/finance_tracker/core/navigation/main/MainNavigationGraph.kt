@@ -31,9 +31,7 @@ fun RootComposeBuilder.navigationGraph() {
     }
 
     screen(MainNavigationTree.CategorySettings.name) {
-        CoinTheme {
-            CategorySettingsScreen()
-        }
+        CategorySettingsScreen()
     }
 
     screen(MainNavigationTree.AddAccount.name) { account ->
@@ -59,9 +57,7 @@ fun RootComposeBuilder.navigationGraph() {
     }
 
     screen(MainNavigationTree.DashboardSettings.name) {
-        CoinTheme {
-            DashboardSettingsScreen()
-        }
+        DashboardSettingsScreen()
     }
 
     screen(MainNavigationTree.Settings.name) {

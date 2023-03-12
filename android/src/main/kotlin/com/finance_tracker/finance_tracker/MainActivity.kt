@@ -28,19 +28,16 @@ class MainActivity : ComponentActivity(), KoinComponent {
         window.navigationBarColor = Color.Transparent.toArgb()
 
         setContent {
-
-            CoinTheme {
-                setNavigationContent(
-                    configuration = OdysseyConfiguration(
-                        canvas = this,
-                        startScreen = StartScreen.Custom(appInitializer.startScreen),
-                        backgroundColor = CoinTheme.color.background,
-                        displayType = DisplayType.EdgeToEdge
-                    ),
-                    onApplicationFinish = ::finish
-                ) {
-                    navigationGraph()
-                }
+            setNavigationContent(
+                configuration = OdysseyConfiguration(
+                    canvas = this,
+                    startScreen = StartScreen.Custom(appInitializer.startScreen),
+                    backgroundColor = CoinTheme.color.background,
+                    displayType = DisplayType.EdgeToEdge
+                ),
+                onApplicationFinish = ::finish
+            ) {
+                navigationGraph()
             }
         }
     }

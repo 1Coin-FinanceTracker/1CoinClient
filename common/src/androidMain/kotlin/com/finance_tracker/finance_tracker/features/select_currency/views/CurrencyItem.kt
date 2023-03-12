@@ -35,6 +35,7 @@ internal fun CurrencyItem(
             style = CoinTheme.typography.body1,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
+            color = CoinTheme.color.content
         )
         Spacer(modifier = Modifier.weight(1f))
         CoinRadioButton(

@@ -1,6 +1,7 @@
 package com.finance_tracker.finance_tracker.core.navigation.tabs
 
 import com.finance_tracker.finance_tracker.core.navigtion.main.MainNavigationTree
+import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.features.tabs_navigation.CustomConfiguration
 import com.finance_tracker.finance_tracker.features.tabs_navigation.TabsNavigationScreen
 import ru.alexgladkov.odyssey.compose.extensions.customNavigation
@@ -12,7 +13,11 @@ fun RootComposeBuilder.tabsNavigationGraph() {
     customNavigation(
         name = MainNavigationTree.Main.name,
         tabsNavModel = CustomConfiguration(
-            content = { TabsNavigationScreen() }
+            content = {
+                CoinTheme {
+                    TabsNavigationScreen()
+                }
+            }
         )
     ) {
         TabsNavigationTree.values().forEach { tabNavItem ->

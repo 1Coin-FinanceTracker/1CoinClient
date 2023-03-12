@@ -39,7 +39,6 @@ private val MaxButtonWidth = 560.dp
 @Composable
 internal fun WelcomeScreen() {
     StoredViewModel<WelcomeViewModel> { viewModel ->
-
         UpdateSystemBarsConfigEffect {
             isStatusBarLight = true
         }

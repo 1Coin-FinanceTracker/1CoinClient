@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.features.detail_account
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -104,6 +105,8 @@ internal fun DetailAccountScreen(
 
             val navigationBarsHeight = LocalFixedInsets.current.navigationBarsHeight
             CommonTransactionsList(
+                modifier = Modifier
+                    .background(CoinTheme.color.background),
                 transactions = transactions,
                 contentPadding = PaddingValues(
                     bottom = navigationBarsHeight

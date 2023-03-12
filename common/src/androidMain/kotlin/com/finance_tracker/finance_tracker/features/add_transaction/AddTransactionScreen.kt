@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.features.add_transaction
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -70,6 +71,7 @@ internal fun AddTransactionScreen(
         val currentStep by viewModel.currentStep.collectAsState()
         Column(
             modifier = Modifier.fillMaxSize()
+                .background(CoinTheme.color.background)
         ) {
             val primaryAmountText by viewModel.primaryAmountText.collectAsState()
             val secondaryAmountText by viewModel.secondaryAmountText.collectAsState()

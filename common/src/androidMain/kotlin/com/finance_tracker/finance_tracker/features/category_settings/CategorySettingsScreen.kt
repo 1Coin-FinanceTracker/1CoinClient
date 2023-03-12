@@ -21,9 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.ui.CategoryCard
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.DraggableItem
 import com.finance_tracker.finance_tracker.core.ui.EmptyStub
 import com.finance_tracker.finance_tracker.core.ui.ItemWrapper
@@ -38,7 +38,7 @@ private val CategoriesListContentPadding = 16.dp
 
 @Composable
 internal fun CategorySettingsScreen() {
-    StoredViewModel<CategorySettingsViewModel> { viewModel ->
+    ComposeScreen<CategorySettingsViewModel> { viewModel ->
 
         viewModel.watchViewActions { action, baseLocalsStorage ->
             handleAction(

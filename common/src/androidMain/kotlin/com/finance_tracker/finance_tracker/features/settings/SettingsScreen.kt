@@ -1,8 +1,10 @@
 package com.finance_tracker.finance_tracker.features.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -18,6 +20,7 @@ import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.feature_flags.FeatureFlag
+import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.features.settings.views.ListGroupHeader
 import com.finance_tracker.finance_tracker.features.settings.views.ListItemDivider
 import com.finance_tracker.finance_tracker.features.settings.views.SettingsScreenTopBar
@@ -29,6 +32,7 @@ import com.finance_tracker.finance_tracker.features.settings.views.items.Setting
 import com.finance_tracker.finance_tracker.features.settings.views.items.SettingsPrivacyItem
 import com.finance_tracker.finance_tracker.features.settings.views.items.SettingsSendingUsageDataItem
 import com.finance_tracker.finance_tracker.features.settings.views.items.SettingsTelegramChatItem
+import com.finance_tracker.finance_tracker.features.settings.views.items.SettingsThemeItem
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
@@ -47,14 +51,18 @@ internal fun SettingsScreen() {
             )
         }
 
-        Column {
+        Column(
+            modifier = Modifier
+                .background(CoinTheme.color.background)
+                .fillMaxHeight()
+        ) {
             SettingsScreenTopBar(
                 onBackClick = viewModel::onBackClick
             )
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .navigationBarsPadding(),
             ) {
 
@@ -113,6 +121,15 @@ internal fun SettingsScreen() {
                 SettingsPrivacyItem(
                     onClick = viewModel::onPrivacyClick
                 )
+
+                if (viewModel.featuresManager.isEnabled(FeatureFlag.ChooseTheme)) {
+                    val themeMode by viewModel.currentTheme.collectAsState()
+                    SettingsThemeItem(
+                        themes = viewModel.themes,
+                        themeMode = themeMode,
+                        onClick = viewModel::onThemeChange
+                    )
+                }
 
                 SettingsTelegramChatItem(
                     onClick = viewModel::onTelegramCommunityClick

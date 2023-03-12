@@ -12,6 +12,10 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -21,7 +25,12 @@ import com.finance_tracker.finance_tracker.core.common.LocalSystemBarsConfig
 import com.finance_tracker.finance_tracker.core.common.asSp
 import com.finance_tracker.finance_tracker.core.common.getContext
 import com.finance_tracker.finance_tracker.core.common.getFixedInsets
+import com.finance_tracker.finance_tracker.core.common.getKoin
 import com.finance_tracker.finance_tracker.core.common.updateSystemBarsConfig
+import com.finance_tracker.finance_tracker.data.settings.ThemeSettings
+import com.finance_tracker.finance_tracker.domain.models.ThemeMode
+
+private val themeSettings: ThemeSettings by lazy { getKoin().get() }
 
 val LocalCoinColors = staticCompositionLocalOf { ColorPalette.Undefined.toJvmColorPalette() }
 val LocalCoinTypography = staticCompositionLocalOf {
@@ -67,13 +76,29 @@ internal fun TextStyle.staticTextSize(isStaticContentSize: Boolean = true): Text
 
 @Composable
 fun CoinTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val coinColors = ColorPalette.provideColorPalette(darkTheme).toJvmColorPalette()
+    val themeMode by themeSettings.themeMode.collectAsState()
+
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    val isDarkTheme by remember(themeMode, isSystemInDarkTheme) {
+        derivedStateOf {
+            when (themeMode) {
+                null, ThemeMode.System -> isSystemInDarkTheme
+                ThemeMode.Light -> false
+                ThemeMode.Dark -> true
+            }
+        }
+    }
+    val coinColors by remember(isDarkTheme) {
+        derivedStateOf { ColorPalette.provideColorPalette(isDarkTheme).toJvmColorPalette() }
+    }
 
     val context = getContext()
-    context.updateSystemBarsConfig(LocalSystemBarsConfig.current)
+    context.updateSystemBarsConfig(
+        systemBarsConfig = LocalSystemBarsConfig.current,
+        isDarkTheme = isDarkTheme
+    )
 
     MaterialTheme(
         typography = MaterialTheme.typography.copy(

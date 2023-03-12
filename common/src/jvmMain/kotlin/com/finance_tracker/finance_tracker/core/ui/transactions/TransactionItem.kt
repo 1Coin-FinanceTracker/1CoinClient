@@ -66,6 +66,7 @@ internal fun TransactionItem(
             } else {
                 rememberVectorPainter(category.iconId)
             },
+            tint = CoinTheme.color.content,
             contentDescription = null
         )
 
@@ -80,7 +81,8 @@ internal fun TransactionItem(
                 } else {
                     category.name
                 },
-                style = CoinTheme.typography.body1
+                style = CoinTheme.typography.body1,
+                color = CoinTheme.color.content,
             )
             Spacer(modifier = Modifier.height(2.dp))
 

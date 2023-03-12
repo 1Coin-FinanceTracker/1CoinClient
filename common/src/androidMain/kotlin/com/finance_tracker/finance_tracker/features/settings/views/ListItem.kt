@@ -67,7 +67,8 @@ internal fun ListItem(
                     .width(IntrinsicSize.Max),
                 style = CoinTheme.typography.body1_medium,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = CoinTheme.color.content
             )
             if (onInfoClick != null) {
                 Icon(

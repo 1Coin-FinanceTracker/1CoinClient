@@ -79,7 +79,7 @@ internal fun CalendarDayView(
             horizontalArrangement = Arrangement.Center
         ) {
             CompositionLocalProvider(
-                LocalContentColor provides LocalContentColor.current.copy(alpha = 0.5f)
+                LocalContentColor provides CoinTheme.color.secondary
             ) {
                 Icon(
                     painter = rememberVectorPainter("ic_calendar"),

@@ -8,4 +8,5 @@ enum class FeatureFlag(
     Authorization(isEnabled = AppBuildConfig.isTestBuild),
     WidgetsSettings(isEnabled = AppBuildConfig.isTestBuild),
     Transfer(isEnabled = AppBuildConfig.isTestBuild),
+    ChooseTheme(isEnabled = AppBuildConfig.isTestBuild),
 }
