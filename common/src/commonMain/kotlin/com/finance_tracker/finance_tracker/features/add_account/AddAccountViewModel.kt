@@ -70,7 +70,9 @@ class AddAccountViewModel(
     private fun loadAccountColors() {
         viewModelScope.launch {
             _colors.value = accountsRepository.getAllAccountColors()
-            _selectedColor.value = colors.value.firstOrNull { it == account?.colorModel }
+            _selectedColor.value = account?.colorModel?.also { colorModel ->
+                colors.value.firstOrNull { it == colorModel }
+            } ?: colors.value.random()
         }
     }
 
