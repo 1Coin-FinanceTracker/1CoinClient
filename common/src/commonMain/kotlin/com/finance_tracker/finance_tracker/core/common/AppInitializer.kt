@@ -15,11 +15,13 @@ import com.finance_tracker.finance_tracker.domain.models.getAnalyticsName
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 class AppInitializer(
@@ -94,7 +96,9 @@ class AppInitializer(
         launch {
             if (!accountSettings.isInitDefaultData()) {
                 databaseInitializer.init(context)
-                accountSettings.setIsInitDefaultData(true)
+                withContext(Dispatchers.Default) {
+                    accountSettings.setIsInitDefaultData(true)
+                }
             }
         }
     }

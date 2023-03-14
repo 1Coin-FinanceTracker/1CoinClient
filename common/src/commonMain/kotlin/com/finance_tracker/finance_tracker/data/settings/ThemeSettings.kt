@@ -13,7 +13,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-@Suppress("RedundantSuspendModifier")
 @OptIn(ExperimentalSettingsApi::class)
 class ThemeSettings(factory: Settings.Factory) {
 
@@ -22,11 +21,11 @@ class ThemeSettings(factory: Settings.Factory) {
     private val flowSettings: FlowSettings = settings.toFlowSettings(Dispatchers.Default)
     val themeMode = getThemeMode().stateIn(coroutineScope, initialValue = null)
 
-    suspend fun saveThemeMode(themeMode: ThemeMode) {
+    fun saveThemeMode(themeMode: ThemeMode) {
         settings.putString(KEY_THEME_MODE, themeMode.modeId)
     }
 
-    private fun getThemeMode(): Flow<ThemeMode?> {
+    fun getThemeMode(): Flow<ThemeMode?> {
         return flowSettings.getStringOrNullFlow(KEY_THEME_MODE)
             .map(ThemeMode::from)
     }

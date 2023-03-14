@@ -9,14 +9,13 @@ import com.russhwolf.settings.coroutines.toFlowSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
-@Suppress("RedundantSuspendModifier")
 @OptIn(ExperimentalSettingsApi::class)
 class AnalyticsSettings(factory: Settings.Factory) {
 
     private val settings: ObservableSettings = factory.create("analytics") as ObservableSettings
     private val flowSettings: FlowSettings = settings.toFlowSettings(Dispatchers.Default)
 
-    suspend fun saveIsAnalyticsEnabled(enabled: Boolean) {
+    fun saveIsAnalyticsEnabled(enabled: Boolean) {
         settings.putBoolean(KEY_IS_ANALYTICS_ENABLED, enabled)
     }
 

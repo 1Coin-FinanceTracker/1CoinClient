@@ -27,10 +27,10 @@ import com.finance_tracker.finance_tracker.core.common.getContext
 import com.finance_tracker.finance_tracker.core.common.getFixedInsets
 import com.finance_tracker.finance_tracker.core.common.getKoin
 import com.finance_tracker.finance_tracker.core.common.updateSystemBarsConfig
-import com.finance_tracker.finance_tracker.data.settings.ThemeSettings
+import com.finance_tracker.finance_tracker.domain.interactors.ThemeInteractor
 import com.finance_tracker.finance_tracker.domain.models.ThemeMode
 
-private val themeSettings: ThemeSettings by lazy { getKoin().get() }
+private val themeInteractor: ThemeInteractor by lazy { getKoin().get() }
 
 val LocalCoinColors = staticCompositionLocalOf { ColorPalette.Undefined.toJvmColorPalette() }
 val LocalCoinTypography = staticCompositionLocalOf {
@@ -78,13 +78,14 @@ internal fun TextStyle.staticTextSize(isStaticContentSize: Boolean = true): Text
 fun CoinTheme(
     content: @Composable () -> Unit
 ) {
-    val themeMode by themeSettings.themeMode.collectAsState()
+    val themeMode by themeInteractor.getThemeModeFlow()
+        .collectAsState(initial = ThemeMode.System)
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val isDarkTheme by remember(themeMode, isSystemInDarkTheme) {
         derivedStateOf {
             when (themeMode) {
-                null, ThemeMode.System -> isSystemInDarkTheme
+                ThemeMode.System -> isSystemInDarkTheme
                 ThemeMode.Light -> false
                 ThemeMode.Dark -> true
             }

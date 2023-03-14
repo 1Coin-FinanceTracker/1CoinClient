@@ -46,7 +46,9 @@ class CurrenciesRepository(
     }
 
     suspend fun savePrimaryCurrency(currency: Currency) {
-        accountSettings.savePrimaryCurrency(currency.code)
+        withContext(Dispatchers.Default) {
+            accountSettings.savePrimaryCurrency(currency.code)
+        }
     }
 
     fun getPrimaryCurrencyFlow(): Flow<Currency> {
