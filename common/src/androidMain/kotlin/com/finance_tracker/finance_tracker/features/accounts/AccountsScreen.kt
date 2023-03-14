@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinPaddings
 import com.finance_tracker.finance_tracker.core.ui.AccountCard
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.EmptyStub
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.domain.models.Account
@@ -26,7 +26,7 @@ import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun AccountsScreen() {
-    StoredViewModel<AccountsViewModel> { viewModel ->
+    ComposeScreen<AccountsViewModel> { viewModel ->
 
         viewModel.watchViewActions { action, baseLocalsStorage ->
             handleAction(

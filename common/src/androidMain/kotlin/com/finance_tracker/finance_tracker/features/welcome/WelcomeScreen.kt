@@ -18,13 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.UpdateSystemBarsConfigEffect
 import com.finance_tracker.finance_tracker.core.common.VectorAnimation
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.statusBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import com.finance_tracker.finance_tracker.core.ui.welcome.EmailSignInButton
 import com.finance_tracker.finance_tracker.core.ui.welcome.SkipButton
@@ -38,7 +38,7 @@ private val MaxButtonWidth = 560.dp
 
 @Composable
 internal fun WelcomeScreen() {
-    StoredViewModel<WelcomeViewModel> { viewModel ->
+    ComposeScreen<WelcomeViewModel> { viewModel ->
         UpdateSystemBarsConfigEffect {
             isStatusBarLight = true
         }

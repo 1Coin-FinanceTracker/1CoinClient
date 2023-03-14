@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.UpdateSystemBarsConfigEffect
 import com.finance_tracker.finance_tracker.core.common.pagination.AutoRefreshList
 import com.finance_tracker.finance_tracker.core.common.pagination.collectAsLazyPagingItems
@@ -21,6 +20,7 @@ import com.finance_tracker.finance_tracker.core.common.toUIColor
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.AppBarIcon
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.collapsing_toolbar.CollapsingToolbarScaffold
 import com.finance_tracker.finance_tracker.core.ui.collapsing_toolbar.CollapsingToolbarScaffoldScopeInstance.align
 import com.finance_tracker.finance_tracker.core.ui.collapsing_toolbar.ScrollStrategy
@@ -39,7 +39,7 @@ import org.koin.core.parameter.parametersOf
 internal fun DetailAccountScreen(
     account: Account
 ) {
-    StoredViewModel<DetailAccountViewModel>(
+    ComposeScreen<DetailAccountViewModel>(
         parameters = { parametersOf(account) }
     ) { viewModel ->
         UpdateSystemBarsConfigEffect {

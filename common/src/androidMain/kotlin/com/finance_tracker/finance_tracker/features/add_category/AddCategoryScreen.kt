@@ -17,9 +17,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.ui.CoinOutlinedTextField
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.PrimaryButton
 import com.finance_tracker.finance_tracker.domain.models.TransactionType
 import com.finance_tracker.finance_tracker.features.add_category.views.AddCategoryAppBar
@@ -33,7 +33,7 @@ private const val MinCategoryNameLength = 2
 internal fun AddCategoryScreen(
     addCategoryScreenParams: AddCategoryScreenParams
 ) {
-    StoredViewModel<AddCategoryViewModel>(
+    ComposeScreen<AddCategoryViewModel>(
         parameters = { parametersOf(addCategoryScreenParams) }
     ) { viewModel ->
 

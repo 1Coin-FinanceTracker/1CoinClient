@@ -15,17 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.core.common.LocalFixedInsets
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.imePadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.features.select_currency.views.CurrencyItem
 import com.finance_tracker.finance_tracker.features.select_currency.views.SelectCurrencyTopBar
-import java.util.Currency
+import java.util.*
 
 @Composable
 internal fun SelectCurrencyScreen() {
-    StoredViewModel<SelectCurrencyViewModel> { viewModel ->
+    ComposeScreen<SelectCurrencyViewModel> { viewModel ->
 
         viewModel.watchViewActions { action, baseLocalsStorage ->
             handleAction(

@@ -1,5 +1,6 @@
 package com.finance_tracker.finance_tracker.features.add_account
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +19,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.PrimaryButton
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.features.add_account.views.AccountColorTextField
@@ -31,11 +32,12 @@ import com.finance_tracker.finance_tracker.features.add_account.views.EditAccoun
 import dev.icerock.moko.resources.compose.stringResource
 import org.koin.core.parameter.parametersOf
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 internal fun AddAccountScreen(
     account: Account
 ) {
-    StoredViewModel<AddAccountViewModel>(
+    ComposeScreen<AddAccountViewModel>(
         parameters = { parametersOf(account) }
     ) { viewModel ->
 

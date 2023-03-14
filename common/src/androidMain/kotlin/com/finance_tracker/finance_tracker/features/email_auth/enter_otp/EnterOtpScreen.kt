@@ -26,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.clicks.scaleClickAnimation
 import com.finance_tracker.finance_tracker.core.common.imePadding
 import com.finance_tracker.finance_tracker.core.common.noRippleClickable
@@ -35,13 +34,14 @@ import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActi
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.core.ui.AppBarIcon
 import com.finance_tracker.finance_tracker.core.ui.CoinCodeTextField
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.rememberVectorPainter
 import dev.icerock.moko.resources.compose.stringResource
 import org.koin.core.parameter.parametersOf
 
 @Composable
 internal fun EnterOtpScreen(email: String) {
-    StoredViewModel<EnterOtpViewModel>(
+    ComposeScreen<EnterOtpViewModel>(
         parameters = { parametersOf(email) }
     ) { viewModel ->
 

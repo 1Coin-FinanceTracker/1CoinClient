@@ -7,7 +7,7 @@ import com.adeo.kviewmodel.odyssey.StoredViewModel as OdysseyStoredViewModel
 
 @Composable
 inline fun <reified T : KViewModel> StoredViewModel(
-    noinline parameters: ParametersDefinition? = null,
+    noinline parameters: ParametersDefinition?,
     noinline content: @Composable (T) -> Unit
 ) {
     OdysseyStoredViewModel(

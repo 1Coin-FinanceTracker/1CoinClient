@@ -2,7 +2,6 @@ package com.finance_tracker.finance_tracker.core.navigation.main
 
 import com.finance_tracker.finance_tracker.core.navigation.tabs.tabsNavigationGraph
 import com.finance_tracker.finance_tracker.core.navigtion.main.MainNavigationTree
-import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.domain.models.Account
 import com.finance_tracker.finance_tracker.features.add_account.AddAccountScreen
 import com.finance_tracker.finance_tracker.features.add_category.AddCategoryScreen
@@ -23,11 +22,9 @@ import ru.alexgladkov.odyssey.compose.navigation.RootComposeBuilder
 fun RootComposeBuilder.navigationGraph() {
 
     screen(MainNavigationTree.AddTransaction.name) {
-        CoinTheme {
-            AddTransactionScreen(
-                params = it as? AddTransactionScreenParams ?: AddTransactionScreenParams()
-            )
-        }
+        AddTransactionScreen(
+            params = it as? AddTransactionScreenParams ?: AddTransactionScreenParams()
+        )
     }
 
     screen(MainNavigationTree.CategorySettings.name) {
@@ -35,25 +32,19 @@ fun RootComposeBuilder.navigationGraph() {
     }
 
     screen(MainNavigationTree.AddAccount.name) { account ->
-        CoinTheme {
-            AddAccountScreen(
-                account = account as? Account ?: Account.EMPTY
-            )
-        }
+        AddAccountScreen(
+            account = account as? Account ?: Account.EMPTY
+        )
     }
 
     screen(MainNavigationTree.AddCategory.name) { params ->
-        CoinTheme {
-            AddCategoryScreen(
-                addCategoryScreenParams = params as AddCategoryScreenParams
-            )
-        }
+        AddCategoryScreen(
+            addCategoryScreenParams = params as AddCategoryScreenParams
+        )
     }
 
     screen(MainNavigationTree.DetailAccount.name) { params ->
-        CoinTheme {
-            DetailAccountScreen(account = params as Account)
-        }
+        DetailAccountScreen(account = params as Account)
     }
 
     screen(MainNavigationTree.DashboardSettings.name) {
@@ -61,33 +52,23 @@ fun RootComposeBuilder.navigationGraph() {
     }
 
     screen(MainNavigationTree.Settings.name) {
-        CoinTheme {
-            SettingsScreen()
-        }
+        SettingsScreen()
     }
 
     screen(MainNavigationTree.Welcome.name) {
-        CoinTheme {
-            WelcomeScreen()
-        }
+        WelcomeScreen()
     }
 
     screen(MainNavigationTree.EnterEmail.name) {
-        CoinTheme {
-            EnterEmailScreen()
-        }
+        EnterEmailScreen()
     }
 
     screen(MainNavigationTree.EnterOtp.name) { email ->
-        CoinTheme {
-            EnterOtpScreen(email as String)
-        }
+        EnterOtpScreen(email as String)
     }
 
     screen(MainNavigationTree.SelectCurrency.name) {
-        CoinTheme {
-            SelectCurrencyScreen()
-        }
+        SelectCurrencyScreen()
     }
 
     tabsNavigationGraph()

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE=$1
+
+# get current branch
+branchName=$(git rev-parse --abbrev-ref HEAD)
+
+ISSUE_KEY_PATTERN="[A-Z]+-[0-9]+"
+
+# search jira issue id in a pattern such a "feature/ABC-123-description"
+jiraId=$(echo "$branchName" | sed -nr 's,(feature|bugfix|release|hotfix)/([A-Z]+-[0-9]+)_.+,\2,p')
+
+IS_AMEND=$(pgrep -ocommand= -p $PPID | grep -e '--amend')
+
+if [ -n "$IS_AMEND" ]; then
+  exit 0
+fi
+
+# only prepare commit message if pattern matched and jiraId was found
+if [[ ! -z $jiraId ]]; then
+  line=$(head -n 1 "$COMMIT_MSG_FILE")
+
+  if [[ ! $line =~ $ISSUE_KEY_PATTERN ]]; then
+
+    # $1 is the name of the file containing the commit message
+    sed -i.bak -e "1s/^/\n\n[$jiraId]\n/" "$1"
+  fi
+
+fi

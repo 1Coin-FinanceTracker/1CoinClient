@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
 import com.finance_tracker.finance_tracker.core.common.BackHandler
 import com.finance_tracker.finance_tracker.core.common.DialogConfigurations
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.asSp
 import com.finance_tracker.finance_tracker.core.common.date.currentLocalDateTime
 import com.finance_tracker.finance_tracker.core.common.`if`
 import com.finance_tracker.finance_tracker.core.common.toDateTime
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.DeleteDialog
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionType
@@ -56,7 +56,7 @@ import ru.alexgladkov.odyssey.compose.local.LocalRootController
 internal fun AddTransactionScreen(
     params: AddTransactionScreenParams
 ) {
-    StoredViewModel<AddTransactionViewModel>(
+    ComposeScreen<AddTransactionViewModel>(
         parameters = { parametersOf(params) }
     ) { viewModel ->
         val navController = LocalRootController.current.findRootController()
