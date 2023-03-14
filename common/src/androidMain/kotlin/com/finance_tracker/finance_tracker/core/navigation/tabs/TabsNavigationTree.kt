@@ -1,7 +1,6 @@
 package com.finance_tracker.finance_tracker.core.navigation.tabs
 
 import androidx.compose.runtime.Composable
-import com.finance_tracker.finance_tracker.core.theme.CoinTheme
 import com.finance_tracker.finance_tracker.features.accounts.AccountsScreen
 import com.finance_tracker.finance_tracker.features.analytics.AnalyticsScreen
 import com.finance_tracker.finance_tracker.features.home.HomeScreen
@@ -18,34 +17,18 @@ enum class TabsNavigationTree(
 ) {
     Home(
         tab = HomeTab(),
-        screen = {
-            CoinTheme {
-                HomeScreen()
-            }
-        }
+        screen = { HomeScreen() }
     ),
     Transactions(
         tab = TransactionsTab(),
-        screen = {
-            CoinTheme {
-                TransactionsScreen()
-            }
-        }
+        screen = { TransactionsScreen() }
     ),
     Accounts(
         tab = AccountsTab(),
-        screen = {
-            CoinTheme {
-                AccountsScreen()
-            }
-        }
+        screen = { AccountsScreen() }
     ),
     Analytics(
         tab = AnalyticsTab(),
-        screen = {
-            CoinTheme {
-                AnalyticsScreen()
-            }
-        }
+        screen = { AnalyticsScreen() }
     )
 }

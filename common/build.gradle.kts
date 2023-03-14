@@ -8,29 +8,84 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
+    // Platform plugins
+    kotlin("native.cocoapods")
+
+    // Convention plugins
     id("android-setup")
     id("multiplatform-compose-setup")
+    id("multiplatform-config")
+
+    // Dependencies plugins
     id("com.squareup.sqldelight")
     id("com.google.firebase.crashlytics")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.codingfeline.buildkonfig")
     id("dev.icerock.mobile.multiplatform-resources")
-    kotlin("native.cocoapods")
-}
-
-android {
-    buildTypes {
-        create("staging") {
-            initWith(getByName("release"))
-        }
-    }
-    namespace = "com.finance_tracker.finance_tracker.common"
 }
 
 kotlin {
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(libs.koin.core)
+                api(libs.mokoResources.core)
+
+                implementation(libs.napier)
+                implementation(libs.kviewmodel)
+                implementation(libs.serialization)
+                implementation(libs.sqldelight.coroutines)
+                implementation(libs.bundles.ktor)
+                implementation(libs.bundles.settings)
+                implementation(libs.uuid)
+                implementation(libs.datetime)
+                implementation(libs.immutableCollections)
+                implementation(libs.paging)
+            }
+        }
+
+        desktopMain {
+            dependencies {
+                implementation(libs.sqldelight.jvm)
+                implementation(libs.datepicker.desktop)
+                implementation(libs.ktor.jvm)
+                implementation(libs.slf4j)
+                implementation(libs.json)
+                implementation(libs.amplitude.java)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.bundles.koin.android)
+                implementation(libs.sqldelight.android)
+                implementation(libs.ktor.android)
+                implementation(libs.amplitude.android)
+
+                implementation(project.dependencies.platform(libs.firebase.bom))
+                implementation(libs.firebase.crashlytics)
+                implementation(libs.lottie)
+                implementation(libs.googleServicesAuth)
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                api(libs.bundles.odyssey)
+
+                implementation(libs.imageloader)
+                implementation(libs.bundles.kviewmodel.compose)
+                implementation(libs.koalaplot)
+                implementation(libs.mokoResources.compose)
+            }
+        }
+
+        iosMain {
+            dependencies {
+                implementation(libs.sqldelight.ios)
+            }
+        }
+    }
 
     cocoapods {
         version = "1.0"
@@ -49,77 +104,6 @@ kotlin {
         // Maps custom Xcode configuration to NativeBuildType
         xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
-    }
-
-    sourceSets {
-        val commonMain by named("commonMain") {
-            dependencies {
-                api(libs.koin.core)
-                api(libs.mokoResources.core)
-
-                implementation(libs.napier)
-                implementation(libs.kviewmodel)
-                implementation(libs.serialization)
-                implementation(libs.sqldelight.coroutines)
-                implementation(libs.bundles.ktor)
-                implementation(libs.bundles.settings)
-                implementation(libs.uuid)
-                implementation(libs.datetime)
-                implementation(libs.immutableCollections)
-                implementation(libs.paging)
-            }
-        }
-        named("desktopMain") {
-            dependencies {
-                implementation(libs.sqldelight.jvm)
-                implementation(libs.datepicker.desktop)
-                implementation(libs.ktor.jvm)
-                implementation(libs.slf4j)
-                implementation(libs.json)
-                implementation(libs.amplitude.java)
-            }
-        }
-        named("androidMain") {
-            dependencies {
-                implementation(libs.bundles.koin.android)
-                implementation(libs.sqldelight.android)
-                implementation(libs.ktor.android)
-                implementation(libs.amplitude.android)
-
-                implementation(project.dependencies.platform(libs.firebase.bom))
-                implementation(libs.firebase.crashlytics)
-                implementation(libs.lottie)
-                implementation(libs.googleServicesAuth)
-            }
-        }
-
-        @Suppress("UnusedPrivateMember")
-        val jvmMain by getting {
-            dependencies {
-                api(libs.bundles.odyssey)
-
-                implementation(libs.imageloader)
-                implementation(libs.bundles.kviewmodel.compose)
-                implementation(libs.koalaplot)
-                implementation(libs.mokoResources.compose)
-            }
-        }
-
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-
-        @Suppress("UnusedPrivateMember")
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-
-            dependencies {
-                implementation(libs.sqldelight.ios)
-            }
-        }
     }
 }
 

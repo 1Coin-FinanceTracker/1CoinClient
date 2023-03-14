@@ -1,33 +1,25 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+    id("multiplatform-config")
 }
 
 kotlin {
-    android()
-    jvm("desktop")
     sourceSets {
-        val androidMain by named("androidMain") {
+        named("androidMain") {
             dependencies {
                 api(compose.uiTooling)
                 api(compose.preview)
             }
         }
-        val commonMain by named("commonMain") {
-            dependencies {
-            }
-        }
-        val desktopMain by named("desktopMain") {
+
+        named("desktopMain") {
             dependencies {
                 implementation(compose.desktop.common)
             }
         }
 
-        @Suppress("UnusedPrivateMember")
-        val jvmMain by creating {
-            dependsOn(commonMain)
-            androidMain.dependsOn(this)
-            desktopMain.dependsOn(this)
+        named("jvmMain") {
             dependencies {
                 api(compose.runtime)
                 api(compose.foundation)

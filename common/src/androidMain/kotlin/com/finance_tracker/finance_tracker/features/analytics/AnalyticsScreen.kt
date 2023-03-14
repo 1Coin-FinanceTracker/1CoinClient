@@ -12,9 +12,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.theme.CoinPaddings
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.toTransactionType
 import com.finance_tracker.finance_tracker.features.widgets.AnalyticsByCategoryWidget
 import com.finance_tracker.finance_tracker.features.widgets.AnalyticsTrendWidget
@@ -24,7 +24,7 @@ val PieChartLabelSize = 20.dp
 
 @Composable
 internal fun AnalyticsScreen() {
-    StoredViewModel<AnalyticsViewModel> { viewModel ->
+    ComposeScreen<AnalyticsViewModel> { viewModel ->
 
         LaunchedEffect(Unit) {
             viewModel.onScreenComposed()

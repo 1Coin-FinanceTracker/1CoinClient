@@ -16,11 +16,11 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.finance_tracker.finance_tracker.MR
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.feature_flags.FeatureFlag
 import com.finance_tracker.finance_tracker.core.theme.CoinTheme
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.features.settings.views.ListGroupHeader
 import com.finance_tracker.finance_tracker.features.settings.views.ListItemDivider
 import com.finance_tracker.finance_tracker.features.settings.views.SettingsScreenTopBar
@@ -37,7 +37,7 @@ import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsScreen() {
-    StoredViewModel<SettingsScreenViewModel> { viewModel ->
+    ComposeScreen<SettingsScreenViewModel> { viewModel ->
 
         val uriHandler = LocalUriHandler.current
         val clipboardManager = LocalClipboardManager.current

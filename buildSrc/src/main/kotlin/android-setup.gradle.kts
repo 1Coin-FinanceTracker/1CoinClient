@@ -14,6 +14,13 @@ android {
         targetSdk = 33
     }
 
+    buildTypes {
+        create("staging") {
+            initWith(getByName("release"))
+        }
+    }
+    namespace = "com.finance_tracker.finance_tracker.common"
+
     sourceSets {
         named("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")

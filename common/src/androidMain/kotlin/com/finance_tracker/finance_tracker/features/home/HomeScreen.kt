@@ -14,10 +14,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.finance_tracker.finance_tracker.core.common.StoredViewModel
 import com.finance_tracker.finance_tracker.core.common.navigationBarsPadding
 import com.finance_tracker.finance_tracker.core.common.view_models.watchViewActions
 import com.finance_tracker.finance_tracker.core.theme.CoinPaddings
+import com.finance_tracker.finance_tracker.core.ui.ComposeScreen
 import com.finance_tracker.finance_tracker.core.ui.tab_rows.TransactionTypeTab
 import com.finance_tracker.finance_tracker.domain.models.DashboardWidgetData
 import com.finance_tracker.finance_tracker.features.widgets.AnalyticsByCategoryWidget
@@ -27,7 +27,7 @@ import com.finance_tracker.finance_tracker.features.widgets.MyAccountsWidget
 
 @Composable
 internal fun HomeScreen() {
-    StoredViewModel<HomeViewModel> { viewModel ->
+    ComposeScreen<HomeViewModel> { viewModel ->
         val accounts by viewModel.accounts.collectAsState()
 
         LaunchedEffect(Unit) {
